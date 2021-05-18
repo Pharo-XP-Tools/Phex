@@ -24,11 +24,11 @@ PhexTaskLauncherPresenter class >> defaultSpec [
 { #category : #'world menu' }
 PhexTaskLauncherPresenter class >> menuCommandOn: aBuilder [
 	<worldMenu>
-	(aBuilder item: #'MicroEd')
+	(aBuilder item: #'Phex')
 		parent: #Tools;
 		action: [ self open ];
 		order: 40;
-		help: 'A microdown Editor & Renderer';
+		help: 'Pharo Experience Task Launcher';
 		icon: (self iconNamed: #glamorousBrowseIcon).
 	aBuilder withSeparatorAfter
 ]
