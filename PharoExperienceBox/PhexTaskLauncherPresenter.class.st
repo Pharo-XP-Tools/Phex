@@ -52,6 +52,8 @@ PhexTaskLauncherPresenter >> currentExperience: anObject [
 
 { #category : #actions }
 PhexTaskLauncherPresenter >> finishTask [
+	taskTable selectedItem ifNotNil: [:t| t finish]..
+	self update
 ]
 
 { #category : #initialization }
@@ -97,7 +99,7 @@ PhexTaskLauncherPresenter >> loadExperience [
 
 	xpClass ifNil: [ ^ self ].
 
-	currentExperience := xpClass new.
+	currentExperience := xpClass currentExperiment.
 	self updateCurrentExperience
 ]
 
@@ -132,7 +134,9 @@ PhexTaskLauncherPresenter >> menu [
 
 { #category : #actions }
 PhexTaskLauncherPresenter >> startSelectedTask [
-	 self halt
+
+	taskTable selectedItem ifNotNil: [:t| t start].
+	self update
 ]
 
 { #category : #accessing }

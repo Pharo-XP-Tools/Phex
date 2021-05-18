@@ -13,6 +13,23 @@ Class {
 }
 
 { #category : #accessing }
+PhexExperiment class >> currentExperiment [
+
+	^ self subclassResponsibility
+]
+
+{ #category : #initialization }
+PhexExperiment class >> resetAllExperiments [
+	<script>
+	self allSubclassesDo: [ :c| c resetExperiment ]
+]
+
+{ #category : #initialization }
+PhexExperiment class >> resetExperiment [
+	 self subclassResponsibility 
+]
+
+{ #category : #accessing }
 PhexExperiment >> description [
 
 	^ description
