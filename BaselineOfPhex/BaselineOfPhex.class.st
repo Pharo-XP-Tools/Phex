@@ -1,11 +1,11 @@
 Class {
-	#name : #BaselineOfPharoExperienceBox,
+	#name : #BaselineOfPhex,
 	#superclass : #BaselineOf,
-	#category : #BaselineOfPharoExperienceBox
+	#category : #BaselineOfPhex
 }
 
 { #category : #baselines }
-BaselineOfPharoExperienceBox >> baseline: spec [
+BaselineOfPhex >> baseline: spec [
 
 	<baseline>
 	spec for: #common do: [ 
