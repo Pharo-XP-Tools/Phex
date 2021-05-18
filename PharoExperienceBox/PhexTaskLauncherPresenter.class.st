@@ -39,14 +39,6 @@ PhexTaskLauncherPresenter class >> open [
 	^ self new openWithSpec
 ]
 
-{ #category : #'as yet unclassified' }
-PhexTaskLauncherPresenter class >> pharoExperienceSpec [
-
-	^ SpBoxLayout newTopToBottom
-		  add: #textOutput;
-		  yourself
-]
-
 { #category : #accessing }
 PhexTaskLauncherPresenter >> currentExperience [
 	 ^currentExperience ifNil:[currentExperience := 'Undefined experience']
@@ -96,14 +88,15 @@ PhexTaskLauncherPresenter >> initializeTaskTable [
 { #category : #actions }
 PhexTaskLauncherPresenter >> loadExperience [
 
-	| xpName xpClass |
-	xpName := UIManager default
-		          request: 'Experience name?'
-		          initialAnswer: ''.
-	(#( nil '' ) includes: xpName) ifTrue: [ ^ self ].
-	xpClass := Smalltalk at: xpName capitalized asSymbol ifAbsent: [ 
-		           self inform: 'Experience not found'.
-		           ^ self ].
+	| xpClass |
+	xpClass := UIManager default
+		           chooseFrom: PhexExperiment allSubclasses
+		           values: PhexExperiment allSubclasses
+		           lines: #( 10 )
+		           title: 'Choose an experiment to run...'.
+
+	xpClass ifNil: [ ^ self ].
+
 	currentExperience := xpClass new.
 	self updateCurrentExperience
 ]
