@@ -12,13 +12,14 @@ Class {
 { #category : #specs }
 PhexTaskLauncherPresenter class >> defaultSpec [
 
-	 ^ SpBoxLayout newTopToBottom
-		add: #menu expand: false;
-		add: (SpPanedLayout newLeftToRight
-			add: #taskTable;
-			add: #taskDescription;
-		yourself);
-	yourself
+	^ SpBoxLayout newTopToBottom
+		  add: #menu expand: false;
+		  add: (SpPanedLayout newLeftToRight
+				   positionOfSlider: 30 percent;
+				   add: #taskTable;
+				   add: #taskDescription;
+				   yourself);
+		  yourself
 ]
 
 { #category : #'world menu' }
