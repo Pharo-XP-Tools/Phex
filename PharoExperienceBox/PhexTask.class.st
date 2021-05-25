@@ -43,7 +43,6 @@ PhexTask >> description: anObject [
 
 { #category : #'start-stop' }
 PhexTask >> finish [
-	started ifFalse:[^self].
 	started := false.
 	finished := true
 ]
@@ -92,7 +91,6 @@ PhexTask >> name: anObject [
 
 { #category : #'start-stop' }
 PhexTask >> start [
-	finished ifTrue:[^self].
 	started := true
 ]
 

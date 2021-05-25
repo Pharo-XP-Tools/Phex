@@ -7,7 +7,10 @@ Class {
 	#instVars : [
 		'name',
 		'description',
-		'tasks'
+		'tasks',
+		'startingTaskAction',
+		'finishTaskAction',
+		'runningTasks'
 	],
 	#category : #'PharoExperienceBox-model'
 }
@@ -29,6 +32,17 @@ PhexExperiment class >> resetExperiment [
 	 self subclassResponsibility 
 ]
 
+{ #category : #private }
+PhexExperiment >> addRunningTask: aTask [
+	self runningTasks addIfNotPresent: aTask
+]
+
+{ #category : #testing }
+PhexExperiment >> canStartNewTask [
+
+	^ (self sequentialTasks and: [ self hasRunningTasks ]) not
+]
+
 { #category : #accessing }
 PhexExperiment >> description [
 
@@ -39,6 +53,34 @@ PhexExperiment >> description [
 PhexExperiment >> description: anObject [
 
 	description := anObject
+]
+
+{ #category : #actions }
+PhexExperiment >> finishTask: aTask [
+
+	aTask isFinished ifTrue: [ PhexTaskIsAlreadyFinished new signal ].
+	aTask isStarted ifFalse: [ PhexTaskIsNotStarted new signal ].
+
+	aTask finish.
+	self removeRunningTask: aTask.
+	self finishTaskAction cull: self cull: aTask
+]
+
+{ #category : #accessing }
+PhexExperiment >> finishTaskAction [
+
+	^ finishTaskAction ifNil: [ finishTaskAction := [ :xp :task |  ] ]
+]
+
+{ #category : #accessing }
+PhexExperiment >> finishTaskAction: anObject [
+
+	finishTaskAction := anObject
+]
+
+{ #category : #testing }
+PhexExperiment >> hasRunningTasks [
+	^self runningTasks notEmpty
 ]
 
 { #category : #accessing }
@@ -56,6 +98,47 @@ PhexExperiment >> name: anObject [
 { #category : #printing }
 PhexExperiment >> printOn: aStream [
 	aStream << self name 
+]
+
+{ #category : #private }
+PhexExperiment >> removeRunningTask: aTask [
+
+	self runningTasks remove: aTask ifAbsent: [  ]
+]
+
+{ #category : #accessing }
+PhexExperiment >> runningTasks [
+
+	^ runningTasks ifNil: [ runningTasks := OrderedCollection new ]
+]
+
+{ #category : #testing }
+PhexExperiment >> sequentialTasks [
+	^false
+]
+
+{ #category : #actions }
+PhexExperiment >> startTask: aTask [
+
+	aTask isFinished ifTrue: [ PhexTaskIsAlreadyFinished new signal ].	
+	(self runningTasks includes: aTask) ifTrue: [ 	PhexTaskIsAlreadyStarted new signal ].
+	self canStartNewTask ifFalse: [ PhexAnotherTaskIsStarted new signal ].
+	
+	aTask start.
+	self addRunningTask: aTask.
+	self startingTaskAction cull: self cull: aTask
+]
+
+{ #category : #accessing }
+PhexExperiment >> startingTaskAction [
+
+	^ startingTaskAction ifNil: [ startingTaskAction := [ :xp :task |  ] ]
+]
+
+{ #category : #accessing }
+PhexExperiment >> startingTaskAction: anObject [
+
+	startingTaskAction := anObject
 ]
 
 { #category : #accessing }

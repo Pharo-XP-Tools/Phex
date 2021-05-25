@@ -1,3 +1,6 @@
+"
+I am a tool to run pharo empirical experiments.
+"
 Class {
 	#name : #PhexTaskLauncherPresenter,
 	#superclass : #SpApplicationWithToolbar,
@@ -53,7 +56,9 @@ PhexTaskLauncherPresenter >> currentExperience: anObject [
 
 { #category : #actions }
 PhexTaskLauncherPresenter >> finishTask [
-	taskTable selectedItem ifNotNil: [:t| t finish]..
+
+	taskTable selectedItem ifNotNil: [ :t | 
+		self runTaskBlock: [ currentExperience finishTask: t ] ].
 	self update
 ]
 
@@ -133,10 +138,20 @@ PhexTaskLauncherPresenter >> menu [
 			          yourself ]
 ]
 
+{ #category : #api }
+PhexTaskLauncherPresenter >> runTaskBlock: aBlock [
+
+	aBlock
+		on: PhexTaskError
+		do: [ :error | self warning: error errorMessage ]
+]
+
 { #category : #actions }
 PhexTaskLauncherPresenter >> startSelectedTask [
 
-	taskTable selectedItem ifNotNil: [:t| t start].
+	taskTable selectedItem ifNotNil: [ :t | 
+		self runTaskBlock: [ currentExperience startTask: t ] ].
+
 	self update
 ]
 
@@ -169,4 +184,21 @@ PhexTaskLauncherPresenter >> updateTaskDescription: item [
 { #category : #api }
 PhexTaskLauncherPresenter >> updateTitle [
 	self window title: self title
+]
+
+{ #category : #'ui requests' }
+PhexTaskLauncherPresenter >> warning: aString [
+
+	self newPopover
+		addStyle: 'error';
+		relativeTo: taskTable;
+		position: SpPopoverPosition top;
+		presenter: (SpPresenter new
+				 layout: (SpBoxLayout newVertical
+						  borderWidth: 2;
+						  spacing: 0;
+						  add: (self newLabel label: aString);
+						  yourself);
+				 yourself);
+		popup
 ]
