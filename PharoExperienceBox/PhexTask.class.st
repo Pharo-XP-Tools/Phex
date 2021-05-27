@@ -11,7 +11,8 @@ Class {
 		'started',
 		'finished',
 		'answer',
-		'requiresAnswer'
+		'requiresAnswer',
+		'requiredAnswer'
 	],
 	#classInstVars : [
 		'tasks'
@@ -101,6 +102,19 @@ PhexTask >> name [
 PhexTask >> name: anObject [
 
 	name := anObject
+]
+
+{ #category : #accessing }
+PhexTask >> requiredAnswer [
+	^requiredAnswer ifNil:[requiredAnswer := 
+'This task does not require you to provide an anwser.
+You can finish the task immediately']
+]
+
+{ #category : #accessing }
+PhexTask >> requiredAnswer: anObject [
+
+	requiredAnswer := anObject
 ]
 
 { #category : #accessing }
