@@ -60,7 +60,7 @@ PhexTaskLauncherPresenter >> finishTask [
 	taskTable selectedItem ifNotNil: [ :t | 
 		self runTaskBlock: [ currentExperience finishTask: t ].
 		self updateTaskDescription: t ].
-
+	Smalltalk image saveSession.
 	self update
 ]
 
@@ -160,7 +160,7 @@ PhexTaskLauncherPresenter >> startSelectedTask [
 	taskTable selectedItem ifNotNil: [ :t | 
 		self runTaskBlock: [ currentExperience startTask: t ].
 		self updateTaskDescription: t ].
-
+	Smalltalk image saveSession.
 	self update
 ]
 
