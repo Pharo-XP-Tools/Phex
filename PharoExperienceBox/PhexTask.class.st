@@ -9,13 +9,27 @@ Class {
 		'description',
 		'contents',
 		'started',
-		'finished'
+		'finished',
+		'answer',
+		'requiresAnswer'
 	],
 	#classInstVars : [
 		'tasks'
 	],
 	#category : #'PharoExperienceBox-model'
 }
+
+{ #category : #accessing }
+PhexTask >> answer [
+
+	^ answer
+]
+
+{ #category : #accessing }
+PhexTask >> answer: anObject [
+
+	answer := anObject
+]
 
 { #category : #accessing }
 PhexTask >> contents [
@@ -87,6 +101,18 @@ PhexTask >> name [
 PhexTask >> name: anObject [
 
 	name := anObject
+]
+
+{ #category : #accessing }
+PhexTask >> requiresAnswer [
+
+	^ requiresAnswer ifNil:[requiresAnswer := false]
+]
+
+{ #category : #accessing }
+PhexTask >> requiresAnswer: anObject [
+
+	requiresAnswer := anObject
 ]
 
 { #category : #'start-stop' }
