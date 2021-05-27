@@ -58,8 +58,16 @@ PhexTaskLauncherPresenter >> currentExperience: anObject [
 PhexTaskLauncherPresenter >> finishTask [
 
 	taskTable selectedItem ifNotNil: [ :t | 
-		self runTaskBlock: [ currentExperience finishTask: t ] ].
+		self runTaskBlock: [ currentExperience finishTask: t ].
+		self updateTaskDescription: t ].
+
 	self update
+]
+
+{ #category : #updating }
+PhexTaskLauncherPresenter >> finishedTaskDescriptionFor: aTask [
+
+	^ 'You already finished this task'
 ]
 
 { #category : #initialization }
@@ -150,9 +158,16 @@ PhexTaskLauncherPresenter >> runTaskBlock: aBlock [
 PhexTaskLauncherPresenter >> startSelectedTask [
 
 	taskTable selectedItem ifNotNil: [ :t | 
-		self runTaskBlock: [ currentExperience startTask: t ] ].
+		self runTaskBlock: [ currentExperience startTask: t ].
+		self updateTaskDescription: t ].
 
 	self update
+]
+
+{ #category : #updating }
+PhexTaskLauncherPresenter >> taskDescriptionFor: aTask [
+	aTask isStarted ifTrue: [ ^ aTask contents ].
+	^ aTask description
 ]
 
 { #category : #accessing }
@@ -173,9 +188,18 @@ PhexTaskLauncherPresenter >> updateCurrentExperience [
 
 { #category : #updating }
 PhexTaskLauncherPresenter >> updateTaskDescription: item [
-	item ifNil:[^self].
+
+	item ifNil: [ ^ self ].
+
+	self updateTextInputWith: (item isFinished
+			 ifTrue: [ self finishedTaskDescriptionFor: item ]
+			 ifFalse: [ self taskDescriptionFor: item ])
+]
+
+{ #category : #updating }
+PhexTaskLauncherPresenter >> updateTextInputWith: aString [
 	
-	taskDescription textInputText: item contents.
+	taskDescription textInputText: aString.
 	taskDescription renderAction
 	
 
