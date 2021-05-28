@@ -28,12 +28,12 @@ PhexTaskAnwserPresenter class >> defaultSpec [
 		  expand: false
 		  fill: false
 		  padding: 5;
-		add: #questionLabel
+		  add: #questionLabel
 		  expand: false
 		  fill: false
 		  padding: 5;
 		  add: #taskDescription;
-		add: #answerLabel
+		  add: #answerLabel
 		  expand: false
 		  fill: false
 		  padding: 5;
@@ -41,14 +41,6 @@ PhexTaskAnwserPresenter class >> defaultSpec [
 		  expand: true
 		  fill: true
 		  padding: 5;
-		  add: (SpGridLayout new
-				   beColumnNotHomogeneous;
-				   borderWidth: 0;
-				   " row: 1 withConstraints: [ :c | c beExpand ];"add:
-					   #buttonCancel
-				   at: 1 @ 1;
-				   add: #buttonAccept at: 2 @ 1)
-		  withConstraints: [ :c | c height: 40 ];
 		  yourself
 ]
 

@@ -57,10 +57,16 @@ PhexTaskLauncherPresenter >> currentExperience: anObject [
 { #category : #actions }
 PhexTaskLauncherPresenter >> finishTask [
 
-	taskTable selectedItem ifNotNil: [ :t | 
-		self runTaskBlock: [ currentExperience finishTask: t ].
-		self updateTaskDescription: t ].
-	Smalltalk image saveSession.
+	| task modal |
+	task := taskTable selectedItem.
+	task ifNil: [ ^ self ].
+
+	modal := (PhexTaskAnwserPresenter on: task) openModalWithSpec.
+	modal isOk ifFalse: [ ^ self ].
+	
+	self runTaskBlock: [ currentExperience finishTask: task ].
+	self updateTaskDescription: task.
+	
 	self update
 ]
 
@@ -151,16 +157,22 @@ PhexTaskLauncherPresenter >> runTaskBlock: aBlock [
 
 	aBlock
 		on: PhexTaskError
-		do: [ :error | self warning: error errorMessage ]
+		do: [ :error | 
+			self warning: error errorMessage.
+			^ self ].
+	Smalltalk image saveSession
 ]
 
 { #category : #actions }
 PhexTaskLauncherPresenter >> startSelectedTask [
 
-	taskTable selectedItem ifNotNil: [ :t | 
-		self runTaskBlock: [ currentExperience startTask: t ].
-		self updateTaskDescription: t ].
-	Smalltalk image saveSession.
+	| task |
+	task := taskTable selectedItem.
+	task ifNil: [ ^ self ].
+
+	self runTaskBlock: [ currentExperience startTask: task ].
+	self updateTaskDescription: task.
+
 	self update
 ]
 
