@@ -76,6 +76,12 @@ PhexTaskLauncherPresenter >> finishedTaskDescriptionFor: aTask [
 	^ 'You already finished this task'
 ]
 
+{ #category : #'ui requests' }
+PhexTaskLauncherPresenter >> info: aString [
+
+	self popover: aString style: 'print'
+]
+
 { #category : #initialization }
 PhexTaskLauncherPresenter >> initializePresenters [
 	self initializeTaskTable.
@@ -152,6 +158,23 @@ PhexTaskLauncherPresenter >> menu [
 			          yourself ]
 ]
 
+{ #category : #'ui requests' }
+PhexTaskLauncherPresenter >> popover: aString style: aStyle [
+
+	self newPopover
+		addStyle: aStyle;
+		relativeTo: taskTable;
+		position: SpPopoverPosition top;
+		presenter: (SpPresenter new
+				 layout: (SpBoxLayout newVertical
+						  borderWidth: 2;
+						  spacing: 0;
+						  add: (self newLabel label: aString);
+						  yourself);
+				 yourself);
+		popup
+]
+
 { #category : #api }
 PhexTaskLauncherPresenter >> runTaskBlock: aBlock [
 
@@ -160,6 +183,7 @@ PhexTaskLauncherPresenter >> runTaskBlock: aBlock [
 		do: [ :error | 
 			self warning: error errorMessage.
 			^ self ].
+	self info: 'Success. Image saved.'.
 	Smalltalk image saveSession
 ]
 
@@ -225,16 +249,5 @@ PhexTaskLauncherPresenter >> updateTitle [
 { #category : #'ui requests' }
 PhexTaskLauncherPresenter >> warning: aString [
 
-	self newPopover
-		addStyle: 'error';
-		relativeTo: taskTable;
-		position: SpPopoverPosition top;
-		presenter: (SpPresenter new
-				 layout: (SpBoxLayout newVertical
-						  borderWidth: 2;
-						  spacing: 0;
-						  add: (self newLabel label: aString);
-						  yourself);
-				 yourself);
-		popup
+	self popover: aString style: 'error'
 ]
