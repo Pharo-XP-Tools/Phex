@@ -12,7 +12,9 @@ Class {
 		'finished',
 		'answer',
 		'requiresAnswer',
-		'requiredAnswer'
+		'requiredAnswer',
+		'endTime',
+		'startTime'
 	],
 	#classInstVars : [
 		'tasks'
@@ -56,8 +58,15 @@ PhexTask >> description: anObject [
 	description := anObject
 ]
 
+{ #category : #accessing }
+PhexTask >> endTime [
+
+	^ endTime
+]
+
 { #category : #'start-stop' }
 PhexTask >> finish [
+	endTime := DateAndTime now.
 	started := false.
 	finished := true
 ]
@@ -131,7 +140,14 @@ PhexTask >> requiresAnswer: anObject [
 
 { #category : #'start-stop' }
 PhexTask >> start [
+	startTime := DateAndTime now.
 	started := true
+]
+
+{ #category : #accessing }
+PhexTask >> startTime [
+
+	^ startTime
 ]
 
 { #category : #accessing }
