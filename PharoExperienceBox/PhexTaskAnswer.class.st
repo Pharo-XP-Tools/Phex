@@ -5,7 +5,6 @@ Class {
 	#name : #PhexTaskAnswer,
 	#superclass : #Object,
 	#instVars : [
-		'dateTime',
 		'contents'
 	],
 	#category : #'PharoExperienceBox-model'
@@ -21,16 +20,4 @@ PhexTaskAnswer >> contents [
 PhexTaskAnswer >> contents: anObject [
 
 	contents := anObject
-]
-
-{ #category : #accessing }
-PhexTaskAnswer >> dateTime [
-
-	^ dateTime
-]
-
-{ #category : #accessing }
-PhexTaskAnswer >> dateTime: anObject [
-
-	dateTime := anObject
 ]

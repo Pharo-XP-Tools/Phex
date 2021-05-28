@@ -44,6 +44,12 @@ PhexTaskAnwserPresenter class >> defaultSpec [
 		  yourself
 ]
 
+{ #category : #api }
+PhexTaskAnwserPresenter >> buildTaskAnswer [
+
+	^ PhexTaskAnswer new contents: text text
+]
+
 { #category : #initialization }
 PhexTaskAnwserPresenter >> initializePresenters [
 

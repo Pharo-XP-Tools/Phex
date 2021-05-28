@@ -57,12 +57,15 @@ PhexTaskLauncherPresenter >> currentExperience: anObject [
 { #category : #actions }
 PhexTaskLauncherPresenter >> finishTask [
 
-	| task modal |
+	| task modal taskAnswer |
 	task := taskTable selectedItem.
 	task ifNil: [ ^ self ].
 
 	modal := (PhexTaskAnwserPresenter on: task) openModalWithSpec.
 	modal isOk ifFalse: [ ^ self ].
+	
+	taskAnswer := modal presenter buildTaskAnswer.
+	task answer: taskAnswer.
 	
 	self runTaskBlock: [ currentExperience finishTask: task ].
 	self updateTaskDescription: task.
