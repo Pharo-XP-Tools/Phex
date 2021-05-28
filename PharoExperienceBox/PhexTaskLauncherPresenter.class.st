@@ -61,15 +61,16 @@ PhexTaskLauncherPresenter >> finishTask [
 	task := taskTable selectedItem.
 	task ifNil: [ ^ self ].
 
-	modal := (PhexTaskAnwserPresenter on: task) openModalWithSpec.
-	modal isOk ifFalse: [ ^ self ].
-	
-	taskAnswer := modal presenter buildTaskAnswer.
-	task answer: taskAnswer.
-	
-	self runTaskBlock: [ currentExperience finishTask: task ].
+	self runTaskBlock: [ 
+		(currentExperience canFinishTask: task) ifFalse:[^self].
+		modal := (PhexTaskAnwserPresenter on: task) openModalWithSpec.
+		modal isOk ifFalse: [ ^ self ].
+		taskAnswer := modal presenter buildTaskAnswer.
+		task answer: taskAnswer.
+
+		currentExperience finishTask: task ].
 	self updateTaskDescription: task.
-	
+
 	self update
 ]
 

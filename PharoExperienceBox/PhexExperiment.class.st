@@ -38,6 +38,12 @@ PhexExperiment >> addRunningTask: aTask [
 ]
 
 { #category : #testing }
+PhexExperiment >> canFinishTask: aTask [
+
+	^ aTask isStarted
+]
+
+{ #category : #testing }
 PhexExperiment >> canStartNewTask [
 
 	^ (self sequentialTasks and: [ self hasRunningTasks ]) not
