@@ -58,21 +58,21 @@ PhexTaskAnwserPresenter >> initializePresenters [
 	titleLabel := self newLabel.
 	titleLabel label:
 		'Warning: finishing a task is a definitive action and it cannot be undone.'.
+	titleLabel addStyle: 'headerError'.
 	questionLabel := self newLabel.
+	questionLabel addStyle: 'dim'.
 	questionLabel label:
 		'To complete this task, you must provide the following information:'.
-	titleLabel addStyle: 'error'.
 	taskDescription := self newText.
 	answerLabel := self newLabel.
-	answerLabel label:
-		'Write your answer below'.
+	answerLabel addStyle: 'dim'.
+	answerLabel label: 'Write your answer below'.
 	text := self newText.
 
 	task ifNotNil: [ 
 		taskDescription text: task requiredAnswer.
 		taskDescription beNotEditable.
-		task requiresAnswer
-			ifFalse: [ text beNotEditable ] ].
+		task requiresAnswer ifFalse: [ text beNotEditable ] ].
 	buttonCancel := self newButton
 		                label: 'Cancel';
 		                icon:
@@ -89,4 +89,16 @@ PhexTaskAnwserPresenter >> initializePresenters [
 { #category : #initialization }
 PhexTaskAnwserPresenter >> setModelBeforeInitialization: aPhexTask [
 	task := aPhexTask
+]
+
+{ #category : #accessing }
+PhexTaskAnwserPresenter >> title [
+
+	| str |
+	str := WriteStream on: String new.
+	str << 'Finish task'.
+	task ifNil: [ ^ str contents ].
+	str space.
+	str << task name.
+	^ str contents
 ]
