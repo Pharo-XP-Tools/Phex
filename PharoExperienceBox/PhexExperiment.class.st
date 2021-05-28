@@ -61,6 +61,11 @@ PhexExperiment >> description: anObject [
 	description := anObject
 ]
 
+{ #category : #accessing }
+PhexExperiment >> experienceId [
+	^self subclassResponsibility 
+]
+
 { #category : #actions }
 PhexExperiment >> finishTask: aTask [
 
@@ -87,6 +92,16 @@ PhexExperiment >> finishTaskAction: anObject [
 { #category : #testing }
 PhexExperiment >> hasRunningTasks [
 	^self runningTasks notEmpty
+]
+
+{ #category : #'serialize/materialize' }
+PhexExperiment >> materializeTasks [
+
+	| dir |
+	dir := self experienceId asFileReference.
+	dir ensureCreateDirectory.
+	tasks := dir allChildren collect: [ :fr | 
+		         STON fromString: fr contents ]
 ]
 
 { #category : #accessing }
@@ -121,6 +136,17 @@ PhexExperiment >> runningTasks [
 { #category : #testing }
 PhexExperiment >> sequentialTasks [
 	^false
+]
+
+{ #category : #'serialize/materialize' }
+PhexExperiment >> serializeTasks [
+
+	| dir |
+	dir := self experienceId asFileReference.
+	dir ensureCreateDirectory.
+	tasks do: [ :t | 
+		(dir / t uuid asString) asFileReference writeStreamDo: [ :str | 
+			str nextPutAll: (STON toString: t) ] ]
 ]
 
 { #category : #actions }

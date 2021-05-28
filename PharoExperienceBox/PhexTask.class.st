@@ -14,7 +14,8 @@ Class {
 		'requiresAnswer',
 		'requiredAnswer',
 		'endTime',
-		'startTime'
+		'startTime',
+		'uuid'
 	],
 	#classInstVars : [
 		'tasks'
@@ -62,6 +63,12 @@ PhexTask >> description: anObject [
 PhexTask >> endTime [
 
 	^ endTime
+]
+
+{ #category : #accessing }
+PhexTask >> endTime: anObject [
+
+	endTime := anObject
 ]
 
 { #category : #'start-stop' }
@@ -151,7 +158,25 @@ PhexTask >> startTime [
 ]
 
 { #category : #accessing }
+PhexTask >> startTime: anObject [
+
+	startTime := anObject
+]
+
+{ #category : #accessing }
 PhexTask >> started: anObject [
 
 	started := anObject
+]
+
+{ #category : #accessing }
+PhexTask >> uuid [
+
+	^ uuid ifNil:[uuid := UUID new]
+]
+
+{ #category : #accessing }
+PhexTask >> uuid: anObject [
+
+	uuid := anObject
 ]
