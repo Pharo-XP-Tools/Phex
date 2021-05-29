@@ -104,7 +104,10 @@ PhexExperiment >> materializeTasks [
 	dir ensureCreateDirectory.
 	tasks := (dir allChildren select: [ :fr | 
 		          fr extension = self taskExtension ]) collect: [ :fr | 
-		         STON fromString: fr readStream upToEnd ]
+		         STON fromString: fr readStream upToEnd ].
+	runningTasks := nil.
+	(tasks select: [ :t | t isStarted ]) do: [ :t | 
+		self addRunningTask: t ]
 ]
 
 { #category : #accessing }
