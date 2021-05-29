@@ -61,6 +61,13 @@ PhexExperiment >> description: anObject [
 	description := anObject
 ]
 
+{ #category : #actions }
+PhexExperiment >> ensureTaskCanBeFinished: aTask [
+
+	aTask isFinished ifTrue: [ PhexTaskIsAlreadyFinished new signal ].
+	aTask isStarted ifFalse: [ PhexTaskIsNotStarted new signal ]
+]
+
 { #category : #accessing }
 PhexExperiment >> experienceId [
 	^self subclassResponsibility 
@@ -68,9 +75,6 @@ PhexExperiment >> experienceId [
 
 { #category : #actions }
 PhexExperiment >> finishTask: aTask [
-
-	aTask isFinished ifTrue: [ PhexTaskIsAlreadyFinished new signal ].
-	aTask isStarted ifFalse: [ PhexTaskIsNotStarted new signal ].
 
 	aTask finish.
 	self removeRunningTask: aTask.

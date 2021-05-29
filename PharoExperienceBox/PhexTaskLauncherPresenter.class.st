@@ -62,7 +62,7 @@ PhexTaskLauncherPresenter >> finishTask [
 	task ifNil: [ ^ self ].
 
 	self runTaskBlock: [ 
-		(currentExperience canFinishTask: task) ifFalse:[^self].
+		currentExperience ensureTaskCanBeFinished: task.
 		modal := (PhexTaskAnwserPresenter on: task) openModalWithSpec.
 		modal isOk ifFalse: [ ^ self ].
 		taskAnswer := modal presenter buildTaskAnswer.
