@@ -74,7 +74,9 @@ PhexExperiment >> finishTask: aTask [
 
 	aTask finish.
 	self removeRunningTask: aTask.
-	self finishTaskAction cull: self cull: aTask
+	self finishTaskAction cull: self cull: aTask.
+	
+	self serializeTasks
 ]
 
 { #category : #accessing }
@@ -100,8 +102,9 @@ PhexExperiment >> materializeTasks [
 	| dir |
 	dir := self experienceId asFileReference.
 	dir ensureCreateDirectory.
-	tasks := dir allChildren collect: [ :fr | 
-		         STON fromString: fr contents ]
+	tasks := (dir allChildren select: [ :fr | 
+		          fr extension = self taskExtension ]) collect: [ :fr | 
+		         STON fromString: fr readStream upToEnd ]
 ]
 
 { #category : #accessing }
@@ -145,8 +148,8 @@ PhexExperiment >> serializeTasks [
 	dir := self experienceId asFileReference.
 	dir ensureCreateDirectory.
 	tasks do: [ :t | 
-		(dir / t uuid asString) asFileReference writeStreamDo: [ :str | 
-			str nextPutAll: (STON toString: t) ] ]
+		(dir / (self taskFilenameFor: t)) asFileReference 
+			writeStreamDo: [ :ws | ws nextPutAll: (STON toString: t) ] ]
 ]
 
 { #category : #actions }
@@ -158,7 +161,8 @@ PhexExperiment >> startTask: aTask [
 	
 	aTask start.
 	self addRunningTask: aTask.
-	self startingTaskAction cull: self cull: aTask
+	self startingTaskAction cull: self cull: aTask.
+	self serializeTasks
 ]
 
 { #category : #accessing }
@@ -171,6 +175,21 @@ PhexExperiment >> startingTaskAction [
 PhexExperiment >> startingTaskAction: anObject [
 
 	startingTaskAction := anObject
+]
+
+{ #category : #accessing }
+PhexExperiment >> taskExtension [
+
+	^ 'ptx'
+]
+
+{ #category : #'serialize/materialize' }
+PhexExperiment >> taskFilenameFor: t [
+
+	^ (String new writeStreamDo: [ :ws | 
+		   ws << t uuid asString.
+		   ws << '.'.
+		   ws << self taskExtension ]) contents
 ]
 
 { #category : #accessing }
