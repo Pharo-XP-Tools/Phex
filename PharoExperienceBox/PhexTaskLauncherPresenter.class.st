@@ -214,8 +214,9 @@ PhexTaskLauncherPresenter >> startSelectedTask [
 
 { #category : #updating }
 PhexTaskLauncherPresenter >> taskDescriptionFor: aTask [
+
 	aTask isStarted ifTrue: [ ^ aTask contents ].
-	^ aTask description
+	^ 'This task is not started yet. Click **Start**, or select another task and click **Start**.'
 ]
 
 { #category : #accessing }
