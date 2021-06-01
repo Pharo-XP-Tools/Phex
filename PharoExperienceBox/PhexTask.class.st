@@ -15,7 +15,8 @@ Class {
 		'requiredAnswer',
 		'endTime',
 		'startTime',
-		'uuid'
+		'uuid',
+		'passed'
 	],
 	#classInstVars : [
 		'tasks'
@@ -86,9 +87,10 @@ PhexTask >> finished: anObject [
 
 { #category : #accessing }
 PhexTask >> icon [
+	self passed ifTrue:[^self iconNamed: #glamorousClose].
 	self isFinished ifTrue:[^self iconNamed: #smallOk].
 	self isStarted ifTrue:[^self iconNamed: #warning].
-	^self iconNamed: #smallHelp
+	^self iconNamed: #scriptManager
 ]
 
 { #category : #initialization }
@@ -118,6 +120,24 @@ PhexTask >> name [
 PhexTask >> name: anObject [
 
 	name := anObject
+]
+
+{ #category : #accessing }
+PhexTask >> pass [
+	self finish.
+	passed := true
+]
+
+{ #category : #accessing }
+PhexTask >> passed [
+
+	^ passed ifNil: [ passed := false ]
+]
+
+{ #category : #accessing }
+PhexTask >> passed: anObject [
+
+	passed := anObject
 ]
 
 { #category : #accessing }

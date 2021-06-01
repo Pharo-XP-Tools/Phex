@@ -63,7 +63,9 @@ PhexTaskLauncherPresenter >> finishTask [
 
 	self runTaskBlock: [ 
 		currentExperience ensureTaskCanBeFinished: task.
-		modal := (PhexTaskAnwserPresenter on: task) openModalWithSpec.
+		modal := (PhexTaskAnwserPresenter on: task)
+			         owner: self;
+			         openModalWithSpec.
 		modal isOk ifFalse: [ ^ self ].
 		taskAnswer := modal presenter buildTaskAnswer.
 		task answer: taskAnswer.
@@ -76,14 +78,19 @@ PhexTaskLauncherPresenter >> finishTask [
 
 { #category : #updating }
 PhexTaskLauncherPresenter >> finishedTaskDescriptionFor: aTask [
-	|str|
+
+	| str title |
 	str := WriteStream on: String new.
-	str << '#You already finished this task'.
+	title := aTask passed
+		         ifTrue: [ 
+		         '#You passed this task. This action is irreversible.' ]
+		         ifFalse: [ '#You already finished this task.' ].
+	str << title.
 	str cr.
 	str << 'Your answer was:'.
 	str cr.
 	str << aTask answer contents.
-	^str contents
+	^ str contents
 ]
 
 { #category : #'ui requests' }

@@ -51,6 +51,18 @@ PhexTaskAnwserPresenter >> buildTaskAnswer [
 ]
 
 { #category : #initialization }
+PhexTaskAnwserPresenter >> initializeDialogWindow: aDialogWindowPresenter [
+
+	super initializeDialogWindow: aDialogWindowPresenter.
+	aDialogWindowPresenter
+		addButton: 'Pass (cannot be undone)'
+		do: [ :presenter | 
+			task pass.
+			presenter triggerOkAction.
+			presenter close ]
+]
+
+{ #category : #initialization }
 PhexTaskAnwserPresenter >> initializePresenters [
 
 	titleLabel := self newLabel.
