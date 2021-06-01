@@ -21,6 +21,11 @@ PhexExperiment class >> currentExperiment [
 	^ self subclassResponsibility
 ]
 
+{ #category : #testing }
+PhexExperiment class >> isRunnableExperience [
+	^true
+]
+
 { #category : #initialization }
 PhexExperiment class >> resetAllExperiments [
 	<script>

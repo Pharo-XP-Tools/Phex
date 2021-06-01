@@ -120,10 +120,12 @@ PhexTaskLauncherPresenter >> initializeTaskTable [
 { #category : #actions }
 PhexTaskLauncherPresenter >> loadExperience [
 
-	| xpClass |
+	| xpClass xpClassChoices |
+	xpClassChoices := PhexExperiment allSubclasses select: [ :c | 
+		                  c isRunnableExperience ].
 	xpClass := UIManager default
-		           chooseFrom: PhexExperiment allSubclasses
-		           values: PhexExperiment allSubclasses
+		           chooseFrom: xpClassChoices
+		           values: xpClassChoices
 		           lines: #( 10 )
 		           title: 'Choose an experiment to run...'.
 
