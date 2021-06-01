@@ -7,8 +7,8 @@ RubPlainTextMode class >> phexMenuOn: aBuilder [
 		pragmaKeyword: 'RubPlainTextMenu'
 		model: RubEditingArea new) menu popUpInWorld" 
 
-	"<contextMenu>
-	<RubPlainTextMenu>"
+	<contextMenu>
+	<RubPlainTextMenu>
 	
 	(aBuilder item: #'Browse selection' translated)
 		keyText: 'b';
