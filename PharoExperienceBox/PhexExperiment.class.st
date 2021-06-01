@@ -116,11 +116,12 @@ PhexExperiment >> materializeTasks [
 	| dir |
 	dir := self experienceId asFileReference.
 	dir ensureCreateDirectory.
-	tasks := (dir allChildren select: [ :fr | 
-		          fr extension = self taskExtension ]) collect: [ :fr | 
-		         STON fromString: fr readStream upToEnd ].
+	tasks := nil.
+	self tasks addAll:
+		((dir allChildren select: [ :fr | fr extension = self taskExtension ]) 
+			 collect: [ :fr | STON fromString: fr readStream upToEnd ]).
 	runningTasks := nil.
-	(tasks select: [ :t | t isStarted ]) do: [ :t | 
+	(self tasks select: [ :t | t isStarted ]) do: [ :t | 
 		self addRunningTask: t ]
 ]
 
@@ -164,9 +165,9 @@ PhexExperiment >> serializeTasks [
 	| dir |
 	dir := self experienceId asFileReference.
 	dir ensureCreateDirectory.
-	tasks do: [ :t | 
-		(dir / (self taskFilenameFor: t)) asFileReference 
-			writeStreamDo: [ :ws | ws nextPutAll: (STON toString: t) ] ]
+	self tasks do: [ :t | 
+		(dir / (self taskFilenameFor: t)) asFileReference writeStreamDo: [ 
+			:ws | ws nextPutAll: (STON toString: t) ] ]
 ]
 
 { #category : #actions }
@@ -212,7 +213,9 @@ PhexExperiment >> taskFilenameFor: t [
 { #category : #accessing }
 PhexExperiment >> tasks [
 
-	^ tasks
+	^ tasks ifNil: [ 
+		  tasks := SortedCollection sortBlock: [ :t1 :t2 | 
+			           t1 name <= t2 name ] ]
 ]
 
 { #category : #accessing }
