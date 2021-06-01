@@ -86,9 +86,9 @@ PhexTask >> finished: anObject [
 
 { #category : #accessing }
 PhexTask >> icon [
-	self isFinished ifTrue:[^self iconNamed: #testGreen].
-	self isStarted ifTrue:[^self iconNamed: #testYellow].
-	^self iconNamed: #testNotRun
+	self isFinished ifTrue:[^self iconNamed: #smallOk].
+	self isStarted ifTrue:[^self iconNamed: #warning].
+	^self iconNamed: #smallHelp
 ]
 
 { #category : #initialization }
