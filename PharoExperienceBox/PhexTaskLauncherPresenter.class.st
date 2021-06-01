@@ -76,8 +76,14 @@ PhexTaskLauncherPresenter >> finishTask [
 
 { #category : #updating }
 PhexTaskLauncherPresenter >> finishedTaskDescriptionFor: aTask [
-
-	^ 'You already finished this task'
+	|str|
+	str := WriteStream on: String new.
+	str << '#You already finished this task'.
+	str cr.
+	str << 'Your answer was:'.
+	str cr.
+	str << aTask answer contents.
+	^str contents
 ]
 
 { #category : #'ui requests' }
