@@ -45,7 +45,7 @@ PhexTaskLauncherPresenter class >> open [
 
 { #category : #accessing }
 PhexTaskLauncherPresenter >> currentExperience [
-	 ^currentExperience ifNil:[currentExperience := 'Undefined experience']
+	 ^currentExperience ifNil:[currentExperience := PhexExperiment new]
 ]
 
 { #category : #accessing }
@@ -178,6 +178,11 @@ PhexTaskLauncherPresenter >> popover: aString style: aStyle [
 						  yourself);
 				 yourself);
 		popup
+]
+
+{ #category : #private }
+PhexTaskLauncherPresenter >> requestWindowClose [
+	 ^self currentExperience closeable
 ]
 
 { #category : #api }

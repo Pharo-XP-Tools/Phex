@@ -49,6 +49,11 @@ PhexExperiment >> canStartNewTask [
 	^ (self sequentialTasks and: [ self hasRunningTasks ]) not
 ]
 
+{ #category : #api }
+PhexExperiment >> closeable [
+	^true
+]
+
 { #category : #accessing }
 PhexExperiment >> description [
 
