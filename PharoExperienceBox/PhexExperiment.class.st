@@ -86,10 +86,11 @@ PhexExperiment >> experienceId [
 { #category : #actions }
 PhexExperiment >> finishTask: aTask [
 
+	aTask isFinished ifTrue: [ PhexTaskIsAlreadyFinished new signal ].
 	aTask finish.
 	self removeRunningTask: aTask.
 	self finishTaskAction cull: self cull: aTask.
-	
+
 	self serializeTasks
 ]
 
