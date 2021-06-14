@@ -80,6 +80,7 @@ PhexTaskLauncherPresenter >> finishTask [
 PhexTaskLauncherPresenter >> finishedTaskDescriptionFor: aTask [
 
 	| str title |
+	aTask alwaysDisplayDescription ifTrue:[^ aTask contents ].
 	str := WriteStream on: String new.
 	title := aTask passed
 		         ifTrue: [ 

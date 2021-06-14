@@ -16,13 +16,25 @@ Class {
 		'endTime',
 		'startTime',
 		'uuid',
-		'passed'
+		'passed',
+		'alwaysDisplayDescription'
 	],
 	#classInstVars : [
 		'tasks'
 	],
 	#category : #'PharoExperienceBox-model'
 }
+
+{ #category : #accessing }
+PhexTask >> alwaysDisplayDescription [
+	^alwaysDisplayDescription ifNil:[alwaysDisplayDescription := false]
+]
+
+{ #category : #accessing }
+PhexTask >> alwaysDisplayDescription: anObject [
+
+	alwaysDisplayDescription := anObject
+]
 
 { #category : #accessing }
 PhexTask >> answer [
