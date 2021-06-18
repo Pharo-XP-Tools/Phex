@@ -136,7 +136,7 @@ PhexTask >> name: anObject [
 
 { #category : #accessing }
 PhexTask >> pass [
-	self finish.
+
 	passed := true
 ]
 

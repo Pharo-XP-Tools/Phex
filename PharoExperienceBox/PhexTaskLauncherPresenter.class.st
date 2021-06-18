@@ -66,6 +66,7 @@ PhexTaskLauncherPresenter >> finishTask [
 		modal := (PhexTaskAnwserPresenter on: task)
 			         owner: self;
 			         openModalWithSpec.
+
 		modal isOk ifFalse: [ ^ self ].
 		taskAnswer := modal presenter buildTaskAnswer.
 		task answer: taskAnswer.

@@ -173,7 +173,6 @@ PhexExperiment >> serializeTasks [
 
 { #category : #actions }
 PhexExperiment >> startTask: aTask [
-
 	aTask isFinished ifTrue: [ PhexTaskIsAlreadyFinished new signal ].	
 	(self runningTasks includes: aTask) ifTrue: [ 	PhexTaskIsAlreadyStarted new signal ].
 	self canStartNewTask ifFalse: [ PhexAnotherTaskIsStarted new signal ].
