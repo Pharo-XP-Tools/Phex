@@ -105,13 +105,13 @@ PhexTaskLauncherPresenter >> info: aString [
 PhexTaskLauncherPresenter >> initializePresenters [
 	self initializeTaskTable.
 	self initializeTaskDescription.
-	self menu applyTo: self.
+	self menu
 ]
 
 { #category : #initialization }
 PhexTaskLauncherPresenter >> initializeTaskDescription [
-	taskDescription := MDMicroEdPresenter on: self.
-	taskDescription layout: MDMicroEdPresenter pharoExperienceSpec
+	taskDescription := MDEditorPresenter on: self.
+	taskDescription layout: MDEditorPresenter pharoExperienceSpec
 ]
 
 { #category : #initialization }
