@@ -264,7 +264,7 @@ PhexTaskLauncherPresenter >> updateTaskDescription: item [
 PhexTaskLauncherPresenter >> updateTextInputWith: aString [
 	
 	taskDescription textInputText: aString.
-	taskDescription renderAction
+	taskDescription renderDocument
 	
 
 ]
