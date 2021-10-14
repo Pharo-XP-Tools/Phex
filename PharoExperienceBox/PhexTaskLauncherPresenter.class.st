@@ -65,7 +65,7 @@ PhexTaskLauncherPresenter >> finishTask [
 		currentExperience ensureTaskCanBeFinished: task.
 		modal := (PhexTaskAnwserPresenter on: task)
 			         owner: self;
-			         openModalWithSpec.
+			         openBlockedDialogWithSpec.
 
 		modal isOk ifFalse: [ ^ self ].
 		taskAnswer := modal presenter buildTaskAnswer.
