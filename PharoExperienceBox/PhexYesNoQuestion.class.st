@@ -8,3 +8,8 @@ Class {
 PhexYesNoQuestion >> buildOn: aSpecPresenter [
 	aSpecPresenter buildYesNoSurveyQuestion: self
 ]
+
+{ #category : #evaluating }
+PhexYesNoQuestion >> evaluateResultFrom: aPhexSurveyQuestionPresenter [ 
+	aPhexSurveyQuestionPresenter evaluateYesNoAnswerFor: self
+]

@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'title',
 		'answer',
-		'optionnal'
+		'optionnal',
+		'id'
 	],
 	#category : #'PharoExperienceBox-model'
 }
@@ -32,6 +33,18 @@ PhexAbstractQuestion >> generateRecord [
 ]
 
 { #category : #accessing }
+PhexAbstractQuestion >> id [
+
+	^ id ifNil:[UUID new asString]
+]
+
+{ #category : #accessing }
+PhexAbstractQuestion >> id: anObject [
+
+	id := anObject
+]
+
+{ #category : #accessing }
 PhexAbstractQuestion >> optionnal [
 
 	^ optionnal
@@ -41,6 +54,11 @@ PhexAbstractQuestion >> optionnal [
 PhexAbstractQuestion >> optionnal: anObject [
 
 	optionnal := anObject
+]
+
+{ #category : #printing }
+PhexAbstractQuestion >> printAnswer: aPhexAnswer on: aStream [
+	aStream << aPhexAnswer answer
 ]
 
 { #category : #accessing }

@@ -2,7 +2,12 @@ Class {
 	#name : #PhexSurveyQuestionPresenter,
 	#superclass : #SpApplicationWithToolbar,
 	#instVars : [
-		'question'
+		'question',
+		'checkboxes',
+		'radios',
+		'freeText',
+		'result',
+		'answer'
 	],
 	#category : #'PharoExperienceBox-presenters'
 }
@@ -18,7 +23,7 @@ PhexSurveyQuestionPresenter >> buildFreeTextSurveyQuestion: aPhexFreeTextQuestio
 	|newLayout|
 	newLayout := self class defaultLayout.
 	newLayout add: aPhexFreeTextQuestion title expand: false fill: false.
-	newLayout add: self newText.
+	newLayout add: freeText.
 	self layout: newLayout 
 	
 ]
@@ -26,15 +31,15 @@ PhexSurveyQuestionPresenter >> buildFreeTextSurveyQuestion: aPhexFreeTextQuestio
 { #category : #building }
 PhexSurveyQuestionPresenter >> buildMultipleChoiceSurveyQuestion: aPhexMultipleChoicesQuestion [
 
-	|newLayout boxLayout buttons|
+	|newLayout boxLayout|
 	newLayout := self class defaultLayout.
 	newLayout add: aPhexMultipleChoicesQuestion title expand: false fill: false.	
 	
-	buttons := aPhexMultipleChoicesQuestion choices 
+	checkboxes := aPhexMultipleChoicesQuestion choices 
 		collect:[:c| (self newCheckBox label: c; yourself)].
 	
 	newLayout add: (boxLayout := SpBoxLayout newTopToBottom) expand: false fill: false.
-	buttons do:[:b| boxLayout add: b].
+	checkboxes do:[:b| boxLayout add: b].
 	self layout: newLayout 
 	
 ]
@@ -42,15 +47,15 @@ PhexSurveyQuestionPresenter >> buildMultipleChoiceSurveyQuestion: aPhexMultipleC
 { #category : #building }
 PhexSurveyQuestionPresenter >> buildSingleChoiceSurveyQuestion: aPhexYesNoQuestion [
 
-	|newLayout boxLayout buttons|
+	|newLayout boxLayout|
 	newLayout := self class defaultLayout.
 	newLayout add: aPhexYesNoQuestion title expand: false fill: false.	
 	
-	buttons := aPhexYesNoQuestion choices collect:[:c| (self newRadioButton label: c; yourself)].
-	buttons first associatedRadioButtons: buttons allButFirst.
+	radios := aPhexYesNoQuestion choices collect:[:c| (self newRadioButton label: c; yourself)].
+	radios first associatedRadioButtons: radios allButFirst.
 	
 	newLayout add: (boxLayout := SpBoxLayout newTopToBottom) expand: false fill: false.
-	buttons do:[:b| boxLayout add: b].
+	radios do:[:b| boxLayout add: b].
 	self layout: newLayout 
 	
 ]
@@ -58,25 +63,75 @@ PhexSurveyQuestionPresenter >> buildSingleChoiceSurveyQuestion: aPhexYesNoQuesti
 { #category : #building }
 PhexSurveyQuestionPresenter >> buildYesNoSurveyQuestion: aPhexYesNoQuestion [
 
-	|newLayout paneLayout buttons|
+	|newLayout paneLayout|
 	newLayout := self class defaultLayout.
 	newLayout add: aPhexYesNoQuestion title expand: false fill: false.	
 	
-	buttons := OrderedCollection new.
-	buttons add: (self newRadioButton label: 'Yes'; yourself).
-	buttons add: (self newRadioButton label: 'No'; yourself).
-	buttons first associatedRadioButtons: buttons allButFirst.
+	radios := OrderedCollection new.
+	radios add: (self newRadioButton label: 'Yes'; yourself).
+	radios add: (self newRadioButton label: 'No'; yourself).
+	radios first associatedRadioButtons: radios allButFirst.
 	
 	newLayout add: (paneLayout := SpPanedLayout newLeftToRight) expand: false fill: false.
-	paneLayout add: buttons first.
-	paneLayout add: buttons second.
+	paneLayout add: radios first.
+	paneLayout add: radios second.
 	self layout: newLayout 
 	
 ]
 
+{ #category : #evaluating }
+PhexSurveyQuestionPresenter >> evaluateFreeTextAnswerFrom: aPhexQuestion [
+	self newAnswerForQuestion: aPhexQuestion.
+	answer answer: freeText text
+	
+]
+
+{ #category : #evaluating }
+PhexSurveyQuestionPresenter >> evaluateMultipleChoiceAnswerFrom: aPhexMultipleChoicesQuestion [
+
+	self newAnswerForQuestion: aPhexMultipleChoicesQuestion.
+	answer answer:
+		(checkboxes select: [ :c | c state ] thenCollect: [ :c | c label ])
+]
+
+{ #category : #evaluating }
+PhexSurveyQuestionPresenter >> evaluateSingleChoiceAnswerFrom: aPhexSingleChoiceQuestion [
+
+	self newAnswerForQuestion: aPhexSingleChoiceQuestion.
+	answer answer: (radios
+			 detect: [ :r | r state ]
+			 ifFound: [ :r | r label ]
+			 ifNone: [ 'No answer found' ])
+]
+
+{ #category : #evaluating }
+PhexSurveyQuestionPresenter >> evaluateSurvey [
+	question evaluateResultFrom: self
+]
+
+{ #category : #evaluating }
+PhexSurveyQuestionPresenter >> evaluateYesNoAnswerFor: aPhexYesNoQuestion [
+
+	self newAnswerForQuestion: aPhexYesNoQuestion.
+	answer answer: (radios
+			 detect: [ :r | r state ]
+			 ifFound: [ :r | r label ]
+			 ifNone: [ 'No answer found' ])
+]
+
 { #category : #initialization }
-PhexSurveyQuestionPresenter >> initializePresenters [ 
+PhexSurveyQuestionPresenter >> initializePresenters [
+	checkboxes := OrderedCollection new. 	
+	radios := OrderedCollection new.	
+	freeText := self newText.
 	self question buildOn: self
+]
+
+{ #category : #evaluating }
+PhexSurveyQuestionPresenter >> newAnswerForQuestion: aPhexQuestion [
+
+	answer := PhexSurveyAnswer new.
+	answer question: aPhexQuestion
 ]
 
 { #category : #accessing }

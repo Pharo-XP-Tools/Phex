@@ -8,3 +8,8 @@ Class {
 PhexFreeTextQuestion >> buildOn: aSpecPresenter [
 	aSpecPresenter buildFreeTextSurveyQuestion: self
 ]
+
+{ #category : #evaluation }
+PhexFreeTextQuestion >> evaluateResultFrom: aPhexSurveyQuestionPresenter [ 
+	aPhexSurveyQuestionPresenter evaluateFreeTextAnswerFrom: self
+]
