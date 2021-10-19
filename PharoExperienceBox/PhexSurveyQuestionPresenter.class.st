@@ -12,6 +12,11 @@ Class {
 	#category : #'PharoExperienceBox-presenters'
 }
 
+{ #category : #accessing }
+PhexSurveyQuestionPresenter class >> currentApplication [ 
+	^PhexSurveyPresenter currentApplication 
+]
+
 { #category : #spec }
 PhexSurveyQuestionPresenter class >> defaultLayout [
 	^SpBoxLayout newTopToBottom
@@ -22,8 +27,8 @@ PhexSurveyQuestionPresenter >> buildFreeTextSurveyQuestion: aPhexFreeTextQuestio
 
 	|newLayout|
 	newLayout := self class defaultLayout.
-	newLayout add: aPhexFreeTextQuestion title expand: false fill: false.
-	newLayout add: freeText.
+	newLayout add: (self newLabel label: aPhexFreeTextQuestion title; addStyle: 'headerBold'; yourself) expand: false fill: false.
+	newLayout add: freeText withConstraints:[:c| c height: 80].
 	self layout: newLayout 
 	
 ]
@@ -33,7 +38,7 @@ PhexSurveyQuestionPresenter >> buildMultipleChoiceSurveyQuestion: aPhexMultipleC
 
 	|newLayout boxLayout|
 	newLayout := self class defaultLayout.
-	newLayout add: aPhexMultipleChoicesQuestion title expand: false fill: false.	
+	newLayout add: (self newLabel label: aPhexMultipleChoicesQuestion title; addStyle: 'headerBold'; yourself) expand: false fill: false.	
 	
 	checkboxes := aPhexMultipleChoicesQuestion choices 
 		collect:[:c| (self newCheckBox label: c; yourself)].
@@ -49,7 +54,7 @@ PhexSurveyQuestionPresenter >> buildSingleChoiceSurveyQuestion: aPhexYesNoQuesti
 
 	|newLayout boxLayout|
 	newLayout := self class defaultLayout.
-	newLayout add: aPhexYesNoQuestion title expand: false fill: false.	
+	newLayout add: (self newLabel label: aPhexYesNoQuestion title; addStyle: 'headerBold'; yourself) expand: false fill: false.	
 	
 	radios := aPhexYesNoQuestion choices collect:[:c| (self newRadioButton label: c; yourself)].
 	radios first associatedRadioButtons: radios allButFirst.
@@ -65,7 +70,7 @@ PhexSurveyQuestionPresenter >> buildYesNoSurveyQuestion: aPhexYesNoQuestion [
 
 	|newLayout paneLayout|
 	newLayout := self class defaultLayout.
-	newLayout add: aPhexYesNoQuestion title expand: false fill: false.	
+	newLayout add: (self newLabel label: aPhexYesNoQuestion title; addStyle: 'headerBold'; yourself) expand: false fill: false.	
 	
 	radios := OrderedCollection new.
 	radios add: (self newRadioButton label: 'Yes'; yourself).
