@@ -32,7 +32,7 @@ PhexSurveyPresenter class >> styleSheet [
 	.box [ Geometry { #height: Reset, #vResizing: true, #hResizing: true } ],
 	.label [
 		Geometry { #hResizing: true },
-		.headerBold [ Font { #bold: true }],
+		.headerBold [ Font { #bold: false }],
 		.headerError [ Draw { #color:  #red } , Font { #bold: true }  ],
 		.headerSuccess [ Draw { #color: #green } ],
 		.header [ Draw { #color: Color{ #rgb: 622413393 } } ],
