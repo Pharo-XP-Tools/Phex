@@ -90,6 +90,15 @@ PhexSurveyPresenter class >> styleSheet [
 '
 ]
 
+{ #category : #evaluating }
+PhexSurveyPresenter >> evaluateSurvey [
+
+	^ questionsPresenters collect: [ :p | 
+		  p
+			  evaluateSurveyAnswer;
+			  question ]
+]
+
 { #category : #initialization }
 PhexSurveyPresenter >> initializePresenters [
 	|newLayout scrollablePresenter|

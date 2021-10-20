@@ -17,7 +17,8 @@ Class {
 		'startTime',
 		'uuid',
 		'passed',
-		'alwaysDisplayDescription'
+		'alwaysDisplayDescription',
+		'survey'
 	],
 	#classInstVars : [
 		'tasks'
@@ -95,6 +96,11 @@ PhexTask >> finish [
 PhexTask >> finished: anObject [
 
 	finished := anObject
+]
+
+{ #category : #survey }
+PhexTask >> hasSurvey [
+	^survey notNil
 ]
 
 { #category : #accessing }
@@ -199,6 +205,18 @@ PhexTask >> startTime: anObject [
 PhexTask >> started: anObject [
 
 	started := anObject
+]
+
+{ #category : #accessing }
+PhexTask >> survey [
+
+	^ survey
+]
+
+{ #category : #accessing }
+PhexTask >> survey: anObject [
+
+	survey := anObject
 ]
 
 { #category : #accessing }

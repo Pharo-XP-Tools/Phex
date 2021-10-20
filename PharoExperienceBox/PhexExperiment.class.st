@@ -10,7 +10,9 @@ Class {
 		'tasks',
 		'startingTaskAction',
 		'finishTaskAction',
-		'runningTasks'
+		'runningTasks',
+		'finalSurvey',
+		'isFinished'
 	],
 	#category : #'PharoExperienceBox-model'
 }
@@ -83,15 +85,26 @@ PhexExperiment >> experienceId [
 	^self subclassResponsibility 
 ]
 
+{ #category : #accessing }
+PhexExperiment >> finalSurvey [
+
+	^ finalSurvey
+]
+
+{ #category : #accessing }
+PhexExperiment >> finalSurvey: anObject [
+
+	finalSurvey := anObject
+]
+
 { #category : #actions }
 PhexExperiment >> finishTask: aTask [
-
-	aTask isFinished ifTrue: [ PhexTaskIsAlreadyFinished new signal ].
+	
 	aTask finish.
 	self removeRunningTask: aTask.
-	self finishTaskAction cull: self cull: aTask.
-
-	self serializeTasks
+	self finishTaskAction cull: self cull: aTask.	
+	self serializeTasks.
+	self updateStatus
 ]
 
 { #category : #accessing }
@@ -107,8 +120,19 @@ PhexExperiment >> finishTaskAction: anObject [
 ]
 
 { #category : #testing }
+PhexExperiment >> hasFinalSurvey [
+	^finalSurvey notNil
+]
+
+{ #category : #testing }
 PhexExperiment >> hasRunningTasks [
 	^self runningTasks notEmpty
+]
+
+{ #category : #testing }
+PhexExperiment >> isFinished [
+
+	^ isFinished
 ]
 
 { #category : #'serialize/materialize' }
@@ -123,7 +147,8 @@ PhexExperiment >> materializeTasks [
 			 collect: [ :fr | STON fromString: fr readStream upToEnd ]).
 	runningTasks := nil.
 	(self tasks select: [ :t | t isStarted ]) do: [ :t | 
-		self addRunningTask: t ]
+		self addRunningTask: t ].
+	self updateStatus
 ]
 
 { #category : #accessing }
@@ -149,10 +174,30 @@ PhexExperiment >> removeRunningTask: aTask [
 	self runningTasks remove: aTask ifAbsent: [  ]
 ]
 
+{ #category : #actions }
+PhexExperiment >> runFinalSurveyWith: aPresenter [
+
+	[ self hasFinalSurvey ] ifFalse: [ ^ self ].
+	aPresenter runSurvey: finalSurvey
+]
+
+{ #category : #actions }
+PhexExperiment >> runSurveyFor: task with: aPresenter [
+
+	task hasSurvey ifFalse: [ ^ self ].
+	aPresenter runSurvey: task survey
+]
+
 { #category : #accessing }
 PhexExperiment >> runningTasks [
 
 	^ runningTasks ifNil: [ runningTasks := OrderedCollection new ]
+]
+
+{ #category : #accessing }
+PhexExperiment >> runningTasks: anObject [
+
+	runningTasks := anObject
 ]
 
 { #category : #testing }
@@ -222,4 +267,11 @@ PhexExperiment >> tasks [
 PhexExperiment >> tasks: anObject [
 
 	tasks := anObject
+]
+
+{ #category : #updating }
+PhexExperiment >> updateStatus [
+
+	(self tasks allSatisfy: [ :t | t isFinished ]) ifTrue: [ 
+		isFinished := true ]
 ]

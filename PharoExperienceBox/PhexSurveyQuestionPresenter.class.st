@@ -110,7 +110,7 @@ PhexSurveyQuestionPresenter >> evaluateSingleChoiceAnswerFrom: aPhexSingleChoice
 ]
 
 { #category : #evaluating }
-PhexSurveyQuestionPresenter >> evaluateSurvey [
+PhexSurveyQuestionPresenter >> evaluateSurveyAnswer [
 	question evaluateResultFrom: self
 ]
 

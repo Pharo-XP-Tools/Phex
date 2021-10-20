@@ -71,9 +71,14 @@ PhexTaskLauncherPresenter >> finishTask [
 		taskAnswer := modal presenter buildTaskAnswer.
 		task answer: taskAnswer.
 
-		currentExperience finishTask: task ].
+		currentExperience runSurveyFor: task with: self.
+		currentExperience finishTask: task.
+		currentExperience isFinished 
+			ifTrue:[currentExperience runFinalSurveyWith: self]
+		 ].
+	
+	
 	self updateTaskDescription: task.
-
 	self update
 ]
 
@@ -200,6 +205,15 @@ PhexTaskLauncherPresenter >> popover: aString style: aStyle [
 { #category : #private }
 PhexTaskLauncherPresenter >> requestWindowClose [
 	 ^self currentExperience closeable
+]
+
+{ #category : #actions }
+PhexTaskLauncherPresenter >> runSurvey: aPhexSurvey [
+	|modal|
+	modal := (PhexSurveyPresenter on: aPhexSurvey) 
+			         owner: self;
+			         openModalWithSpec.
+	aPhexSurvey answers: modal presenter evaluateSurvey
 ]
 
 { #category : #api }

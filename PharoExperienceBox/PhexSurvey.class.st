@@ -5,10 +5,23 @@ Class {
 		'title',
 		'id',
 		'questions',
-		'validationBlock'
+		'validationBlock',
+		'answers'
 	],
 	#category : #'PharoExperienceBox-model'
 }
+
+{ #category : #accessing }
+PhexSurvey >> answers [
+
+	^ answers
+]
+
+{ #category : #accessing }
+PhexSurvey >> answers: anObject [
+
+	answers := anObject
+]
 
 { #category : #spec }
 PhexSurvey >> buildOn: aSpecPresenter [
