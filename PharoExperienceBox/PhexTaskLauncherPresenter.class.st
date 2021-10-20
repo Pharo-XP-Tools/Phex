@@ -209,10 +209,11 @@ PhexTaskLauncherPresenter >> requestWindowClose [
 
 { #category : #actions }
 PhexTaskLauncherPresenter >> runSurvey: aPhexSurvey [
-	|modal|
-	modal := (PhexSurveyPresenter on: aPhexSurvey) 
-			         owner: self;
-			         openModalWithSpec.
+
+	| modal |
+	modal := (PhexSurveyPresenter on: aPhexSurvey)
+		         owner: self;
+		         openModalWithSpec.
 	aPhexSurvey answers: modal presenter evaluateSurvey
 ]
 

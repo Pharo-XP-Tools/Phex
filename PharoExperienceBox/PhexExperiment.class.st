@@ -177,7 +177,7 @@ PhexExperiment >> removeRunningTask: aTask [
 { #category : #actions }
 PhexExperiment >> runFinalSurveyWith: aPresenter [
 
-	[ self hasFinalSurvey ] ifFalse: [ ^ self ].
+	self hasFinalSurvey  ifFalse: [ ^ self ].
 	aPresenter runSurvey: finalSurvey
 ]
 

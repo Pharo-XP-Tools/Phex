@@ -100,6 +100,16 @@ PhexSurveyPresenter >> evaluateSurvey [
 ]
 
 { #category : #initialization }
+PhexSurveyPresenter >> initializeDialogWindow: aDialogWindowPresenter [
+
+	aDialogWindowPresenter
+		closeOnBackdropClick: false;
+		addButton: 'Ok' do: [ :presenter | 
+			presenter triggerOkAction.
+			presenter close ]
+]
+
+{ #category : #initialization }
 PhexSurveyPresenter >> initializePresenters [
 	|newLayout scrollablePresenter|
 	
