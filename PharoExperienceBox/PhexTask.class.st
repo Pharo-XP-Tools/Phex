@@ -18,7 +18,8 @@ Class {
 		'uuid',
 		'passed',
 		'alwaysDisplayDescription',
-		'survey'
+		'survey',
+		'taskId'
 	],
 	#classInstVars : [
 		'tasks'
@@ -217,6 +218,18 @@ PhexTask >> survey [
 PhexTask >> survey: anObject [
 
 	survey := anObject
+]
+
+{ #category : #accessing }
+PhexTask >> taskId [
+
+	^ taskId
+]
+
+{ #category : #accessing }
+PhexTask >> taskId: anObject [
+
+	taskId := anObject
 ]
 
 { #category : #accessing }

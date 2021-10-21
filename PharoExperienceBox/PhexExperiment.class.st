@@ -20,6 +20,10 @@ Class {
 { #category : #accessing }
 PhexExperiment class >> currentExperiment [
 
+	"Called by the experiment framework when the participant selects an experience from the list"
+
+	"Returns an instance of the Experiment"
+
 	^ self subclassResponsibility
 ]
 
@@ -64,13 +68,7 @@ PhexExperiment >> closeable [
 { #category : #accessing }
 PhexExperiment >> description [
 
-	^ description
-]
-
-{ #category : #accessing }
-PhexExperiment >> description: anObject [
-
-	description := anObject
+	^ 'No description' "self subclassResponsibility"
 ]
 
 { #category : #actions }
@@ -129,6 +127,13 @@ PhexExperiment >> hasRunningTasks [
 	^self runningTasks notEmpty
 ]
 
+{ #category : #initialization }
+PhexExperiment >> initialize [
+
+	name := self name.
+	description := self description
+]
+
 { #category : #testing }
 PhexExperiment >> isFinished [
 
@@ -154,13 +159,7 @@ PhexExperiment >> materializeTasks [
 { #category : #accessing }
 PhexExperiment >> name [
 
-	^ name ifNil:['Unnamed experience']
-]
-
-{ #category : #accessing }
-PhexExperiment >> name: anObject [
-
-	name := anObject
+	^ 'Unnamed experience' "self subclassResponsibility"
 ]
 
 { #category : #printing }
