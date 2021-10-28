@@ -24,24 +24,22 @@ Class {
 PhexTaskAnwserPresenter class >> defaultSpec [
 
 	^ SpBoxLayout newTopToBottom
-		  add: #titleLabel
-		  expand: false
-		  fill: false
-		  padding: 5;
-		  add: #questionLabel
-		  expand: false
-		  fill: false
-		  padding: 5;
-		  add: #taskDescription;
-		  add: #answerLabel
-		  expand: false
-		  fill: false
-		  padding: 5;
-		  add: #text
-		  expand: true
-		  fill: true
-		  padding: 5;
-		  yourself
+		 add: #titleLabel expand: false fill: false padding: 5;
+		 add: #questionLabel expand: false fill: false padding: 5;
+		 add: #taskDescription;
+		 add: #answerLabel expand: false fill: false padding: 5;
+		 add: #text expand: true fill: true padding: 5;
+		 yourself
+]
+
+{ #category : #specs }
+PhexTaskAnwserPresenter class >> noAnswerSpec [
+
+	^ SpBoxLayout newTopToBottom
+		 add: #titleLabel expand: false fill: false padding: 5;
+		 add: #questionLabel expand: false fill: false padding: 5;
+		 add: #taskDescription;
+		 yourself
 ]
 
 { #category : #api }
@@ -64,6 +62,8 @@ PhexTaskAnwserPresenter >> initializeDialogWindow: aDialogWindowPresenter [
 
 { #category : #initialization }
 PhexTaskAnwserPresenter >> initializePresenters [
+
+	task requiresAnswer ifFalse:[self layout: self class noAnswerSpec].
 
 	titleLabel := self newLabel.
 	titleLabel label:
