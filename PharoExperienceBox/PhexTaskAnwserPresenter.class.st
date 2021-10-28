@@ -49,18 +49,6 @@ PhexTaskAnwserPresenter >> buildTaskAnswer [
 ]
 
 { #category : #initialization }
-PhexTaskAnwserPresenter >> initializeDialogWindow: aDialogWindowPresenter [
-
-	super initializeDialogWindow: aDialogWindowPresenter.
-	aDialogWindowPresenter
-		addButton: 'Pass'
-		do: [ :presenter | 
-			task pass.
-			presenter triggerOkAction.
-			presenter close ]
-]
-
-{ #category : #initialization }
 PhexTaskAnwserPresenter >> initializePresenters [
 
 	task requiresAnswer ifFalse:[self layout: self class noAnswerSpec].
