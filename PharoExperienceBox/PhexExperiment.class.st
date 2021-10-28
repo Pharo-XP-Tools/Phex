@@ -144,7 +144,7 @@ PhexExperiment >> isFinished [
 PhexExperiment >> materializeTasks [
 
 	| dir |
-	dir := self experienceId asFileReference.
+	dir := self experienceId asFileReference / 'taskList'.
 	dir ensureCreateDirectory.
 	tasks := nil.
 	self tasks addAll:
