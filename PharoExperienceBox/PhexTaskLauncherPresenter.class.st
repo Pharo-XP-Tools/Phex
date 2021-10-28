@@ -219,9 +219,12 @@ PhexTaskLauncherPresenter >> requestWindowClose [
 PhexTaskLauncherPresenter >> runSurvey: aPhexSurvey [
 
 	| modal |
+	self finishModalIsOpen ifTrue:[^self].
+	finishModalIsOpen := true.
 	modal := (PhexSurveyPresenter on: aPhexSurvey)
 		         owner: self;
-		         openModalWithSpec.
+		         openBlockedDialogWithSpec.
+	finishModalIsOpen := false.
 	aPhexSurvey answers: modal presenter evaluateSurvey
 ]
 

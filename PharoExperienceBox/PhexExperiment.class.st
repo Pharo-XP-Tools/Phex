@@ -132,7 +132,7 @@ PhexExperiment >> hasRunningTasks [
 { #category : #testing }
 PhexExperiment >> isFinished [
 
-	^ isFinished
+	^ isFinished ifNil:[isFinished := false]
 ]
 
 { #category : #'serialize/materialize' }

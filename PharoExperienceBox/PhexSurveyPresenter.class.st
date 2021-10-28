@@ -103,7 +103,6 @@ PhexSurveyPresenter >> evaluateSurvey [
 PhexSurveyPresenter >> initializeDialogWindow: aDialogWindowPresenter [
 
 	aDialogWindowPresenter
-		closeOnBackdropClick: false;
 		addButton: 'Ok' do: [ :presenter | 
 			presenter triggerOkAction.
 			presenter close ]
