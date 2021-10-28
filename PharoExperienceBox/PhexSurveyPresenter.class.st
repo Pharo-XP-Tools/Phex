@@ -1,6 +1,6 @@
 Class {
 	#name : #PhexSurveyPresenter,
-	#superclass : #SpApplicationWithToolbar,
+	#superclass : #SpPresenter,
 	#instVars : [
 		'survey',
 		'actionBar',
