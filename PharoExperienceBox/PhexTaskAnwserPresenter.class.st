@@ -15,7 +15,8 @@ Class {
 		'task',
 		'taskDescription',
 		'questionLabel',
-		'answerLabel'
+		'answerLabel',
+		'subtitleLabel'
 	],
 	#category : #'PharoExperienceBox-presenters'
 }
@@ -25,6 +26,7 @@ PhexTaskAnwserPresenter class >> defaultSpec [
 
 	^ SpBoxLayout newTopToBottom
 		 add: #titleLabel expand: false fill: false padding: 5;
+		 add: #subtitleLabel expand: false fill: false padding: 5;
 		 add: #questionLabel expand: false fill: false padding: 5;
 		 add: #taskDescription;
 		 add: #answerLabel expand: false fill: false padding: 5;
@@ -37,6 +39,7 @@ PhexTaskAnwserPresenter class >> noAnswerSpec [
 
 	^ SpBoxLayout newTopToBottom
 		 add: #titleLabel expand: false fill: false padding: 5;
+		 add: #subtitleLabel expand: false fill: false padding: 5;
 		 add: #questionLabel expand: false fill: false padding: 5;
 		 add: #taskDescription;
 		 yourself
@@ -55,8 +58,12 @@ PhexTaskAnwserPresenter >> initializePresenters [
 
 	titleLabel := self newLabel.
 	titleLabel label:
-		'Warning: finishing a task is a definitive action and it cannot be undone.'.
+		'This action is definitive action and cannot be undone.'.
 	titleLabel addStyle: 'headerError'.
+	subtitleLabel := self newLabel.
+	subtitleLabel label:
+		'You can pass this task just by clicking ok.'.
+	subtitleLabel addStyle: 'headerError'.
 	questionLabel := self newLabel.
 	questionLabel addStyle: 'dim'.
 	questionLabel label:
