@@ -7,7 +7,8 @@ Class {
 	#instVars : [
 		'currentExperience',
 		'taskTable',
-		'taskDescription'
+		'taskDescription',
+		'finishModalIsOpen'
 	],
 	#category : #'PharoExperienceBox-presenters'
 }
@@ -54,19 +55,26 @@ PhexTaskLauncherPresenter >> currentExperience: anObject [
 	currentExperience := anObject
 ]
 
+{ #category : #accessing }
+PhexTaskLauncherPresenter >> finishModalIsOpen [ 
+	^finishModalIsOpen ifNil:[finishModalIsOpen := false]
+]
+
 { #category : #actions }
 PhexTaskLauncherPresenter >> finishTask [
 
 	| task modal taskAnswer |
+	self finishModalIsOpen ifTrue:[^self].
 	task := taskTable selectedItem.
 	task ifNil: [ ^ self ].
 
 	self runTaskBlock: [ 
 		currentExperience ensureTaskCanBeFinished: task.
+		finishModalIsOpen := true.
 		modal := (PhexTaskAnwserPresenter on: task)
 			         owner: self;
 			         openBlockedDialogWithSpec.
-
+		finishModalIsOpen := false.
 		modal isOk ifFalse: [ ^ self ].
 		taskAnswer := modal presenter buildTaskAnswer.
 		task answer: taskAnswer.
