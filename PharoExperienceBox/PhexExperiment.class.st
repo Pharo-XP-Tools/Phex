@@ -87,6 +87,15 @@ PhexExperiment >> ensureTaskCanBeFinished: aTask [
 ]
 
 { #category : #'serialize/materialize' }
+PhexExperiment >> ensureTasksAnswersFolder [
+
+	| dir |
+	dir := self experienceId asFileReference.
+	dir ensureCreateDirectory.
+	^ dir
+]
+
+{ #category : #'serialize/materialize' }
 PhexExperiment >> ensureTasksDefinitionFolder [
 
 	| dir |
@@ -161,8 +170,7 @@ PhexExperiment >> isFinished [
 PhexExperiment >> materializeTasks [
 
 	| dir |
-	dir := self experienceId asFileReference / 'taskList'.
-	dir ensureCreateDirectory.
+	dir := self ensureTasksDefinitionFolder.
 	tasks := nil.
 	self tasks addAll:
 		((dir allChildren select: [ :fr | fr extension = self taskExtension ]) 
@@ -225,8 +233,7 @@ PhexExperiment >> sequentialTasks [
 PhexExperiment >> serializeTasks [
 
 	| dir |
-	dir := self experienceId asFileReference.
-	dir ensureCreateDirectory.
+	dir := self ensureTasksAnswersFolder.
 	self tasks do: [ :t | 
 		(dir / (self taskFilenameFor: t)) asFileReference writeStreamDo: [ 
 			:ws | ws nextPutAll: (STON toString: t) ] ]
