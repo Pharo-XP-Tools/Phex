@@ -27,6 +27,14 @@ PhexExperiment class >> currentExperiment [
 	^ self subclassResponsibility
 ]
 
+{ #category : #'as yet unclassified' }
+PhexExperiment class >> ensureTasksDefinitionFolder [
+
+	"ensures that the tasks folder of the experiment exists. Returns the FileReference"
+
+	^ self currentExperiment ensureTasksDefinitionFolder
+]
+
 { #category : #testing }
 PhexExperiment class >> isRunnableExperience [
 	^true
@@ -76,6 +84,15 @@ PhexExperiment >> ensureTaskCanBeFinished: aTask [
 
 	aTask isFinished ifTrue: [ PhexTaskIsAlreadyFinished new signal ].
 	aTask isStarted ifFalse: [ PhexTaskIsNotStarted new signal ]
+]
+
+{ #category : #'serialize/materialize' }
+PhexExperiment >> ensureTasksDefinitionFolder [
+
+	| dir |
+	dir := self experienceId asFileReference / 'taskList'.
+	dir ensureCreateDirectory.
+	^ dir
 ]
 
 { #category : #accessing }
