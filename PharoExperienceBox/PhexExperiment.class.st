@@ -187,6 +187,12 @@ PhexExperiment >> name [
 	^ 'Unnamed experience' "self subclassResponsibility"
 ]
 
+{ #category : #initialization }
+PhexExperiment >> prepareSystemForExperiment [
+
+	^ self subclassResponsibility
+]
+
 { #category : #printing }
 PhexExperiment >> printOn: aStream [
 	aStream << self name 

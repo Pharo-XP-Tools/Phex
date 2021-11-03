@@ -152,6 +152,7 @@ PhexTaskLauncherPresenter >> loadExperience [
 	xpClass ifNil: [ ^ self ].
 
 	currentExperience := xpClass currentExperiment.
+	currentExperience prepareSystemForExperiment.
 	currentExperience materializeTasks.
 	self updateCurrentExperience
 ]
