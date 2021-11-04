@@ -150,7 +150,9 @@ PhexTaskLauncherPresenter >> loadExperience [
 		           title: 'Choose an experiment to run...'.
 
 	xpClass ifNil: [ ^ self ].
-
+	currentExperience class = xpClass ifTrue: [ 
+		self inform: 'The experiment is already loaded'.
+		^ self ].
 	currentExperience := xpClass currentExperiment.
 	currentExperience prepareSystemForExperiment.
 	currentExperience materializeTasks.
