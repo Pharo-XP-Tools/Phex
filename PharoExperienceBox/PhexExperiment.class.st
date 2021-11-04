@@ -166,6 +166,14 @@ PhexExperiment >> isFinished [
 	^ isFinished
 ]
 
+{ #category : #initialization }
+PhexExperiment >> logger [
+
+	"Returns the logger object"
+
+	^ self subclassResponsibility
+]
+
 { #category : #'serialize/materialize' }
 PhexExperiment >> materializeTasks [
 
