@@ -157,7 +157,8 @@ PhexExperiment >> hasRunningTasks [
 PhexExperiment >> initialize [
 
 	name := self name.
-	description := self description
+	description := self description.
+	isFinished := false
 ]
 
 { #category : #testing }
