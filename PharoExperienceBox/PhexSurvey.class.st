@@ -11,6 +11,11 @@ Class {
 	#category : #'PharoExperienceBox-model'
 }
 
+{ #category : #questions }
+PhexSurvey >> addQuestion: aQuestion [
+	questions add: aQuestion
+]
+
 { #category : #accessing }
 PhexSurvey >> answers [
 
@@ -64,7 +69,7 @@ PhexSurvey >> title: anObject [
 	title := anObject
 ]
 
-{ #category : #validating }
+{ #category : #questions }
 PhexSurvey >> validate [
 	self validationBlock cull: self
 ]
