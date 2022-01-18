@@ -74,7 +74,7 @@ PhexTaskLauncherPresenter >> finishTask [
 		currentExperience runSurveyFor: task with: self.
 		currentExperience finishTask: task.
 		currentExperience isFinished 
-			ifTrue:[currentExperience runFinalSurveyWith: self]
+			ifTrue:[currentExperience runPostSurveysWith: self]
 		 ].
 	
 	

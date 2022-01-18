@@ -11,8 +11,8 @@ Class {
 		'startingTaskAction',
 		'finishTaskAction',
 		'runningTasks',
-		'finalSurvey',
-		'isFinished'
+		'isFinished',
+		'postSurveys'
 	],
 	#category : #'PharoExperienceBox-model'
 }
@@ -49,6 +49,12 @@ PhexExperiment class >> resetAllExperiments [
 { #category : #initialization }
 PhexExperiment class >> resetExperiment [
 	 self subclassResponsibility 
+]
+
+{ #category : #accessing }
+PhexExperiment >> addPostSurvey: aSurvey [
+
+	self postSurveys add: aSurvey
 ]
 
 { #category : #private }
@@ -109,18 +115,6 @@ PhexExperiment >> experienceId [
 	^self subclassResponsibility 
 ]
 
-{ #category : #accessing }
-PhexExperiment >> finalSurvey [
-
-	^ finalSurvey
-]
-
-{ #category : #accessing }
-PhexExperiment >> finalSurvey: anObject [
-
-	finalSurvey := anObject
-]
-
 { #category : #actions }
 PhexExperiment >> finishTask: aTask [
 	
@@ -144,8 +138,8 @@ PhexExperiment >> finishTaskAction: anObject [
 ]
 
 { #category : #testing }
-PhexExperiment >> hasFinalSurvey [
-	^finalSurvey notNil
+PhexExperiment >> hasPostSurvey [
+	^self postSurveys notEmpty
 ]
 
 { #category : #testing }
@@ -198,6 +192,12 @@ PhexExperiment >> name [
 	^ 'Unnamed experience' "self subclassResponsibility"
 ]
 
+{ #category : #accessing }
+PhexExperiment >> postSurveys [
+
+	^ postSurveys ifNil: [ postSurveys := OrderedCollection new ]
+]
+
 { #category : #initialization }
 PhexExperiment >> prepareSystemForExperiment [
 
@@ -216,10 +216,10 @@ PhexExperiment >> removeRunningTask: aTask [
 ]
 
 { #category : #actions }
-PhexExperiment >> runFinalSurveyWith: aPresenter [
+PhexExperiment >> runPostSurveysWith: aPresenter [
 
-	self hasFinalSurvey  ifFalse: [ ^ self ].
-	aPresenter runSurvey: finalSurvey
+	self hasPostSurvey ifFalse: [ ^ self ].
+	self postSurveys do: [ :f | aPresenter runSurvey: f ]
 ]
 
 { #category : #actions }
