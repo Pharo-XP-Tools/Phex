@@ -182,8 +182,10 @@ PhexExperiment >> materializeTasks [
 	dir := self ensureTasksDefinitionFolder.
 	tasks := nil.
 	self tasks addAll:
-		((dir allChildren select: [ :fr | fr extension = self taskExtension ]) 
-			 collect: [ :fr | STON fromString: fr readStream upToEnd ]).
+		(((dir allChildren select: [ :fr | 
+			   fr extension = self taskExtension ]) collect: [ :fr | 
+			  STON fromString: fr readStream upToEnd ]) select:
+			 self tasksMaterializationFilter).
 	runningTasks := nil.
 	(self tasks select: [ :t | t isStarted ]) do: [ :t | 
 		self addRunningTask: t ].
@@ -305,6 +307,16 @@ PhexExperiment >> tasks [
 PhexExperiment >> tasks: anObject [
 
 	tasks := anObject
+]
+
+{ #category : #'serialize/materialize' }
+PhexExperiment >> tasksMaterializationFilter [
+
+	"returns a filter that is applied when materializing tasks"
+
+	"Override this to make each user have a different set of tasks"
+
+	^ [ :task | true "no filter" ]
 ]
 
 { #category : #updating }
