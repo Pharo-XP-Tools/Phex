@@ -429,13 +429,19 @@ PhexExperiment >> updateStatus [
 		isFinished := true ]
 ]
 
-{ #category : #accessing }
+{ #category : #events }
+PhexExperiment >> whenSurveyClosedDo: aBlock [
+
+	surveys valuesDo: [ :s | s validationBlock: aBlock ]
+]
+
+{ #category : #events }
 PhexExperiment >> whenTaskFinishedDo: aBlock [
 
 	finishTaskAction := aBlock
 ]
 
-{ #category : #accessing }
+{ #category : #events }
 PhexExperiment >> whenTaskStartedDo: aBlock [
 
 	startingTaskAction := aBlock
