@@ -1,3 +1,7 @@
+"
+I'm an answer to a survey question.
+I hold the answer (a literal value) and the question to which I am the answer.
+"
 Class {
 	#name : #PhexSurveyAnswer,
 	#superclass : #Object,
