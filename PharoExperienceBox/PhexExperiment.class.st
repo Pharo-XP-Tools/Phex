@@ -99,7 +99,7 @@ PhexExperiment >> description [
 ]
 
 { #category : #'serialize/materialize' }
-PhexExperiment >> ensureSurveyDefinitionFolder [
+PhexExperiment >> ensureSurveysDefinitionFolder [
 
 	| dir |
 	dir := self experienceId asFileReference / 'surveys'.
@@ -208,7 +208,7 @@ PhexExperiment >> materialize [
 PhexExperiment >> materializeSurveys [
 
 	| dir |
-	dir := self ensureSurveyDefinitionFolder.
+	dir := self ensureSurveysDefinitionFolder.
 	surveys := nil.
 	((dir allChildren select: [ :fr | 
 		  fr extension = self surveyExtension ]) collect: [ :fr | 
@@ -314,7 +314,7 @@ PhexExperiment >> sequentialTasks [
 PhexExperiment >> serializeSurveys [
 
 	| dir |
-	dir := self ensureSurveyDefinitionFolder.
+	dir := self ensureSurveysDefinitionFolder.
 	self surveys valuesDo: [ :s | 
 		(dir / (self surveyFilenameFor: s)) asFileReference writeStreamDo: [ 
 			:ws | ws nextPutAll: (STON toString: s) ] ]
