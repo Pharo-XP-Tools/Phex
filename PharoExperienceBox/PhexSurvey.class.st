@@ -56,8 +56,9 @@ PhexSurvey >> answers [
 
 { #category : #accessing }
 PhexSurvey >> answers: anObject [
-
-	answers := anObject
+	self flag: 'Accessor should not do more than accessing. Rename this method.'.
+	answers := anObject.
+	self validate
 ]
 
 { #category : #spec }
