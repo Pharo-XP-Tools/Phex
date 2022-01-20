@@ -201,6 +201,7 @@ PhexExperiment >> materialize [
 
 	self materializeSurveys.
 	self materializeTasks.
+	self setUpExperiment.
 	self updateStatus
 ]
 
@@ -328,6 +329,14 @@ PhexExperiment >> serializeTasks [
 	self tasks do: [ :t | 
 		(dir / (self taskFilenameFor: t)) asFileReference writeStreamDo: [ 
 			:ws | ws nextPutAll: (STON toString: t) ] ]
+]
+
+{ #category : #initialization }
+PhexExperiment >> setUpExperiment [
+
+	"By default, does nothing. 
+	Experiments designers must implement dedicated experiment setup code in this method, that should be immediately called after materializing the experiment (default, see PhexExperiment>>#materialize
+	Such setup code can be configuring pre/post tasks actions, survey validation actions, etc."
 ]
 
 { #category : #actions }
