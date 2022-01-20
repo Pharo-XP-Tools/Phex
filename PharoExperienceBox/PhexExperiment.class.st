@@ -289,8 +289,8 @@ PhexExperiment >> runPreSurveysWith: aPresenter [
 { #category : #surveys }
 PhexExperiment >> runSurveyFor: task with: aPresenter [
 
-	task hasSurvey ifFalse: [ ^ self ].
-	aPresenter runSurvey: task survey
+	task hasSurvey ifFalse: [ ^ self ].	
+	aPresenter runSurvey: (surveys at: task survey)
 ]
 
 { #category : #accessing }
