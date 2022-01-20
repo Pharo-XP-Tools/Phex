@@ -153,12 +153,6 @@ PhexExperiment >> finishTaskAction [
 	^ finishTaskAction ifNil: [ finishTaskAction := [ :xp :task |  ] ]
 ]
 
-{ #category : #accessing }
-PhexExperiment >> finishTaskAction: anObject [
-
-	finishTaskAction := anObject
-]
-
 { #category : #surveys }
 PhexExperiment >> hasPostSurvey [
 	^self postSurveys notEmpty
@@ -358,12 +352,6 @@ PhexExperiment >> startingTaskAction [
 ]
 
 { #category : #accessing }
-PhexExperiment >> startingTaskAction: anObject [
-
-	startingTaskAction := anObject
-]
-
-{ #category : #accessing }
 PhexExperiment >> surveyExtension [
 
 	^ 'psx'
@@ -439,4 +427,16 @@ PhexExperiment >> updateStatus [
 
 	(self tasks allSatisfy: [ :t | t isFinished ]) ifTrue: [ 
 		isFinished := true ]
+]
+
+{ #category : #accessing }
+PhexExperiment >> whenTaskFinishedDo: aBlock [
+
+	finishTaskAction := aBlock
+]
+
+{ #category : #accessing }
+PhexExperiment >> whenTaskStartedDo: aBlock [
+
+	startingTaskAction := aBlock
 ]
