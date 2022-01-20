@@ -4,7 +4,7 @@ I model a survey.
 I hold a set of questions, instances of subclasses of `PhexAbstractQuestion`.
 
 I hold a validation block that does nothing by default, but which can be configured to perform custom actions while validating a survey.
-The `validate` method has to be called explicitly by clients.
+The `validate` method is automatically called when a new answer is provided.
 
 I am open by default while my `answers` instance variable remains nil.
 I am considered closed once my `answers` instance variable is no longer nil.
