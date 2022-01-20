@@ -13,7 +13,8 @@ Class {
 		'runningTasks',
 		'isFinished',
 		'postSurveys',
-		'preSurveys'
+		'preSurveys',
+		'surveys'
 	],
 	#category : #'PharoExperienceBox-model'
 }
@@ -55,18 +56,23 @@ PhexExperiment class >> resetExperiment [
 { #category : #surveys }
 PhexExperiment >> addPostSurvey: aSurvey [
 
-	self postSurveys add: aSurvey
+	self postSurveys add: aSurvey uuid
 ]
 
 { #category : #surveys }
 PhexExperiment >> addPreSurvey: aSurvey [
 
-	self preSurveys add: aSurvey
+	self preSurveys add: aSurvey uuid
 ]
 
 { #category : #private }
 PhexExperiment >> addRunningTask: aTask [
 	self runningTasks addIfNotPresent: aTask
+]
+
+{ #category : #surveys }
+PhexExperiment >> addSurvey: aSurvey [
+	self surveys at: aSurvey uuid put: aSurvey
 ]
 
 { #category : #testing }
@@ -90,6 +96,15 @@ PhexExperiment >> closeable [
 PhexExperiment >> description [
 
 	^ 'No description' "self subclassResponsibility"
+]
+
+{ #category : #'serialize/materialize' }
+PhexExperiment >> ensureSurveyDefinitionFolder [
+
+	| dir |
+	dir := self experienceId asFileReference / 'surveys'.
+	dir ensureCreateDirectory.
+	^ dir
 ]
 
 { #category : #actions }
@@ -237,14 +252,16 @@ PhexExperiment >> removeRunningTask: aTask [
 PhexExperiment >> runPostSurveysWith: aPresenter [
 
 	self hasPostSurvey ifFalse: [ ^ self ].
-	self postSurveys do: [ :f | aPresenter runSurvey: f ]
+	self postSurveys do: [ :uuid | 
+		aPresenter runSurvey: (self surveyFromUUID: uuid) ]
 ]
 
 { #category : #surveys }
 PhexExperiment >> runPreSurveysWith: aPresenter [
 
 	self hasPreSurvey ifFalse: [ ^ self ].
-	self preSurveys do: [ :f | aPresenter runSurvey: f ]
+	self preSurveys do: [ :uuid | 
+		aPresenter runSurvey: (self surveyFromUUID: uuid) ]
 ]
 
 { #category : #surveys }
@@ -303,6 +320,29 @@ PhexExperiment >> startingTaskAction [
 PhexExperiment >> startingTaskAction: anObject [
 
 	startingTaskAction := anObject
+]
+
+{ #category : #accessing }
+PhexExperiment >> surveyExtension [
+
+	^ 'psx'
+]
+
+{ #category : #surveys }
+PhexExperiment >> surveyFromUUID: aSurveyUUID [
+	^self surveys at: aSurveyUUID
+]
+
+{ #category : #accessing }
+PhexExperiment >> surveys [
+
+	^ surveys ifNil: [ surveys := Dictionary new ]
+]
+
+{ #category : #accessing }
+PhexExperiment >> surveys: anObject [
+
+	surveys := anObject
 ]
 
 { #category : #accessing }
