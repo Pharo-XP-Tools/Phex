@@ -158,7 +158,9 @@ PhexTaskLauncherPresenter >> loadExperience [
 	currentExperience materialize.
 	self updateCurrentExperience.
 	ExperimentLogging setLoggerFor: currentExperience.
-	ExperimentLogging currentLogger experimentLoaded: currentExperience
+	ExperimentLogging currentLogger experimentLoaded: currentExperience.
+	currentExperience runPreSurveysWith: self
+	
 ]
 
 { #category : #api }
