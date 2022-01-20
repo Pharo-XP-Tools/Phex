@@ -272,16 +272,18 @@ PhexExperiment >> removeRunningTask: aTask [
 PhexExperiment >> runPostSurveysWith: aPresenter [
 
 	self hasPostSurvey ifFalse: [ ^ self ].
-	self postSurveys do: [ :uuid | 
-		aPresenter runSurvey: (self surveyFromUUID: uuid) ]
+	(self postSurveys
+		 collect: [ :uuid | self surveyFromUUID: uuid ]
+		 thenSelect: [ :s | s isOpen ]) do: [ :s | aPresenter runSurvey: s ]
 ]
 
 { #category : #surveys }
 PhexExperiment >> runPreSurveysWith: aPresenter [
 
 	self hasPreSurvey ifFalse: [ ^ self ].
-	self preSurveys do: [ :uuid | 
-		aPresenter runSurvey: (self surveyFromUUID: uuid) ]
+	(self preSurveys
+		 collect: [ :uuid | self surveyFromUUID: uuid ]
+		 thenSelect: [ :s | s isOpen ]) do: [ :s | aPresenter runSurvey: s ]
 ]
 
 { #category : #surveys }
