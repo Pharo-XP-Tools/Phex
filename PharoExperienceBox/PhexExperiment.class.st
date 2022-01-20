@@ -197,6 +197,26 @@ PhexExperiment >> logger [
 ]
 
 { #category : #'serialize/materialize' }
+PhexExperiment >> materialize [
+
+	self materializeSurveys.
+	self materializeTasks.
+	self updateStatus
+]
+
+{ #category : #'serialize/materialize' }
+PhexExperiment >> materializeSurveys [
+
+	| dir |
+	dir := self ensureSurveyDefinitionFolder.
+	surveys := nil.
+	((dir allChildren select: [ :fr | 
+		  fr extension = self surveyExtension ]) collect: [ :fr | 
+		 STON fromString: fr readStream upToEnd ]) do: [ :s | 
+		s configureForExperiment: self ]
+]
+
+{ #category : #'serialize/materialize' }
 PhexExperiment >> materializeTasks [
 
 	| dir |
@@ -289,6 +309,16 @@ PhexExperiment >> sequentialTasks [
 ]
 
 { #category : #'serialize/materialize' }
+PhexExperiment >> serializeSurveys [
+
+	| dir |
+	dir := self ensureSurveyDefinitionFolder.
+	self surveys valuesDo: [ :s | 
+		(dir / (self surveyFilenameFor: s)) asFileReference writeStreamDo: [ 
+			:ws | ws nextPutAll: (STON toString: s) ] ]
+]
+
+{ #category : #'serialize/materialize' }
 PhexExperiment >> serializeTasks [
 
 	| dir |
@@ -326,6 +356,15 @@ PhexExperiment >> startingTaskAction: anObject [
 PhexExperiment >> surveyExtension [
 
 	^ 'psx'
+]
+
+{ #category : #'serialize/materialize' }
+PhexExperiment >> surveyFilenameFor: s [
+
+	^ (String new writeStreamDo: [ :ws | 
+		   ws << s uuid asString.
+		   ws << '.'.
+		   ws << self surveyExtension ]) contents
 ]
 
 { #category : #surveys }
