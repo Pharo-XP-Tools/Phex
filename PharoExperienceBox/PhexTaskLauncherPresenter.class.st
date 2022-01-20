@@ -155,7 +155,7 @@ PhexTaskLauncherPresenter >> loadExperience [
 		^ self ].
 	currentExperience := xpClass currentExperiment.
 	currentExperience prepareSystemForExperiment.
-	currentExperience materializeTasks.
+	currentExperience materialize.
 	self updateCurrentExperience.
 	ExperimentLogging setLoggerFor: currentExperience.
 	ExperimentLogging currentLogger experimentLoaded: currentExperience
