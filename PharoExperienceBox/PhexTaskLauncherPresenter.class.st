@@ -82,7 +82,7 @@ PhexTaskLauncherPresenter >> finishTask [
 		currentExperience runSurveyFor: task with: self.
 		currentExperience finishTask: task.
 		currentExperience isFinished 
-			ifTrue:[currentExperience runFinalSurveyWith: self]
+			ifTrue:[currentExperience runPostSurveysWith: self]
 		 ].
 	
 	
@@ -158,10 +158,17 @@ PhexTaskLauncherPresenter >> loadExperience [
 		           title: 'Choose an experiment to run...'.
 
 	xpClass ifNil: [ ^ self ].
-
+	currentExperience class = xpClass ifTrue: [ 
+		self inform: 'The experiment is already loaded'.
+		^ self ].
 	currentExperience := xpClass currentExperiment.
-	currentExperience materializeTasks.
-	self updateCurrentExperience
+	currentExperience prepareSystemForExperiment.
+	currentExperience materialize.
+	self updateCurrentExperience.
+	ExperimentLogging setLoggerFor: currentExperience.
+	currentExperience logger experimentLoaded: currentExperience.
+	currentExperience runPreSurveysWith: self
+	
 ]
 
 { #category : #api }

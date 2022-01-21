@@ -1,3 +1,15 @@
+"
+I model a survey.
+
+I hold a set of questions, instances of subclasses of `PhexAbstractQuestion`.
+
+I hold a validation block that does nothing by default, but which can be configured to perform custom actions while validating a survey.
+The `validate` method is automatically called when a new answer is provided.
+
+I am open by default while my `answers` instance variable remains nil.
+I am considered closed once my `answers` instance variable is no longer nil.
+
+"
 Class {
 	#name : #PhexSurvey,
 	#superclass : #Object,
@@ -6,10 +18,35 @@ Class {
 		'id',
 		'questions',
 		'validationBlock',
-		'answers'
+		'answers',
+		'uuid',
+		'configurator'
 	],
 	#category : #'PharoExperienceBox-model'
 }
+
+{ #category : #'instance creation' }
+PhexSurvey class >> postExperimentSurvey [
+	|configurator survey|
+	survey := self new.
+	configurator := PhexPostExperimentSurveyConfigurator on: survey.
+	^survey
+	
+]
+
+{ #category : #'instance creation' }
+PhexSurvey class >> preExperimentSurvey [
+	|configurator survey|
+	survey := self new.
+	configurator := PhexPreExperimentSurveyConfigurator on: survey.
+	^survey
+	
+]
+
+{ #category : #questions }
+PhexSurvey >> addQuestion: aQuestion [
+	questions add: aQuestion
+]
 
 { #category : #accessing }
 PhexSurvey >> answers [
@@ -19,13 +56,31 @@ PhexSurvey >> answers [
 
 { #category : #accessing }
 PhexSurvey >> answers: anObject [
-
-	answers := anObject
+	self flag: 'Accessor should not do more than accessing. Rename this method.'.
+	answers := anObject.
+	self validate
 ]
 
 { #category : #spec }
 PhexSurvey >> buildOn: aSpecPresenter [
 	aSpecPresenter buildPhexSurvey
+]
+
+{ #category : #accessing }
+PhexSurvey >> configurator [
+
+	^ configurator ifNil: [ configurator := PhexSurveyConfigurator on: self ]
+]
+
+{ #category : #accessing }
+PhexSurvey >> configurator: anObject [
+
+	configurator := anObject
+]
+
+{ #category : #initialization }
+PhexSurvey >> configureForExperiment: anExperiment [
+	self configurator configureForExperiment:  anExperiment
 ]
 
 { #category : #accessing }
@@ -38,6 +93,21 @@ PhexSurvey >> id [
 PhexSurvey >> id: anObject [
 
 	id := anObject
+]
+
+{ #category : #initialization }
+PhexSurvey >> initialize [ 
+	uuid := UUID new
+]
+
+{ #category : #testing }
+PhexSurvey >> isClosed [
+	^answers notNil
+]
+
+{ #category : #testing }
+PhexSurvey >> isOpen [
+	^self isClosed not
 ]
 
 { #category : #accessing }
@@ -64,7 +134,13 @@ PhexSurvey >> title: anObject [
 	title := anObject
 ]
 
-{ #category : #validating }
+{ #category : #accessing }
+PhexSurvey >> uuid [
+
+	^ uuid
+]
+
+{ #category : #questions }
 PhexSurvey >> validate [
 	self validationBlock cull: self
 ]

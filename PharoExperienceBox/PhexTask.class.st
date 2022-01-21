@@ -18,7 +18,8 @@ Class {
 		'uuid',
 		'passed',
 		'alwaysDisplayDescription',
-		'survey'
+		'survey',
+		'taskId'
 	],
 	#classInstVars : [
 		'tasks'
@@ -160,9 +161,14 @@ PhexTask >> passed: anObject [
 
 { #category : #accessing }
 PhexTask >> requiredAnswer [
-	^requiredAnswer ifNil:[requiredAnswer := 
-'This task does not require you to provide an anwser.
-You can finish the task immediately']
+
+	^ requiredAnswer ifNil: [ 
+		  requiresAnswer
+			  ifTrue: [ 
+			  requiredAnswer := 'This task requires you to provide an anwser.' ]
+			  ifFalse: [ 
+				  requiredAnswer := 'This task does not require you to provide an anwser.
+You can finish the task immediately' ] ]
 ]
 
 { #category : #accessing }
@@ -217,6 +223,18 @@ PhexTask >> survey [
 PhexTask >> survey: anObject [
 
 	survey := anObject
+]
+
+{ #category : #accessing }
+PhexTask >> taskId [
+
+	^ taskId
+]
+
+{ #category : #accessing }
+PhexTask >> taskId: anObject [
+
+	taskId := anObject
 ]
 
 { #category : #accessing }
