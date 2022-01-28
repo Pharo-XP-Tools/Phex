@@ -37,6 +37,14 @@ PhexExperiment class >> ensureTasksDefinitionFolder [
 	^ self currentExperiment ensureTasksDefinitionFolder
 ]
 
+{ #category : #'building - API' }
+PhexExperiment class >> freeTextQuestion: text [
+
+	^ PhexFreeTextQuestion new
+		  title: text;
+		  yourself
+]
+
 { #category : #testing }
 PhexExperiment class >> isRunnableExperience [
 	^true
@@ -51,6 +59,23 @@ PhexExperiment class >> resetAllExperiments [
 { #category : #initialization }
 PhexExperiment class >> resetExperiment [
 	 self subclassResponsibility 
+]
+
+{ #category : #'building - API' }
+PhexExperiment class >> singleChoiceQuestion: text options: choices [
+
+	^ PhexSingleChoiceQuestion new
+		  title: text;
+		  choices: choices;
+		  yourself
+]
+
+{ #category : #'building - API' }
+PhexExperiment class >> yesNoQuestion: text [
+
+	^ PhexYesNoQuestion new
+		  title: text;
+		  yourself
 ]
 
 { #category : #surveys }
