@@ -45,7 +45,7 @@ PhexSurvey class >> preExperimentSurvey [
 
 { #category : #questions }
 PhexSurvey >> addQuestion: aQuestion [
-	questions add: aQuestion
+	self questions add: aQuestion
 ]
 
 { #category : #accessing }
@@ -113,7 +113,7 @@ PhexSurvey >> isOpen [
 { #category : #accessing }
 PhexSurvey >> questions [
 
-	^ questions
+	^ questions ifNil:[questions := OrderedCollection new]
 ]
 
 { #category : #accessing }
