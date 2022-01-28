@@ -15,7 +15,8 @@ Class {
 		'task',
 		'taskDescription',
 		'questionLabel',
-		'answerLabel'
+		'answerLabel',
+		'subtitleLabel'
 	],
 	#category : #'PharoExperienceBox-presenters'
 }
@@ -24,24 +25,24 @@ Class {
 PhexTaskAnwserPresenter class >> defaultSpec [
 
 	^ SpBoxLayout newTopToBottom
-		  add: #titleLabel
-		  expand: false
-		  fill: false
-		  padding: 5;
-		  add: #questionLabel
-		  expand: false
-		  fill: false
-		  padding: 5;
-		  add: #taskDescription;
-		  add: #answerLabel
-		  expand: false
-		  fill: false
-		  padding: 5;
-		  add: #text
-		  expand: true
-		  fill: true
-		  padding: 5;
-		  yourself
+		 add: #titleLabel expand: false fill: false padding: 5;
+		 add: #subtitleLabel expand: false fill: false padding: 5;
+		 add: #questionLabel expand: false fill: false padding: 5;
+		 add: #taskDescription;
+		 add: #answerLabel expand: false fill: false padding: 5;
+		 add: #text expand: true fill: true padding: 5;
+		 yourself
+]
+
+{ #category : #specs }
+PhexTaskAnwserPresenter class >> noAnswerSpec [
+
+	^ SpBoxLayout newTopToBottom
+		 add: #titleLabel expand: false fill: false padding: 5;
+		 add: #subtitleLabel expand: false fill: false padding: 5;
+		 add: #questionLabel expand: false fill: false padding: 5;
+		 add: #taskDescription;
+		 yourself
 ]
 
 { #category : #api }
@@ -51,24 +52,18 @@ PhexTaskAnwserPresenter >> buildTaskAnswer [
 ]
 
 { #category : #initialization }
-PhexTaskAnwserPresenter >> initializeDialogWindow: aDialogWindowPresenter [
-
-	super initializeDialogWindow: aDialogWindowPresenter.
-	aDialogWindowPresenter
-		addButton: 'Pass'
-		do: [ :presenter | 
-			task pass.
-			presenter triggerOkAction.
-			presenter close ]
-]
-
-{ #category : #initialization }
 PhexTaskAnwserPresenter >> initializePresenters [
+
+	task requiresAnswer ifFalse:[self layout: self class noAnswerSpec].
 
 	titleLabel := self newLabel.
 	titleLabel label:
-		'Warning: finishing a task is a definitive action and it cannot be undone.'.
+		'This action is definitive action and cannot be undone.'.
 	titleLabel addStyle: 'headerError'.
+	subtitleLabel := self newLabel.
+	subtitleLabel label:
+		'You can pass this task just by clicking ok.'.
+	subtitleLabel addStyle: 'headerError'.
 	questionLabel := self newLabel.
 	questionLabel addStyle: 'dim'.
 	questionLabel label:

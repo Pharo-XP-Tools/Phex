@@ -204,7 +204,7 @@ PhexExperiment >> initialize [
 { #category : #testing }
 PhexExperiment >> isFinished [
 
-	^ isFinished
+	^ isFinished ifNil:[isFinished := false]
 ]
 
 { #category : #initialization }

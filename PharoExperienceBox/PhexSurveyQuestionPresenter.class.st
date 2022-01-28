@@ -1,6 +1,6 @@
 Class {
 	#name : #PhexSurveyQuestionPresenter,
-	#superclass : #SpApplicationWithToolbar,
+	#superclass : #SpPresenter,
 	#instVars : [
 		'question',
 		'checkboxes',
