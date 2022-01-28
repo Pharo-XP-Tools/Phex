@@ -43,6 +43,15 @@ PhexSurvey class >> preExperimentSurvey [
 	
 ]
 
+{ #category : #'ston-core' }
+PhexSurvey class >> stonAllInstVarNames [
+
+	"Override to encode my instances using a custom set of instance variables or to define their order."
+
+	^ super stonAllInstVarNames
+		  reject: [ :e | e = #validationBlock ]
+]
+
 { #category : #questions }
 PhexSurvey >> addQuestion: aQuestion [
 	self questions add: aQuestion
