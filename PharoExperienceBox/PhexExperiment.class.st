@@ -14,7 +14,8 @@ Class {
 		'isFinished',
 		'postSurveys',
 		'preSurveys',
-		'surveys'
+		'surveys',
+		'finishExperimentAction'
 	],
 	#category : #'PharoExperienceBox-model'
 }
@@ -160,6 +161,12 @@ PhexExperiment >> ensureTasksDefinitionFolder [
 { #category : #accessing }
 PhexExperiment >> experienceId [
 	^self subclassResponsibility 
+]
+
+{ #category : #accessing }
+PhexExperiment >> finishExperimentAction [
+
+	^ finishExperimentAction ifNil: [ finishExperimentAction := [ :xp |  ] ]
 ]
 
 { #category : #actions }
@@ -447,11 +454,22 @@ PhexExperiment >> tasksMaterializationFilter [
 	^ [ :task | true "no filter" ]
 ]
 
+{ #category : #actions }
+PhexExperiment >> terminate [
+	self finishExperimentAction cull: self
+]
+
 { #category : #updating }
 PhexExperiment >> updateStatus [
 
 	(self tasks allSatisfy: [ :t | t isFinished ]) ifTrue: [ 
 		isFinished := true ]
+]
+
+{ #category : #events }
+PhexExperiment >> whenFinishedDo: aBlock [
+
+	finishExperimentAction := aBlock
 ]
 
 { #category : #events }

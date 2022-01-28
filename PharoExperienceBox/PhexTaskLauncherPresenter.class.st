@@ -64,7 +64,7 @@ PhexTaskLauncherPresenter >> finishModalIsOpen [
 PhexTaskLauncherPresenter >> finishTask [
 
 	| task modal taskAnswer |
-	self finishModalIsOpen ifTrue:[^self].
+	self finishModalIsOpen ifTrue: [ ^ self ].
 	task := taskTable selectedItem.
 	task ifNil: [ ^ self ].
 
@@ -81,11 +81,11 @@ PhexTaskLauncherPresenter >> finishTask [
 
 		currentExperience runSurveyFor: task with: self.
 		currentExperience finishTask: task.
-		currentExperience isFinished 
-			ifTrue:[currentExperience runPostSurveysWith: self]
-		 ].
-	
-	
+		currentExperience isFinished ifTrue: [ 
+			currentExperience runPostSurveysWith: self.
+			currentExperience terminate ] ].
+
+
 	self updateTaskDescription: task.
 	self update
 ]
