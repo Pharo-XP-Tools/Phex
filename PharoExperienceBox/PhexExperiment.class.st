@@ -227,8 +227,7 @@ PhexExperiment >> materialize [
 
 	self materializeSurveys.
 	self materializeTasks.
-	self setUpExperiment.
-	self updateStatus
+	self setUpExperiment
 ]
 
 { #category : #'serialize/materialize' }
@@ -360,9 +359,11 @@ PhexExperiment >> serializeTasks [
 { #category : #initialization }
 PhexExperiment >> setUpExperiment [
 
-	"By default, does nothing. 
-	Experiments designers must implement dedicated experiment setup code in this method, that should be immediately called after materializing the experiment (default, see PhexExperiment>>#materialize
-	Such setup code can be configuring pre/post tasks actions, survey validation actions, etc."
+	"Experiments designers must implement dedicated experiment setup code in this method, that should be immediately called after materializing the experiment (default, see PhexExperiment>>#materialize
+	Such setup code can be configuring pre/post tasks actions, survey validation actions, etc.
+	The default behavior (here) is intented to be called every time."
+	
+	self updateStatus
 ]
 
 { #category : #actions }

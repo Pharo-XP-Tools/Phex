@@ -167,8 +167,8 @@ PhexTaskLauncherPresenter >> loadExperience [
 	self updateCurrentExperience.
 	ExperimentLogging setLoggerFor: currentExperience.
 	currentExperience logger experimentLoaded: currentExperience.
+	Smalltalk image saveSession.
 	currentExperience runPreSurveysWith: self
-	
 ]
 
 { #category : #api }
