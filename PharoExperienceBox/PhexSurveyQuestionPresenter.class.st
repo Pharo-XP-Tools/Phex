@@ -23,11 +23,19 @@ PhexSurveyQuestionPresenter class >> defaultLayout [
 ]
 
 { #category : #building }
+PhexSurveyQuestionPresenter >> addQuestionTextPresenterFor: title toLayout: newLayout [
+	|box|
+	box := SpGridLayout new.
+	box add: (self buildQuestionText: title) at: 1@1.
+	newLayout add: box
+]
+
+{ #category : #building }
 PhexSurveyQuestionPresenter >> buildFreeTextSurveyQuestion: aPhexFreeTextQuestion [
 
 	|newLayout|
 	newLayout := self class defaultLayout.
-	newLayout add: (self newLabel label: aPhexFreeTextQuestion title; addStyle: 'headerBold'; yourself) expand: false fill: false.
+	self addQuestionTextPresenterFor: aPhexFreeTextQuestion title toLayout: newLayout.	
 	newLayout add: freeText withConstraints:[:c| c height: 80].
 	self layout: newLayout 
 	
@@ -38,8 +46,8 @@ PhexSurveyQuestionPresenter >> buildMultipleChoiceSurveyQuestion: aPhexMultipleC
 
 	|newLayout boxLayout|
 	newLayout := self class defaultLayout.
-	newLayout add: (self newLabel label: aPhexMultipleChoicesQuestion title; addStyle: 'headerBold'; yourself) expand: false fill: false.	
-	
+	self addQuestionTextPresenterFor: aPhexMultipleChoicesQuestion title toLayout: newLayout.	
+		
 	checkboxes := aPhexMultipleChoicesQuestion choices 
 		collect:[:c| (self newCheckBox label: c; yourself)].
 	
@@ -50,11 +58,24 @@ PhexSurveyQuestionPresenter >> buildMultipleChoiceSurveyQuestion: aPhexMultipleC
 ]
 
 { #category : #building }
+PhexSurveyQuestionPresenter >> buildQuestionText: questionText [
+
+	| textPresenter |
+	textPresenter := self newText.
+	textPresenter text: questionText.
+	textPresenter addStyle: 'headerBold'.
+	textPresenter beNotEditable.
+	textPresenter beWrapWord.
+	textPresenter withScrollBars.
+	^ textPresenter
+]
+
+{ #category : #building }
 PhexSurveyQuestionPresenter >> buildSingleChoiceSurveyQuestion: aPhexYesNoQuestion [
 
 	|newLayout boxLayout|
 	newLayout := self class defaultLayout.
-	newLayout add: (self newLabel label: aPhexYesNoQuestion title; addStyle: 'headerBold'; yourself) expand: false fill: false.	
+	self addQuestionTextPresenterFor:  aPhexYesNoQuestion title toLayout: newLayout.
 	
 	radios := aPhexYesNoQuestion choices collect:[:c| (self newRadioButton label: c; yourself)].
 	radios first associatedRadioButtons: radios allButFirst.
@@ -70,7 +91,7 @@ PhexSurveyQuestionPresenter >> buildYesNoSurveyQuestion: aPhexYesNoQuestion [
 
 	|newLayout paneLayout|
 	newLayout := self class defaultLayout.
-	newLayout add: (self newLabel label: aPhexYesNoQuestion title; addStyle: 'headerBold'; yourself) expand: false fill: false.	
+	self addQuestionTextPresenterFor: aPhexYesNoQuestion title toLayout: newLayout.	
 	
 	radios := OrderedCollection new.
 	radios add: (self newRadioButton label: 'Yes'; yourself).
