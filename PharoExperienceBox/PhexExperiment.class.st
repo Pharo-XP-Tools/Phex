@@ -17,17 +17,16 @@ Class {
 		'surveys',
 		'finishExperimentAction'
 	],
+	#classInstVars : [
+		'current'
+	],
 	#category : #'PharoExperienceBox-model'
 }
 
 { #category : #accessing }
 PhexExperiment class >> currentExperiment [
 
-	"Called by the experiment framework when the participant selects an experience from the list"
-
-	"Returns an instance of the Experiment"
-
-	^ self subclassResponsibility
+	^current ifNil:[current := self new]
 ]
 
 { #category : #'as yet unclassified' }
