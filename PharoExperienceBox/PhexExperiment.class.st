@@ -350,7 +350,7 @@ PhexExperiment >> serializeSurveys [
 PhexExperiment >> serializeTasks [
 
 	| dir |
-	dir := self ensureTasksAnswersFolder.
+	dir := self ensureTasksDefinitionFolder.
 	self tasks do: [ :t | 
 		(dir / (self taskFilenameFor: t)) asFileReference writeStreamDo: [ 
 			:ws | ws nextPutAll: (STON toString: t) ] ]
