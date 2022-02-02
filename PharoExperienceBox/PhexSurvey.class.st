@@ -20,7 +20,8 @@ Class {
 		'validationBlock',
 		'answers',
 		'uuid',
-		'configurator'
+		'configurator',
+		'isSingleCriticalYesNoQuestion'
 	],
 	#category : #'PharoExperienceBox-model'
 }
@@ -68,11 +69,6 @@ PhexSurvey >> answers: anObject [
 	self flag: 'Accessor should not do more than accessing. Rename this method.'.
 	answers := anObject.
 	self validate
-]
-
-{ #category : #spec }
-PhexSurvey >> buildOn: aSpecPresenter [
-	aSpecPresenter buildPhexSurvey
 ]
 
 { #category : #accessing }
