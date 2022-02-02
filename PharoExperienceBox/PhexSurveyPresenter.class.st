@@ -6,15 +6,19 @@ Class {
 		'actionBar',
 		'questionsPresenters'
 	],
+	#classInstVars : [
+		'application'
+	],
 	#category : #'PharoExperienceBox-presenters'
 }
 
 { #category : #accessing }
 PhexSurveyPresenter class >> currentApplication [
 
-	^ SpApplication new
-		  styleSheet: self styleSheet;
-		  yourself
+	^ application ifNil: [ 
+		  application := SpApplication new
+			                 styleSheet: self styleSheet;
+			                 yourself ]
 ]
 
 { #category : #specs }
@@ -29,7 +33,8 @@ PhexSurveyPresenter class >> styleSheet [
 .application [
 	Font { #name : EnvironmentFont(#default) },
 	Geometry { #height: 25 },
-	.box [ Geometry { #height: Reset, #vResizing: true, #hResizing: true } ],
+	.box [ Geometry { #height: Reset, #vResizing: true, #hResizing: true }, Container { #borderColor: #black, #padding: 5} ],
+	.borderedBox [ Container { #borderColor: #black} ],
 	.label [
 		Geometry { #hResizing: true },
 		.headerBold [ Font { #bold: false }],
@@ -40,6 +45,7 @@ PhexSurveyPresenter class >> styleSheet [
 		.fixed [ Geometry { #hResizing: false, #width: 100 } ],
 		.dim [ Draw { #color : Color{ #rgb: 708480675 } } ]
 	],
+   .bgOpaque [ Draw { #backgroundColor: EnvironmentColor(#classBoxBackground) } ],
 	.link [ Geometry { #hResizing: true } ],
 	.button [  
 		Geometry { #width: 100, #height: 30 },
@@ -67,7 +73,6 @@ PhexSurveyPresenter class >> styleSheet [
 		.icons [ Geometry { #height: 30 } ],
 		.iconsAndLabel [ Geometry { #height: 45 } ]
 	],
-	.text [ Geometry { #height: Reset }, Font { #size: 18 } ],
 	.code [ Font { #name: EnvironmentFont(#code) } ],
 	.codePopover [ 
 		Draw { #color : #transparent },
@@ -110,15 +115,21 @@ PhexSurveyPresenter >> initializeDialogWindow: aDialogWindowPresenter [
 
 { #category : #initialization }
 PhexSurveyPresenter >> initializePresenters [
-	|newLayout scrollablePresenter|
-	
+
+	| newLayout scrollablePresenter |
 	super initializePresenters.
+
 	questionsPresenters := survey questions collect: [ :q | 
 		                       PhexSurveyQuestionPresenter on: q ].
+	
 	newLayout := SpBoxLayout newTopToBottom.
-	questionsPresenters do:[:qp| newLayout add: qp].
+	questionsPresenters do: [ :qp | 
+		newLayout add: qp expand: true.
+		newLayout add: SpLabelPresenter new withConstraints: [ :c | c height: 5 ] ].
+
 	scrollablePresenter := SpPresenter new.
 	scrollablePresenter layout: newLayout.
+
 	self layout: (SpScrollableLayout with: scrollablePresenter)
 ]
 
