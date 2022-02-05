@@ -104,6 +104,6 @@ PhexTaskAnwserPresenter >> title [
 	str << 'Finish task'.
 	task ifNil: [ ^ str contents ].
 	str space.
-	str << task name.
+	str << task title.
 	^ str contents
 ]

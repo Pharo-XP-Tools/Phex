@@ -140,7 +140,7 @@ PhexTaskLauncherPresenter >> initializeTaskTable [
 				 sortFunction: nil;
 				 yourself);
 		addColumn:
-		(SpStringTableColumn title: 'Task' evaluated: [ :task | task name ]).
+		(SpStringTableColumn title: 'Task' evaluated: [ :task | task title ]).
 	taskTable transmitDo: [ :item| self updateTaskDescription: item].
 	self updateCurrentExperience
 ]
