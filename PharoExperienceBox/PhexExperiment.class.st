@@ -264,16 +264,22 @@ PhexExperiment >> name [
 	^ 'Unnamed experience' "self subclassResponsibility"
 ]
 
+{ #category : #private }
+PhexExperiment >> newOrderedItemCollection [
+
+	^ SortedCollection sortBlock: [ :a :b | a order < b order ]
+]
+
 { #category : #accessing }
 PhexExperiment >> postSurveys [
 
-	^ postSurveys ifNil: [ postSurveys := OrderedCollection new ]
+	^ postSurveys ifNil: [ postSurveys := self newOrderedItemCollection ]
 ]
 
 { #category : #accessing }
 PhexExperiment >> preSurveys [
 
-	^ preSurveys ifNil: [ preSurveys := OrderedCollection new ]
+	^ preSurveys ifNil: [ preSurveys := self newOrderedItemCollection ]
 ]
 
 { #category : #initialization }
@@ -433,15 +439,15 @@ PhexExperiment >> taskFilenameFor: t [
 { #category : #accessing }
 PhexExperiment >> tasks [
 
-	^ tasks ifNil: [ 
-		  tasks := SortedCollection sortBlock: [ :t1 :t2 | 
-			           t1 order <= t2 order ] ]
+	^ tasks ifNil: [ tasks := self newOrderedItemCollection ]
 ]
 
 { #category : #accessing }
 PhexExperiment >> tasks: anObject [
 
-	tasks := anObject
+	tasks := self newOrderedItemCollection
+		         addAll: anObject;
+		         yourself
 ]
 
 { #category : #'serialize/materialize' }
