@@ -1,11 +1,9 @@
 Class {
 	#name : #PhexAbstractQuestion,
-	#superclass : #Object,
+	#superclass : #PhexOrderedExperimentItem,
 	#instVars : [
-		'title',
 		'answer',
-		'optionnal',
-		'id'
+		'optionnal'
 	],
 	#category : #'PharoExperienceBox-model'
 }
@@ -33,18 +31,6 @@ PhexAbstractQuestion >> generateRecord [
 ]
 
 { #category : #accessing }
-PhexAbstractQuestion >> id [
-
-	^ id ifNil:[UUID new asString]
-]
-
-{ #category : #accessing }
-PhexAbstractQuestion >> id: anObject [
-
-	id := anObject
-]
-
-{ #category : #accessing }
 PhexAbstractQuestion >> optionnal [
 
 	^ optionnal
@@ -59,16 +45,4 @@ PhexAbstractQuestion >> optionnal: anObject [
 { #category : #printing }
 PhexAbstractQuestion >> printAnswer: aPhexAnswer on: aStream [
 	aStream << aPhexAnswer answer
-]
-
-{ #category : #accessing }
-PhexAbstractQuestion >> title [
-
-	^ title
-]
-
-{ #category : #accessing }
-PhexAbstractQuestion >> title: anObject [
-
-	title := anObject
 ]

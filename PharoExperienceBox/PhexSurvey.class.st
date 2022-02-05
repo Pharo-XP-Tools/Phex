@@ -12,14 +12,11 @@ I am considered closed once my `answers` instance variable is no longer nil.
 "
 Class {
 	#name : #PhexSurvey,
-	#superclass : #Object,
+	#superclass : #PhexOrderedExperimentItem,
 	#instVars : [
-		'title',
-		'id',
 		'questions',
 		'validationBlock',
 		'answers',
-		'uuid',
 		'configurator',
 		'isSingleCriticalYesNoQuestion'
 	],
@@ -71,6 +68,11 @@ PhexSurvey >> answers: anObject [
 	self validate
 ]
 
+{ #category : #questions }
+PhexSurvey >> beSingleCriticalYesNoQuestion [
+	isSingleCriticalYesNoQuestion := true
+]
+
 { #category : #accessing }
 PhexSurvey >> configurator [
 
@@ -88,23 +90,6 @@ PhexSurvey >> configureForExperiment: anExperiment [
 	self configurator configureForExperiment:  anExperiment
 ]
 
-{ #category : #accessing }
-PhexSurvey >> id [
-
-	^ id
-]
-
-{ #category : #accessing }
-PhexSurvey >> id: anObject [
-
-	id := anObject
-]
-
-{ #category : #initialization }
-PhexSurvey >> initialize [ 
-	uuid := UUID new
-]
-
 { #category : #testing }
 PhexSurvey >> isClosed [
 	^answers notNil
@@ -113,6 +98,11 @@ PhexSurvey >> isClosed [
 { #category : #testing }
 PhexSurvey >> isOpen [
 	^self isClosed not
+]
+
+{ #category : #accessing }
+PhexSurvey >> isSingleCriticalYesNoQuestion [
+	^isSingleCriticalYesNoQuestion ifNil:[isSingleCriticalYesNoQuestion := false]
 ]
 
 { #category : #accessing }
@@ -127,26 +117,11 @@ PhexSurvey >> questions: anObject [
 	questions := anObject
 ]
 
-{ #category : #accessing }
-PhexSurvey >> title [
-
-	^ title
-]
-
-{ #category : #accessing }
-PhexSurvey >> title: anObject [
-
-	title := anObject
-]
-
-{ #category : #accessing }
-PhexSurvey >> uuid [
-
-	^ uuid
-]
-
 { #category : #questions }
 PhexSurvey >> validate [
+
+	self isSingleCriticalYesNoQuestion ifTrue: [ self halt.
+		self answers first answer ifFalse: [ Smalltalk exitFailure ] ].
 	self validationBlock cull: self
 ]
 

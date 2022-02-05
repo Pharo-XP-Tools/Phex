@@ -435,7 +435,7 @@ PhexExperiment >> tasks [
 
 	^ tasks ifNil: [ 
 		  tasks := SortedCollection sortBlock: [ :t1 :t2 | 
-			           t1 name <= t2 name ] ]
+			           t1 order <= t2 order ] ]
 ]
 
 { #category : #accessing }

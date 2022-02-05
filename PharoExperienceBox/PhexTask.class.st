@@ -3,9 +3,8 @@ I represent an experimental task with status started/finished
 "
 Class {
 	#name : #PhexTask,
-	#superclass : #Object,
+	#superclass : #PhexOrderedExperimentItem,
 	#instVars : [
-		'name',
 		'description',
 		'contents',
 		'started',
@@ -15,7 +14,6 @@ Class {
 		'requiredAnswer',
 		'endTime',
 		'startTime',
-		'uuid',
 		'passed',
 		'alwaysDisplayDescription',
 		'survey',
@@ -130,18 +128,6 @@ PhexTask >> isStarted [
 ]
 
 { #category : #accessing }
-PhexTask >> name [
-
-	^ name
-]
-
-{ #category : #accessing }
-PhexTask >> name: anObject [
-
-	name := anObject
-]
-
-{ #category : #accessing }
 PhexTask >> pass [
 
 	passed := true
@@ -235,16 +221,4 @@ PhexTask >> taskId [
 PhexTask >> taskId: anObject [
 
 	taskId := anObject
-]
-
-{ #category : #accessing }
-PhexTask >> uuid [
-
-	^ uuid ifNil:[uuid := UUID new]
-]
-
-{ #category : #accessing }
-PhexTask >> uuid: anObject [
-
-	uuid := anObject
 ]
