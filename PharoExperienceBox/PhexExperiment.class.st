@@ -110,7 +110,7 @@ PhexExperiment >> addSurvey: aSurvey [
 { #category : #accessing }
 PhexExperiment >> agreementSurveys [
 
-	^ agreementSurveys ifNil: [ agreementSurveys := self newOrderedItemCollection ]
+	^ agreementSurveys ifNil: [ agreementSurveys := OrderedCollection new  ]
 ]
 
 { #category : #testing }
@@ -198,8 +198,13 @@ PhexExperiment >> finishTaskAction [
 ]
 
 { #category : #surveys }
-PhexExperiment >> hasPostSurvey [
+PhexExperiment >> hasAgreementSurvey [
 	^self agreementSurveys notEmpty
+]
+
+{ #category : #surveys }
+PhexExperiment >> hasPostSurvey [
+	^self postSurveys notEmpty
 ]
 
 { #category : #surveys }
@@ -286,13 +291,13 @@ PhexExperiment >> newOrderedItemCollection [
 { #category : #accessing }
 PhexExperiment >> postSurveys [
 
-	^ postSurveys ifNil: [ postSurveys := self newOrderedItemCollection ]
+	^ postSurveys ifNil: [ postSurveys := OrderedCollection new ]
 ]
 
 { #category : #accessing }
 PhexExperiment >> preSurveys [
 
-	^ preSurveys ifNil: [ preSurveys := self newOrderedItemCollection ]
+	^ preSurveys ifNil: [ preSurveys := OrderedCollection new  ]
 ]
 
 { #category : #initialization }
@@ -316,28 +321,22 @@ PhexExperiment >> removeRunningTask: aTask [
 PhexExperiment >> runAgreementSurveyWith: aPresenter [
 
 	self hasAgreementSurvey ifFalse: [ ^ self ].
-	(self agreementSurveys
-		 collect: [ :uuid | self surveyFromUUID: uuid ]
-		 thenSelect: [ :s | s isOpen ]) do: [ :s | 
-		aPresenter runAgreementSurvey: s ]
+	self runSurveySelection: self agreementSurveys with: aPresenter
 ]
 
 { #category : #surveys }
 PhexExperiment >> runPostSurveysWith: aPresenter [
 
 	self hasPostSurvey ifFalse: [ ^ self ].
-	(self postSurveys
-		 collect: [ :uuid | self surveyFromUUID: uuid ]
-		 thenSelect: [ :s | s isOpen ]) do: [ :s | aPresenter runSurvey: s ]
+	self runSurveySelection: self postSurveys with: aPresenter
+
 ]
 
 { #category : #surveys }
 PhexExperiment >> runPreSurveysWith: aPresenter [
 
 	self hasPreSurvey ifFalse: [ ^ self ].
-	(self preSurveys
-		 collect: [ :uuid | self surveyFromUUID: uuid ]
-		 thenSelect: [ :s | s isOpen ]) do: [ :s | aPresenter runSurvey: s ]
+	self runSurveySelection: self preSurveys with: aPresenter
 ]
 
 { #category : #surveys }
@@ -345,6 +344,19 @@ PhexExperiment >> runSurveyFor: task with: aPresenter [
 
 	task hasSurvey ifFalse: [ ^ self ].	
 	aPresenter runSurvey: (surveys at: task survey)
+]
+
+{ #category : #surveys }
+PhexExperiment >> runSurveySelection: surveySelection with: aPresenter [
+
+	| runnableSurveys |
+	runnableSurveys := self newOrderedItemCollection.
+
+	runnableSurveys addAll: (surveySelection
+			 collect: [ :uuid | self surveyFromUUID: uuid ]
+			 thenSelect: [ :s | s isOpen ]).
+			
+	runnableSurveys do: [ :s | aPresenter runAgreementSurvey: s ]
 ]
 
 { #category : #accessing }
