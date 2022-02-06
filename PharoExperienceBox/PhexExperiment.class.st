@@ -15,7 +15,8 @@ Class {
 		'postSurveys',
 		'preSurveys',
 		'surveys',
-		'finishExperimentAction'
+		'finishExperimentAction',
+		'agreementSurveys'
 	],
 	#classInstVars : [
 		'current'
@@ -79,6 +80,12 @@ PhexExperiment class >> yesNoQuestion: text [
 ]
 
 { #category : #surveys }
+PhexExperiment >> addAgreementSurvey: aSurvey [
+
+	self agreementSurveys add: aSurvey uuid
+]
+
+{ #category : #surveys }
 PhexExperiment >> addPostSurvey: aSurvey [
 
 	self postSurveys add: aSurvey uuid
@@ -98,6 +105,12 @@ PhexExperiment >> addRunningTask: aTask [
 { #category : #surveys }
 PhexExperiment >> addSurvey: aSurvey [
 	self surveys at: aSurvey uuid put: aSurvey
+]
+
+{ #category : #accessing }
+PhexExperiment >> agreementSurveys [
+
+	^ agreementSurveys ifNil: [ agreementSurveys := self newOrderedItemCollection ]
 ]
 
 { #category : #testing }
@@ -186,7 +199,7 @@ PhexExperiment >> finishTaskAction [
 
 { #category : #surveys }
 PhexExperiment >> hasPostSurvey [
-	^self postSurveys notEmpty
+	^self agreementSurveys notEmpty
 ]
 
 { #category : #surveys }
@@ -297,6 +310,16 @@ PhexExperiment >> printOn: aStream [
 PhexExperiment >> removeRunningTask: aTask [
 
 	self runningTasks remove: aTask ifAbsent: [  ]
+]
+
+{ #category : #surveys }
+PhexExperiment >> runAgreementSurveyWith: aPresenter [
+
+	self hasAgreementSurvey ifFalse: [ ^ self ].
+	(self agreementSurveys
+		 collect: [ :uuid | self surveyFromUUID: uuid ]
+		 thenSelect: [ :s | s isOpen ]) do: [ :s | 
+		aPresenter runAgreementSurvey: s ]
 ]
 
 { #category : #surveys }

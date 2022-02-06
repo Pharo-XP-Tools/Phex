@@ -1,3 +1,6 @@
+"
+I present a list of PhexSurveyQuestion from a PhexSurvey, with an ok button to validate.
+"
 Class {
 	#name : #PhexSurveyPresenter,
 	#superclass : #SpPresenter,

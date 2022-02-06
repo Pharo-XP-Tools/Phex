@@ -24,6 +24,15 @@ Class {
 }
 
 { #category : #'instance creation' }
+PhexSurvey class >> agreementSurvey [
+	|configurator survey|
+	survey := self new.
+	configurator := PhexAgreementSurveyConfigurator on: survey.
+	^survey
+	
+]
+
+{ #category : #'instance creation' }
 PhexSurvey class >> postExperimentSurvey [
 	|configurator survey|
 	survey := self new.

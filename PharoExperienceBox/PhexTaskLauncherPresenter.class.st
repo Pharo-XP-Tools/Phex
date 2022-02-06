@@ -168,6 +168,7 @@ PhexTaskLauncherPresenter >> loadExperience [
 	ExperimentLogging setLoggerFor: currentExperience.
 	currentExperience logger experimentLoaded: currentExperience.
 	Smalltalk image saveSession.
+	currentExperience runAgreementSurveyWith: self.
 	currentExperience runPreSurveysWith: self
 ]
 
@@ -200,6 +201,17 @@ PhexTaskLauncherPresenter >> menu [
 			          yourself ]
 ]
 
+{ #category : #actions }
+PhexTaskLauncherPresenter >> openModal: aPhexSurveyPresenter for: aPhexSurvey [
+
+	| modal |
+	self finishModalIsOpen ifTrue: [ ^ self ].
+	finishModalIsOpen := true.
+	modal := aPhexSurveyPresenter openBlockedDialogWithSpec.
+	finishModalIsOpen := false.
+	aPhexSurvey answers: modal presenter evaluateSurvey
+]
+
 { #category : #'ui requests' }
 PhexTaskLauncherPresenter >> popover: aString style: aStyle [
 
@@ -223,16 +235,23 @@ PhexTaskLauncherPresenter >> requestWindowClose [
 ]
 
 { #category : #actions }
+PhexTaskLauncherPresenter >> runAgreementSurvey: aPhexSurvey [
+
+	self
+		openModal: ((PhexAgreementPresenter on: aPhexSurvey)
+				 owner: self;
+				 yourself)
+		for: aPhexSurvey
+]
+
+{ #category : #actions }
 PhexTaskLauncherPresenter >> runSurvey: aPhexSurvey [
 
-	| modal |
-	self finishModalIsOpen ifTrue:[^self].
-	finishModalIsOpen := true.
-	modal := (PhexSurveyPresenter on: aPhexSurvey)
-		         owner: self;
-		         openBlockedDialogWithSpec.
-	finishModalIsOpen := false.
-	aPhexSurvey answers: modal presenter evaluateSurvey
+	self
+		openModal: ((PhexSurveyPresenter on: aPhexSurvey)
+				 owner: self;
+				 yourself)
+		for: aPhexSurvey
 ]
 
 { #category : #api }

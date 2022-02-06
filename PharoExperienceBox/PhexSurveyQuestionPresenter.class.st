@@ -1,3 +1,7 @@
+"
+I present a PhexSurveyQuestion: the text of the question and the possible choices of the question.
+By default, the choice is nil (i.e., no choice).
+"
 Class {
 	#name : #PhexSurveyQuestionPresenter,
 	#superclass : #SpPresenter,
@@ -36,6 +40,19 @@ PhexSurveyQuestionPresenter >> addQuestionTextPresenterFor: title toLayout: newL
 					 ifFalse: [ 60 ]).
 			c expand: false.
 			c padding: 0 ]
+]
+
+{ #category : #building }
+PhexSurveyQuestionPresenter >> buildAgreementQuestion: aPhexAgreementQuestion [
+
+	| newLayout |
+	newLayout := self class defaultLayout.
+	
+	self
+		addQuestionTextPresenterFor: aPhexAgreementQuestion title
+		toLayout: newLayout.
+
+	self layout: newLayout
 ]
 
 { #category : #building }
