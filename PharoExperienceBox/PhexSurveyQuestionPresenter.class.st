@@ -51,6 +51,18 @@ PhexSurveyQuestionPresenter >> buildAgreementQuestion: aPhexAgreementQuestion [
 	self
 		addQuestionTextPresenterFor: aPhexAgreementQuestion title
 		toLayout: newLayout.
+		
+	radios := OrderedCollection new.
+	radios add: (self newRadioButton
+			 label: 'Yes';
+			 yourself).
+	radios add: (self newRadioButton
+			 label: 'No';
+			 yourself).
+	radios first associatedRadioButtons: radios allButFirst.
+	radios second state: true.
+
+	newLayout add: (self buildHorizontalRadioBox: radios) expand: false.
 
 	self layout: newLayout
 ]
@@ -238,4 +250,11 @@ PhexSurveyQuestionPresenter >> question: anObject [
 { #category : #initialization }
 PhexSurveyQuestionPresenter >> setModelBeforeInitialization: aPhexQuestion [
 	question := aPhexQuestion 
+]
+
+{ #category : #accessing }
+PhexSurveyQuestionPresenter >> singleChoiceState [
+
+	^ (radios detect: [ :r | r state ] ifNone: [ nil ]) ifNotNil: [ :r | 
+		  r label ]
 ]

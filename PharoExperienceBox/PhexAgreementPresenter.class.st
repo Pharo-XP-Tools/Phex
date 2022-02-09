@@ -20,10 +20,9 @@ PhexAgreementPresenter >> evaluateSurvey [
 { #category : #initialization }
 PhexAgreementPresenter >> initializeDialogWindow: aDialogWindowPresenter [
 
-	aDialogWindowPresenter addButton: 'Yes' do: [ :presenter | 
+	aDialogWindowPresenter addButton: 'Submit' do: [ :presenter | 
+		questionsPresenters first singleChoiceState = 'No' ifTrue: [ 
+			Smalltalk exitFailure ].
 		presenter triggerOkAction.
-		presenter close ].
-	aDialogWindowPresenter
-		addButton: 'No'
-		do: [ :presenter | Smalltalk exitFailure ]
+		presenter close ]
 ]
