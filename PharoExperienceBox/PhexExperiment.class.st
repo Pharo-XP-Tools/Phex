@@ -321,7 +321,11 @@ PhexExperiment >> removeRunningTask: aTask [
 PhexExperiment >> runAgreementSurveyWith: aPresenter [
 
 	self hasAgreementSurvey ifFalse: [ ^ self ].
-	self runSurveySelection: self agreementSurveys with: aPresenter
+	self runSurveySelection: self agreementSurveys with: aPresenter.
+	"If we got there, the system is still running.
+	If the participant refused the agreement, the system would have been terminated.
+	Therefore, the participant did consent to send their data."
+	self logger authorizeDataSending
 ]
 
 { #category : #surveys }
