@@ -511,6 +511,11 @@ PhexExperiment >> updateStatus [
 		isFinished := true ]
 ]
 
+{ #category : #actions }
+PhexExperiment >> validateTask: aTask [
+	self subclassResponsibility 
+]
+
 { #category : #events }
 PhexExperiment >> whenFinishedDo: aBlock [
 
