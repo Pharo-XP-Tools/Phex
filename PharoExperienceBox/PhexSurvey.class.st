@@ -17,8 +17,7 @@ Class {
 		'questions',
 		'validationBlock',
 		'answers',
-		'configurator',
-		'isSingleCriticalYesNoQuestion'
+		'configurator'
 	],
 	#category : #'PharoExperienceBox-model'
 }
@@ -77,11 +76,6 @@ PhexSurvey >> answers: anObject [
 	self validate
 ]
 
-{ #category : #questions }
-PhexSurvey >> beSingleCriticalYesNoQuestion [
-	isSingleCriticalYesNoQuestion := true
-]
-
 { #category : #accessing }
 PhexSurvey >> configurator [
 
@@ -110,11 +104,6 @@ PhexSurvey >> isOpen [
 ]
 
 { #category : #accessing }
-PhexSurvey >> isSingleCriticalYesNoQuestion [
-	^isSingleCriticalYesNoQuestion ifNil:[isSingleCriticalYesNoQuestion := false]
-]
-
-{ #category : #accessing }
 PhexSurvey >> questions [
 
 	^ questions ifNil:[questions := OrderedCollection new]
@@ -129,8 +118,6 @@ PhexSurvey >> questions: anObject [
 { #category : #questions }
 PhexSurvey >> validate [
 
-	self isSingleCriticalYesNoQuestion ifTrue: [ self halt.
-		self answers first answer ifFalse: [ Smalltalk exitFailure ] ].
 	self validationBlock cull: self
 ]
 
