@@ -86,8 +86,7 @@ PhexTaskLauncherPresenter >> finishTask [
 			currentExperience terminate ] ].
 
 
-	self updateTaskDescription: task.
-	self update
+	self updateTaskDescription: task
 ]
 
 { #category : #updating }
@@ -262,6 +261,7 @@ PhexTaskLauncherPresenter >> runTaskBlock: aBlock [
 		do: [ :error | 
 			self warning: error errorMessage.
 			^ self ].
+	self update.
 	self info: 'Success. Image saved.'.
 	Smalltalk image saveSession
 ]
@@ -274,9 +274,7 @@ PhexTaskLauncherPresenter >> startSelectedTask [
 	task ifNil: [ ^ self ].
 
 	self runTaskBlock: [ currentExperience startTask: task ].
-	self updateTaskDescription: task.
-
-	self update
+	self updateTaskDescription: task
 ]
 
 { #category : #updating }
