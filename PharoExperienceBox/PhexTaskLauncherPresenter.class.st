@@ -160,6 +160,12 @@ PhexTaskLauncherPresenter >> loadExperience [
 	currentExperience class = xpClass ifTrue: [ 
 		self inform: 'The experiment is already loaded'.
 		^ self ].
+	self loadExperience: xpClass
+]
+
+{ #category : #actions }
+PhexTaskLauncherPresenter >> loadExperience: xpClass [
+
 	currentExperience := xpClass currentExperiment.
 	currentExperience prepareSystemForExperiment.
 	currentExperience materialize.
