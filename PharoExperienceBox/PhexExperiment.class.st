@@ -16,7 +16,8 @@ Class {
 		'preSurveys',
 		'surveys',
 		'finishExperimentAction',
-		'agreementSurveys'
+		'agreementSurveys',
+		'lastFinishedTaskOrder'
 	],
 	#classInstVars : [
 		'current'
@@ -187,6 +188,7 @@ PhexExperiment >> finishTask: aTask [
 	aTask finish.
 	self removeRunningTask: aTask.
 	self finishTaskAction cull: self cull: aTask.	
+	lastFinishedTaskOrder := aTask order.
 	self serializeTasks.
 	self updateStatus
 ]
@@ -229,6 +231,12 @@ PhexExperiment >> initialize [
 PhexExperiment >> isFinished [
 
 	^ isFinished ifNil:[isFinished := false]
+]
+
+{ #category : #accessing }
+PhexExperiment >> lastFinishedTaskOrder [
+
+	^ lastFinishedTaskOrder ifNil: [ lastFinishedTaskOrder := 0 ]
 ]
 
 { #category : #initialization }
@@ -363,6 +371,12 @@ PhexExperiment >> runSurveySelection: surveySelection with: aPresenter [
 	runnableSurveys do: [ :s | aPresenter runAgreementSurvey: s ]
 ]
 
+{ #category : #testing }
+PhexExperiment >> runTasksInOrder [
+
+	^ false
+]
+
 { #category : #accessing }
 PhexExperiment >> runningTasks [
 
@@ -415,6 +429,7 @@ PhexExperiment >> startTask: aTask [
 	aTask isFinished ifTrue: [ PhexTaskIsAlreadyFinished new signal ].	
 	(self runningTasks includes: aTask) ifTrue: [ 	PhexTaskIsAlreadyStarted new signal ].
 	self canStartNewTask ifFalse: [ PhexAnotherTaskIsStarted new signal ].
+	(self validateStartingTaskOrder: aTask) ifFalse:  [ PhexTaskStartedInWrongOrder new signal ].
 	
 	aTask start.
 	self addRunningTask: aTask.
@@ -509,6 +524,12 @@ PhexExperiment >> updateStatus [
 
 	(self tasks allSatisfy: [ :t | t isFinished ]) ifTrue: [ 
 		isFinished := true ]
+]
+
+{ #category : #testing }
+PhexExperiment >> validateStartingTaskOrder: task [
+
+	^ (self runTasksInOrder not) or: [ task order = self lastFinishedTaskOrder + 1 ]
 ]
 
 { #category : #actions }
