@@ -41,7 +41,7 @@ PhexTaskLauncherPresenter class >> menuCommandOn: aBuilder [
 { #category : #examples }
 PhexTaskLauncherPresenter class >> open [
 	<example>
-	^ self new openWithSpec
+	^ self new openWithSpec; yourself
 ]
 
 { #category : #accessing }
