@@ -183,12 +183,12 @@ PhexTaskLauncherPresenter >> menu [
 	^ menu ifNil: [ 
 		  menu := self newMenuBar
 			          addGroup: [ :group | 
-				          group addItem: [ :item | 
+				       "   group addItem: [ :item | 
 						          item
 							          name: 'Load experience';
 							          description: 'Load an experience';
 							          icon: (self iconNamed: #smallNew);
-							          action: [ self loadExperience ] ].
+							          action: [ self loadExperience ] ]."
 				          group addItem: [ :item | 
 					          item
 						          name: 'Start';
