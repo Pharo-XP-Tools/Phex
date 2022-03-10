@@ -217,6 +217,13 @@ PhexTaskLauncherPresenter >> openModal: aPhexSurveyPresenter for: aPhexSurvey [
 	aPhexSurvey answers: modal presenter evaluateSurvey
 ]
 
+{ #category : #initialization }
+PhexTaskLauncherPresenter >> openWithSpec [ 
+	super openWithSpec.
+	self window window makeUnclosable 
+	
+]
+
 { #category : #'ui requests' }
 PhexTaskLauncherPresenter >> popover: aString style: aStyle [
 
