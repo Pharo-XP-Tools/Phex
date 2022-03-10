@@ -529,7 +529,7 @@ PhexExperiment >> updateStatus [
 { #category : #testing }
 PhexExperiment >> validateStartingTaskOrder: task [
 
-	^ (self runTasksInOrder not) or: [ task order = self lastFinishedTaskOrder + 1 ]
+	^ (self runTasksInOrder not) or: [ task order = (self lastFinishedTaskOrder + 1) ]
 ]
 
 { #category : #actions }
