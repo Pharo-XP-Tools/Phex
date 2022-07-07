@@ -107,6 +107,12 @@ PhexSurveyPresenter >> evaluateSurvey [
 			  question ]
 ]
 
+{ #category : #api }
+PhexSurveyPresenter >> initialExtent [
+ 
+	^ 600@400
+]
+
 { #category : #initialization }
 PhexSurveyPresenter >> initializeDialogWindow: aDialogWindowPresenter [
 
