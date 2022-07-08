@@ -126,6 +126,22 @@ PhexExperiment >> canStartNewTask [
 	^ (self sequentialTasks and: [ self hasRunningTasks ]) not
 ]
 
+{ #category : #'serialize/materialize' }
+PhexExperiment >> clearSurveysFiles [
+
+	| dir |
+	dir := self ensureSurveysDefinitionFolder.
+	dir files do: [ :f | f delete ]
+]
+
+{ #category : #'serialize/materialize' }
+PhexExperiment >> clearTasksFiles [
+
+	| dir |
+	dir := self ensureTasksDefinitionFolder.
+	dir files do: [ :f | f delete ]
+]
+
 { #category : #api }
 PhexExperiment >> closeable [
 	^true
@@ -399,6 +415,7 @@ PhexExperiment >> serializeSurveys [
 
 	| dir |
 	dir := self ensureSurveysDefinitionFolder.
+	self clearSurveysFiles.
 	self surveys valuesDo: [ :s | 
 		(dir / (self surveyFilenameFor: s)) asFileReference writeStreamDo: [ 
 			:ws | ws nextPutAll: (STON toString: s) ] ]
@@ -409,6 +426,7 @@ PhexExperiment >> serializeTasks [
 
 	| dir |
 	dir := self ensureTasksDefinitionFolder.
+	self clearTasksFiles.
 	self tasks do: [ :t | 
 		(dir / (self taskFilenameFor: t)) asFileReference writeStreamDo: [ 
 			:ws | ws nextPutAll: (STON toString: t) ] ]
