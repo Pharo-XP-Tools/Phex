@@ -384,7 +384,7 @@ PhexExperiment >> runSurveySelection: surveySelection with: aPresenter [
 			 collect: [ :uuid | self surveyFromUUID: uuid ]
 			 thenSelect: [ :s | s isOpen ]).
 			
-	runnableSurveys do: [ :s | s runSurveyOn: aPresenter  ]
+	runnableSurveys do: [ :s | s configurator runSurveyOn: aPresenter  ]
 ]
 
 { #category : #testing }

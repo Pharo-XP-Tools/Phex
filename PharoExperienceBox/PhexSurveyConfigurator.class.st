@@ -30,5 +30,5 @@ PhexSurveyConfigurator >> forSurvey: aPhexSurvey [
 
 { #category : #'as yet unclassified' }
 PhexSurveyConfigurator >> runSurveyOn: aPresenter [
-	aPresenter runSurvey: self
+	aPresenter runSurvey: survey
 ]

@@ -12,5 +12,5 @@ PhexAgreementSurveyConfigurator >> configureForExperiment: aPhexExperiment [
 
 { #category : #'as yet unclassified' }
 PhexAgreementSurveyConfigurator >> runSurveyOn: aPresenter [
-	aPresenter runAgreementSurvey: self
+	aPresenter runAgreementSurvey: survey
 ]
