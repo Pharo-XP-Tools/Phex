@@ -232,6 +232,7 @@ PhexSurveyQuestionPresenter >> initializePresenters [
 PhexSurveyQuestionPresenter >> newAnswerForQuestion: aPhexQuestion [
 
 	answer := PhexSurveyAnswer new.
+	answer question: aPhexQuestion.
 	aPhexQuestion answer: answer
 ]
 
