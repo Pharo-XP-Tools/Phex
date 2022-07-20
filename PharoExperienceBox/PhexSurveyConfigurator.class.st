@@ -27,3 +27,8 @@ PhexSurveyConfigurator >> forSurvey: aPhexSurvey [
 	survey := aPhexSurvey.
 	aPhexSurvey configurator: self
 ]
+
+{ #category : #'as yet unclassified' }
+PhexSurveyConfigurator >> runSurveyOn: aPresenter [
+	aPresenter runSurvey: self
+]
