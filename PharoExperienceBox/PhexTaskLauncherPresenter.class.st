@@ -13,6 +13,11 @@ Class {
 	#category : #'PharoExperienceBox-presenters'
 }
 
+{ #category : #accessing }
+PhexTaskLauncherPresenter class >> currentApplication [ 
+	^PhexSurveyPresenter currentApplication 
+]
+
 { #category : #specs }
 PhexTaskLauncherPresenter class >> defaultSpec [
 
@@ -115,6 +120,7 @@ PhexTaskLauncherPresenter >> info: aString [
 
 { #category : #initialization }
 PhexTaskLauncherPresenter >> initializePresenters [
+self application: self class currentApplication.
 	self initializeTaskTable.
 	self initializeTaskDescription.
 	self menu
