@@ -84,8 +84,9 @@ PhexTaskLauncherPresenter >> finishTask [
 		taskAnswer := modal presenter buildTaskAnswer.
 		task answer: taskAnswer.
 
-		currentExperience runSurveyFor: task with: self.
 		currentExperience finishTask: task.
+		currentExperience runSurveyFor: task with: self.
+				
 		currentExperience isFinished ifTrue: [ 
 			currentExperience runPostSurveysWith: self.
 			currentExperience terminate ] ].
