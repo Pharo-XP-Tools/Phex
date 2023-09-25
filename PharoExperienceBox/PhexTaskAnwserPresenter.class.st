@@ -91,28 +91,9 @@ PhexTaskAnwserPresenter >> initializePresenters [
 		                yourself
 ]
 
-{ #category : #showing }
-PhexTaskAnwserPresenter >> openBlockedDialogWithSpec [
-
-	"Overriden to show a confirmation blocking dialog once the ok button is pressed."
-
-	^ (self asBlockedDialogWindow
-		   okAction: [ self showConfirmationModal ifTrue: [ self owner beOk ] ];
-		   yourself) open
-]
-
 { #category : #initialization }
 PhexTaskAnwserPresenter >> setModelBeforeInitialization: aPhexTask [
 	task := aPhexTask
-]
-
-{ #category : #'as yet unclassified' }
-PhexTaskAnwserPresenter >> showConfirmationModal [
-
-	^ (StPharoApplication current newConfirm
-		   label: 'The answer can not be modified later. Are you sure you want to submit?';
-		   title: 'Confirmation required';
-		   yourself) openModalWithSpec
 ]
 
 { #category : #accessing }
