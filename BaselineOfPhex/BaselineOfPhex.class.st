@@ -15,5 +15,8 @@ BaselineOfPhex >> baseline: spec [
 		spec
 			baseline: 'MicroEd'
 			with: [ spec repository: 'github://Pharo-XP-Tools/MicroEd' ].
-		spec package: 'PharoExperienceBox' ]
+		spec package: 'PharoExperienceBox'.
+		spec group: 'core' with: #('PharoExperienceBox').
+		
+		 ]
 ]
