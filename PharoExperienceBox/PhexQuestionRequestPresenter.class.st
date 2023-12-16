@@ -19,6 +19,17 @@ PhexQuestionRequestPresenter class >> defaultSpec [
 		  yourself
 ]
 
+{ #category : #'as yet unclassified' }
+PhexQuestionRequestPresenter class >> question: aString choices: aCollection [
+
+	^ self basicNew
+		  application: self currentApplication;
+		  setModelBeforeInitialization: aCollection;
+		  questionText: aString;
+		  initialize;
+		  yourself
+]
+
 { #category : #layout }
 PhexQuestionRequestPresenter >> buttons [
 	^buttons ifNil:[buttons := OrderedCollection new]
