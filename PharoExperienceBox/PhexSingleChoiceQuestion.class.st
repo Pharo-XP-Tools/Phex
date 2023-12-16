@@ -13,3 +13,8 @@ PhexSingleChoiceQuestion >> buildOn: aSpecPresenter [
 PhexSingleChoiceQuestion >> evaluateResultFrom: aPhexSurveyQuestionPresenter [ 
 	aPhexSurveyQuestionPresenter evaluateSingleChoiceAnswerFrom: self
 ]
+
+{ #category : #printing }
+PhexSingleChoiceQuestion >> printOn: aStream [
+	aStream << title
+]
