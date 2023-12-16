@@ -5,10 +5,19 @@ Class {
 		'buttons',
 		'choices',
 		'selectedChoice',
-		'question'
+		'question',
+		'pharo9Layout'
 	],
 	#category : #'PharoExperienceBox-presenters'
 }
+
+{ #category : #specs }
+PhexQuestionRequestPresenter class >> defaultSpec [
+
+	^ SpBoxLayout newTopToBottom
+		  add: #pharo9Layout;
+		  yourself
+]
 
 { #category : #layout }
 PhexQuestionRequestPresenter >> buttons [
@@ -22,6 +31,15 @@ PhexQuestionRequestPresenter >> content [
 
 { #category : #layout }
 PhexQuestionRequestPresenter >> defaultLayout [
+
+	layout := SpBoxLayout newTopToBottom.
+	layout add: self textPresenter height: 80.
+	self buttons do: [ :b | layout add: b expand: false fill: false ].
+	^ layout
+]
+
+{ #category : #layout }
+PhexQuestionRequestPresenter >> defaultSpec [
 
 	layout := SpBoxLayout newTopToBottom.
 	layout add: self textPresenter height: 80.
@@ -46,7 +64,8 @@ PhexQuestionRequestPresenter >> initializePresenters [
 		           self newButton
 			           action: [ self selectedChoice: c ];
 			           label: c;
-			           yourself ]
+			           yourself ].
+	pharo9Layout := self defaultLayout 
 ]
 
 { #category : #'accessing - model' }
