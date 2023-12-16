@@ -25,7 +25,7 @@ PhexQuestionRequestPresenter >> defaultLayout [
 
 	layout := SpBoxLayout newTopToBottom.
 	layout add: self textPresenter height: 80.
-"	self buttons do: [ :b | layout add: b expand: false fill: false ]."
+	self buttons do: [ :b | layout add: b expand: false fill: false ].
 	^ layout
 ]
 
@@ -34,10 +34,7 @@ PhexQuestionRequestPresenter >> initializeDialogWindow: aDialog [
 
 	aDialog closeOnBackdropClick: false.
 	aDialog cancelAction: [  ].
-	aDialog title: 'Question'.
-
-	choices do: [ :c |
-		aDialog addButton: c do: [ :presenter | self selectedChoice: c ] ]
+	aDialog title: 'Question'
 ]
 
 { #category : #initialize }
