@@ -15,7 +15,7 @@ Class {
 PhexQuestionRequestPresenter class >> defaultSpec [
 
 	^ SpBoxLayout newTopToBottom
-		  add: #pharo9Layout;
+		  add: #pharo9Layout expand: true fill: true;
 		  yourself
 ]
 
