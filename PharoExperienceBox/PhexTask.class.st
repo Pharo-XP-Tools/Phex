@@ -17,13 +17,20 @@ Class {
 		'passed',
 		'alwaysDisplayDescription',
 		'survey',
-		'taskId'
+		'taskId',
+		'metadata'
 	],
 	#classInstVars : [
 		'tasks'
 	],
 	#category : #'PharoExperienceBox-model'
 }
+
+{ #category : #accessing }
+PhexTask >> addMetadata: data atKey: key [
+
+	self metadata at: key put: data
+]
 
 { #category : #accessing }
 PhexTask >> alwaysDisplayDescription [
@@ -125,6 +132,12 @@ PhexTask >> isFinished [
 { #category : #testing }
 PhexTask >> isStarted [
 	^started
+]
+
+{ #category : #accessing }
+PhexTask >> metadata [
+
+	^ metadata ifNil: [ metadata := Dictionary new ]
 ]
 
 { #category : #accessing }
