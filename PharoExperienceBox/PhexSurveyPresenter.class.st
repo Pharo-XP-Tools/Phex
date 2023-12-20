@@ -117,7 +117,7 @@ PhexSurveyPresenter >> initialExtent [
 PhexSurveyPresenter >> initializeDialogWindow: aDialogWindowPresenter [
 
 	| isDemographicSurvey |
-	self halt.
+
 	isDemographicSurvey := survey title = 'Demographic information'.
 
 	aDialogWindowPresenter whenOpenedDo: [ 
