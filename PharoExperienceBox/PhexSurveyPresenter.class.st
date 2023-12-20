@@ -116,10 +116,27 @@ PhexSurveyPresenter >> initialExtent [
 { #category : #initialization }
 PhexSurveyPresenter >> initializeDialogWindow: aDialogWindowPresenter [
 
-	aDialogWindowPresenter
-		addButton: 'Ok' do: [ :presenter | 
-			presenter triggerOkAction.
-			presenter close ]
+	| isDemographicSurvey |
+
+	isDemographicSurvey := survey title = 'Demographic information'.
+
+	aDialogWindowPresenter whenOpenedDo: [ 
+		isDemographicSurvey ifTrue: [ aDialogWindowPresenter window makeUnclosable ] 
+	].
+
+	aDialogWindowPresenter addButton: 'Ok' do: [ :presenter | 
+		isDemographicSurvey ifTrue: [ 
+			(questionsPresenters
+				 detect: [ :qp | qp singleChoiceState = 'No choice' ]
+				 ifNone: [ nil ])
+				ifNil: [ presenter window makeClosable ]
+				ifNotNil: [ 
+					UIManager default
+						alert:
+						'It is mandatory to complete the demographic survey. Please provide an answer for each question (Do not forget to scroll down).'
+						title: 'Missing information' ] ].
+		presenter triggerOkAction.
+		presenter close ]
 ]
 
 { #category : #initialization }
