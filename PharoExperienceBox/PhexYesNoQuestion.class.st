@@ -13,3 +13,8 @@ PhexYesNoQuestion >> buildOn: aSpecPresenter [
 PhexYesNoQuestion >> evaluateResultFrom: aPhexSurveyQuestionPresenter [ 
 	aPhexSurveyQuestionPresenter evaluateYesNoAnswerFor: self
 ]
+
+{ #category : #testing }
+PhexYesNoQuestion >> hasValidAnswer: aCollection [ 
+	^#('Yes' 'No') includes: answer answer
+]

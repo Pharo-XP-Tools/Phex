@@ -13,3 +13,8 @@ PhexFreeTextQuestion >> buildOn: aSpecPresenter [
 PhexFreeTextQuestion >> evaluateResultFrom: aPhexSurveyQuestionPresenter [ 
 	aPhexSurveyQuestionPresenter evaluateFreeTextAnswerFrom: self
 ]
+
+{ #category : #testing }
+PhexFreeTextQuestion >> hasValidAnswer: aCollection [ 
+	^answer answer notEmpty
+]

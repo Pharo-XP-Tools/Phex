@@ -76,6 +76,38 @@ PhexSurvey >> answers: anObject [
 	self validate
 ]
 
+{ #category : #'as yet unclassified' }
+PhexSurvey >> collectAnswers [
+
+	(answers isKindOf: Boolean) ifTrue: [
+		^ OrderedCollection with: (PhexSurveyAnswerResult new
+				   question: questions first title;
+				   answer: answers;
+				   yourself) ].
+
+	^ answers collect: [ :a |
+		  PhexSurveyAnswerResult new
+			  question: a title;
+			  answer: a answer answer;
+			  yourself ]
+]
+
+{ #category : #'as yet unclassified' }
+PhexSurvey >> collectAnswersFromQuestions [
+
+	(answers isKindOf: Boolean) ifTrue: [
+		^ OrderedCollection with: (PhexSurveyAnswerResult new
+				   question: questions first title;
+				   answer: answers;
+				   yourself) ].
+
+	^ questions collect: [ :a |
+		  PhexSurveyAnswerResult new
+			  question: a title;
+			  answer: a answer answer;
+			  yourself ]
+]
+
 { #category : #accessing }
 PhexSurvey >> configurator [
 
@@ -93,6 +125,15 @@ PhexSurvey >> configureForExperiment: anExperiment [
 	self configurator configureForExperiment:  anExperiment
 ]
 
+{ #category : #accessing }
+PhexSurvey >> isAlmostValid [
+
+	^ (questions inject: 0 into: [ :sum :next |
+		   (next hasValidAnswer: answers)
+			   ifTrue: [ sum + 1 ]
+			   ifFalse: [ sum ] ]) <= 2 
+]
+
 { #category : #testing }
 PhexSurvey >> isClosed [
 	^answers notNil
@@ -101,6 +142,12 @@ PhexSurvey >> isClosed [
 { #category : #testing }
 PhexSurvey >> isOpen [
 	^self isClosed not
+]
+
+{ #category : #accessing }
+PhexSurvey >> isValid [
+	
+	^questions allSatisfy: [ :q| q hasValidAnswer: answers]
 ]
 
 { #category : #accessing }

@@ -14,6 +14,11 @@ PhexSingleChoiceQuestion >> evaluateResultFrom: aPhexSurveyQuestionPresenter [
 	aPhexSurveyQuestionPresenter evaluateSingleChoiceAnswerFrom: self
 ]
 
+{ #category : #testing }
+PhexSingleChoiceQuestion >> hasValidAnswer: aCollection [ 
+	^choices includes: answer answer
+]
+
 { #category : #printing }
 PhexSingleChoiceQuestion >> printOn: aStream [
 	aStream << title
