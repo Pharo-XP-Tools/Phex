@@ -133,11 +133,9 @@ PhexTaskLauncherPresenter >> initializePresenters [
 
 { #category : 'initialization' }
 PhexTaskLauncherPresenter >> initializeTaskDescription [
+
 	taskDescription := MicrodownPresenter on: self.
-	taskDescription  text: (Microdown asRichText:
-			'## Subtitle
-			*italic*
-			**bold**')
+	taskDescription text: (Microdown asRichText: '## select a task')
 ]
 
 { #category : 'initialization' }
@@ -341,8 +339,7 @@ PhexTaskLauncherPresenter >> updateCurrentExperience [
 	currentExperience ifNil: [ 
 		taskTable items: #(  ).
 		^ self ].
-	taskTable items: currentExperience tasks.
-	self updateTitle
+	taskTable items: currentExperience tasks
 ]
 
 { #category : 'updating' }
@@ -357,11 +354,8 @@ PhexTaskLauncherPresenter >> updateTaskDescription: item [
 
 { #category : 'updating' }
 PhexTaskLauncherPresenter >> updateTextInputWith: aString [
-	
-	taskDescription textInputText: aString.
-	taskDescription renderDocument
-	
 
+	taskDescription text: (Microdown asRichText: aString)
 ]
 
 { #category : 'api' }
