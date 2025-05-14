@@ -2,8 +2,8 @@
 I present a list of PhexSurveyQuestion from a PhexSurvey, with an ok button to validate.
 "
 Class {
-	#name : #PhexSurveyPresenter,
-	#superclass : #SpPresenter,
+	#name : 'PhexSurveyPresenter',
+	#superclass : 'SpPresenter',
 	#instVars : [
 		'survey',
 		'actionBar',
@@ -12,10 +12,12 @@ Class {
 	#classInstVars : [
 		'application'
 	],
-	#category : #'PharoExperienceBox-presenters'
+	#category : 'PharoExperienceBox-presenters',
+	#package : 'PharoExperienceBox',
+	#tag : 'presenters'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PhexSurveyPresenter class >> currentApplication [
 
 	^ application ifNil: [ 
@@ -24,12 +26,12 @@ PhexSurveyPresenter class >> currentApplication [
 			                 yourself ]
 ]
 
-{ #category : #specs }
+{ #category : 'specs' }
 PhexSurveyPresenter class >> defaultSpec [ 
 	^SpBoxLayout newTopToBottom 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PhexSurveyPresenter class >> styleSheet [
 
 	^ SpStyleVariableSTONReader fromString: '
@@ -98,7 +100,7 @@ PhexSurveyPresenter class >> styleSheet [
 '
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 PhexSurveyPresenter >> evaluateSurvey [
 
 	^ questionsPresenters collect: [ :p | 
@@ -107,13 +109,13 @@ PhexSurveyPresenter >> evaluateSurvey [
 			  question ]
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 PhexSurveyPresenter >> initialExtent [
  
 	^ 600@400
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PhexSurveyPresenter >> initializeDialogWindow: aDialogWindowPresenter [
 
 	| isDemographicSurvey |
@@ -139,7 +141,7 @@ PhexSurveyPresenter >> initializeDialogWindow: aDialogWindowPresenter [
 		presenter close ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PhexSurveyPresenter >> initializePresenters [
 
 	| newLayout scrollablePresenter |
@@ -159,14 +161,14 @@ PhexSurveyPresenter >> initializePresenters [
 	self layout: (SpScrollableLayout with: scrollablePresenter)
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PhexSurveyPresenter >> initializeWindow: aWindowPresenter [
 
 	super initializeWindow: aWindowPresenter.
 	aWindowPresenter title: survey title
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PhexSurveyPresenter >> setModelBeforeInitialization: aPhexSurvey [
 	survey := aPhexSurvey 
 ]

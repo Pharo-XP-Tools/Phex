@@ -2,12 +2,14 @@
 I should be raised when one attempts to start a task that is already started.
 "
 Class {
-	#name : #PhexTaskIsAlreadyStarted,
-	#superclass : #PhexTaskError,
-	#category : #'PharoExperienceBox-model'
+	#name : 'PhexTaskIsAlreadyStarted',
+	#superclass : 'PhexTaskError',
+	#category : 'PharoExperienceBox-model',
+	#package : 'PharoExperienceBox',
+	#tag : 'model'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PhexTaskIsAlreadyStarted >> errorMessage [
 
 	^ 'You are already working on this task'

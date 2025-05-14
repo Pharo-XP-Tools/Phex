@@ -4,12 +4,14 @@ I should be raised when one attempts to start a task and:
 - the task the user tries to start is not the next one in the order
 "
 Class {
-	#name : #PhexTaskStartedInWrongOrder,
-	#superclass : #PhexTaskError,
-	#category : #'PharoExperienceBox-model'
+	#name : 'PhexTaskStartedInWrongOrder',
+	#superclass : 'PhexTaskError',
+	#category : 'PharoExperienceBox-model',
+	#package : 'PharoExperienceBox',
+	#tag : 'model'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PhexTaskStartedInWrongOrder >> errorMessage [
 
 	^ 'You must finish prior tasks before starting this task'

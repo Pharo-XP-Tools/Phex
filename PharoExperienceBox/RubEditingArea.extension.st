@@ -1,6 +1,6 @@
-Extension { #name : #RubEditingArea }
+Extension { #name : 'RubEditingArea' }
 
-{ #category : #'*PharoExperienceBox' }
+{ #category : '*PharoExperienceBox' }
 RubEditingArea >> browsePhexSelection [
 
 	| selection |

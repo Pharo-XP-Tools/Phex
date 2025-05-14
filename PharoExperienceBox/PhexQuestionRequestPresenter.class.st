@@ -1,6 +1,6 @@
 Class {
-	#name : #PhexQuestionRequestPresenter,
-	#superclass : #SpPresenter,
+	#name : 'PhexQuestionRequestPresenter',
+	#superclass : 'SpPresenter',
 	#instVars : [
 		'buttons',
 		'choices',
@@ -8,10 +8,12 @@ Class {
 		'question',
 		'pharo9Layout'
 	],
-	#category : #'PharoExperienceBox-presenters'
+	#category : 'PharoExperienceBox-presenters',
+	#package : 'PharoExperienceBox',
+	#tag : 'presenters'
 }
 
-{ #category : #specs }
+{ #category : 'specs' }
 PhexQuestionRequestPresenter class >> defaultSpec [
 
 	^ SpBoxLayout newTopToBottom
@@ -19,7 +21,7 @@ PhexQuestionRequestPresenter class >> defaultSpec [
 		  yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 PhexQuestionRequestPresenter class >> question: aString choices: aCollection [
 
 	^ self basicNew
@@ -30,17 +32,17 @@ PhexQuestionRequestPresenter class >> question: aString choices: aCollection [
 		  yourself
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 PhexQuestionRequestPresenter >> buttons [
 	^buttons ifNil:[buttons := OrderedCollection new]
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 PhexQuestionRequestPresenter >> content [
 	^ 'I am a modal demo with custom actions buttons.  I set closeOnBackdropClick to false so that the user cannot click on the backdrop to close the modal.'
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 PhexQuestionRequestPresenter >> defaultLayout [
 
 	layout := SpBoxLayout newTopToBottom.
@@ -49,7 +51,7 @@ PhexQuestionRequestPresenter >> defaultLayout [
 	^ layout
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 PhexQuestionRequestPresenter >> defaultSpec [
 
 	layout := SpBoxLayout newTopToBottom.
@@ -58,7 +60,7 @@ PhexQuestionRequestPresenter >> defaultSpec [
 	^ layout
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 PhexQuestionRequestPresenter >> initializeDialogWindow: aDialog [
 
 	aDialog closeOnBackdropClick: false.
@@ -66,7 +68,7 @@ PhexQuestionRequestPresenter >> initializeDialogWindow: aDialog [
 	aDialog title: 'Question'
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 PhexQuestionRequestPresenter >> initializePresenters [
 
 	super initializePresenters.
@@ -79,18 +81,18 @@ PhexQuestionRequestPresenter >> initializePresenters [
 	pharo9Layout := self defaultLayout 
 ]
 
-{ #category : #'accessing - model' }
+{ #category : 'accessing - model' }
 PhexQuestionRequestPresenter >> questionText: text [
 	question := text
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PhexQuestionRequestPresenter >> selectedChoice [
 
 	^ selectedChoice
 ]
 
-{ #category : #'accessing - model' }
+{ #category : 'accessing - model' }
 PhexQuestionRequestPresenter >> selectedChoice: aString [
 
 	selectedChoice := aString.
@@ -100,14 +102,14 @@ PhexQuestionRequestPresenter >> selectedChoice: aString [
 		close
 ]
 
-{ #category : #'accessing - model' }
+{ #category : 'accessing - model' }
 PhexQuestionRequestPresenter >> setModelBeforeInitialization: model [
 
 	choices := model.
 	selectedChoice := nil
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 PhexQuestionRequestPresenter >> textPresenter [
 
 	^ self newText

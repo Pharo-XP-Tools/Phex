@@ -3,8 +3,8 @@ I present a PhexSurveyQuestion: the text of the question and the possible choice
 By default, the choice is nil (i.e., no choice).
 "
 Class {
-	#name : #PhexSurveyQuestionPresenter,
-	#superclass : #SpPresenter,
+	#name : 'PhexSurveyQuestionPresenter',
+	#superclass : 'SpPresenter',
 	#instVars : [
 		'question',
 		'checkboxes',
@@ -13,15 +13,17 @@ Class {
 		'result',
 		'answer'
 	],
-	#category : #'PharoExperienceBox-presenters'
+	#category : 'PharoExperienceBox-presenters',
+	#package : 'PharoExperienceBox',
+	#tag : 'presenters'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PhexSurveyQuestionPresenter class >> currentApplication [ 
 	^PhexSurveyPresenter currentApplication 
 ]
 
-{ #category : #spec }
+{ #category : 'spec' }
 PhexSurveyQuestionPresenter class >> defaultLayout [
 
 	^ SpBoxLayout newTopToBottom
@@ -29,7 +31,7 @@ PhexSurveyQuestionPresenter class >> defaultLayout [
 		  yourself
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 PhexSurveyQuestionPresenter >> addQuestionTextPresenterFor: title toLayout: newLayout [
 
 	newLayout
@@ -42,7 +44,7 @@ PhexSurveyQuestionPresenter >> addQuestionTextPresenterFor: title toLayout: newL
 			c padding: 0 ]
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 PhexSurveyQuestionPresenter >> buildAgreementQuestion: aPhexAgreementQuestion [
 
 	| newLayout |
@@ -67,7 +69,7 @@ PhexSurveyQuestionPresenter >> buildAgreementQuestion: aPhexAgreementQuestion [
 	self layout: newLayout
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 PhexSurveyQuestionPresenter >> buildFreeTextSurveyQuestion: aPhexFreeTextQuestion [
 
 	|newLayout|
@@ -78,7 +80,7 @@ PhexSurveyQuestionPresenter >> buildFreeTextSurveyQuestion: aPhexFreeTextQuestio
 	
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 PhexSurveyQuestionPresenter >> buildHorizontalRadioBox: rs [
 
 	| box |
@@ -87,7 +89,7 @@ PhexSurveyQuestionPresenter >> buildHorizontalRadioBox: rs [
 	^ box
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 PhexSurveyQuestionPresenter >> buildMultipleChoiceSurveyQuestion: aPhexMultipleChoicesQuestion [
 
 	|newLayout boxLayout|
@@ -103,7 +105,7 @@ PhexSurveyQuestionPresenter >> buildMultipleChoiceSurveyQuestion: aPhexMultipleC
 	
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 PhexSurveyQuestionPresenter >> buildQuestionText: questionText [
 
 	| textPresenter |
@@ -116,13 +118,13 @@ PhexSurveyQuestionPresenter >> buildQuestionText: questionText [
 	^ textPresenter
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 PhexSurveyQuestionPresenter >> buildRadios: rs inBox: box [
 
 	rs do: [ :r | box add: r expand: false ]
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 PhexSurveyQuestionPresenter >> buildSingleChoiceSurveyQuestion: aPhexYesNoQuestion [
 
 	| newLayout |
@@ -146,7 +148,7 @@ PhexSurveyQuestionPresenter >> buildSingleChoiceSurveyQuestion: aPhexYesNoQuesti
 	self layout: newLayout
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 PhexSurveyQuestionPresenter >> buildVerticalRadioBox: rs [
 
 	| box |
@@ -155,7 +157,7 @@ PhexSurveyQuestionPresenter >> buildVerticalRadioBox: rs [
 	^ box
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 PhexSurveyQuestionPresenter >> buildYesNoSurveyQuestion: aPhexYesNoQuestion [
 
 	| newLayout |
@@ -180,14 +182,14 @@ PhexSurveyQuestionPresenter >> buildYesNoSurveyQuestion: aPhexYesNoQuestion [
 	self layout: newLayout
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 PhexSurveyQuestionPresenter >> evaluateFreeTextAnswerFrom: aPhexQuestion [
 	self newAnswerForQuestion: aPhexQuestion.
 	answer answer: freeText text
 	
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 PhexSurveyQuestionPresenter >> evaluateMultipleChoiceAnswerFrom: aPhexMultipleChoicesQuestion [
 
 	self newAnswerForQuestion: aPhexMultipleChoicesQuestion.
@@ -195,7 +197,7 @@ PhexSurveyQuestionPresenter >> evaluateMultipleChoiceAnswerFrom: aPhexMultipleCh
 		(checkboxes select: [ :c | c state ] thenCollect: [ :c | c label ])
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 PhexSurveyQuestionPresenter >> evaluateSingleChoiceAnswerFrom: aPhexSingleChoiceQuestion [
 
 	self newAnswerForQuestion: aPhexSingleChoiceQuestion.
@@ -205,12 +207,12 @@ PhexSurveyQuestionPresenter >> evaluateSingleChoiceAnswerFrom: aPhexSingleChoice
 			 ifNone: [ 'No answer found' ])
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 PhexSurveyQuestionPresenter >> evaluateSurveyAnswer [
 	question evaluateResultFrom: self
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 PhexSurveyQuestionPresenter >> evaluateYesNoAnswerFor: aPhexYesNoQuestion [
 
 	self newAnswerForQuestion: aPhexYesNoQuestion.
@@ -220,7 +222,7 @@ PhexSurveyQuestionPresenter >> evaluateYesNoAnswerFor: aPhexYesNoQuestion [
 			 ifNone: [ 'No answer found' ])
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PhexSurveyQuestionPresenter >> initializePresenters [
 	checkboxes := OrderedCollection new. 	
 	radios := OrderedCollection new.	
@@ -228,7 +230,7 @@ PhexSurveyQuestionPresenter >> initializePresenters [
 	self question buildOn: self
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 PhexSurveyQuestionPresenter >> newAnswerForQuestion: aPhexQuestion [
 
 	answer := PhexSurveyAnswer new.
@@ -236,24 +238,24 @@ PhexSurveyQuestionPresenter >> newAnswerForQuestion: aPhexQuestion [
 	aPhexQuestion answer: answer
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PhexSurveyQuestionPresenter >> question [
 
 	^ question
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PhexSurveyQuestionPresenter >> question: anObject [
 
 	question := anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PhexSurveyQuestionPresenter >> setModelBeforeInitialization: aPhexQuestion [
 	question := aPhexQuestion 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PhexSurveyQuestionPresenter >> singleChoiceState [
 
 	^ (radios detect: [ :r | r state ] ifNone: [ nil ]) ifNotNil: [ :r | 

@@ -5,19 +5,21 @@ Clicking `no` just quit Pharo.
 Clicking `yes` records the agreement.
 "
 Class {
-	#name : #PhexAgreementPresenter,
-	#superclass : #PhexSurveyPresenter,
-	#category : #'PharoExperienceBox-presenters'
+	#name : 'PhexAgreementPresenter',
+	#superclass : 'PhexSurveyPresenter',
+	#category : 'PharoExperienceBox-presenters',
+	#package : 'PharoExperienceBox',
+	#tag : 'presenters'
 }
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 PhexAgreementPresenter >> evaluateSurvey [
 	"By default, if the survey is evaluated it means the user clicked on accept. 
 	We just return true as there is nothing more to check."
 	^ true
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PhexAgreementPresenter >> initializeDialogWindow: aDialogWindowPresenter [
 
 	aDialogWindowPresenter addButton: 'Submit' do: [ :presenter | 

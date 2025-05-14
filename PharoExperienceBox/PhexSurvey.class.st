@@ -11,18 +11,20 @@ I am considered closed once my `answers` instance variable is no longer nil.
 
 "
 Class {
-	#name : #PhexSurvey,
-	#superclass : #PhexOrderedExperimentItem,
+	#name : 'PhexSurvey',
+	#superclass : 'PhexOrderedExperimentItem',
 	#instVars : [
 		'questions',
 		'validationBlock',
 		'answers',
 		'configurator'
 	],
-	#category : #'PharoExperienceBox-model'
+	#category : 'PharoExperienceBox-model',
+	#package : 'PharoExperienceBox',
+	#tag : 'model'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 PhexSurvey class >> agreementSurvey [
 	|configurator survey|
 	survey := self new.
@@ -31,7 +33,7 @@ PhexSurvey class >> agreementSurvey [
 	
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 PhexSurvey class >> postExperimentSurvey [
 	|configurator survey|
 	survey := self new.
@@ -40,7 +42,7 @@ PhexSurvey class >> postExperimentSurvey [
 	
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 PhexSurvey class >> preExperimentSurvey [
 	|configurator survey|
 	survey := self new.
@@ -49,7 +51,7 @@ PhexSurvey class >> preExperimentSurvey [
 	
 ]
 
-{ #category : #'ston-core' }
+{ #category : 'ston-core' }
 PhexSurvey class >> stonAllInstVarNames [
 
 	"Override to encode my instances using a custom set of instance variables or to define their order."
@@ -58,25 +60,25 @@ PhexSurvey class >> stonAllInstVarNames [
 		  reject: [ :e | e = #validationBlock ]
 ]
 
-{ #category : #questions }
+{ #category : 'questions' }
 PhexSurvey >> addQuestion: aQuestion [
 	self questions add: aQuestion
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PhexSurvey >> answers [
 
 	^ answers
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PhexSurvey >> answers: anObject [
 	self flag: 'Accessor should not do more than accessing. Rename this method.'.
 	answers := anObject.
 	self validate
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 PhexSurvey >> collectAnswers [
 
 	(answers isKindOf: Boolean) ifTrue: [
@@ -92,7 +94,7 @@ PhexSurvey >> collectAnswers [
 			  yourself ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 PhexSurvey >> collectAnswersFromQuestions [
 
 	(answers isKindOf: Boolean) ifTrue: [
@@ -108,24 +110,24 @@ PhexSurvey >> collectAnswersFromQuestions [
 			  yourself ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PhexSurvey >> configurator [
 
 	^ configurator ifNil: [ configurator := PhexSurveyConfigurator on: self ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PhexSurvey >> configurator: anObject [
 
 	configurator := anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PhexSurvey >> configureForExperiment: anExperiment [
 	self configurator configureForExperiment:  anExperiment
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PhexSurvey >> isAlmostValid [
 
 	^ (questions inject: 0 into: [ :sum :next |
@@ -134,47 +136,47 @@ PhexSurvey >> isAlmostValid [
 			   ifFalse: [ sum ] ]) <= 2 
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 PhexSurvey >> isClosed [
 	^answers notNil
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 PhexSurvey >> isOpen [
 	^self isClosed not
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PhexSurvey >> isValid [
 	
 	^questions allSatisfy: [ :q| q hasValidAnswer: answers]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PhexSurvey >> questions [
 
 	^ questions ifNil:[questions := OrderedCollection new]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PhexSurvey >> questions: anObject [
 
 	questions := anObject
 ]
 
-{ #category : #questions }
+{ #category : 'questions' }
 PhexSurvey >> validate [
 
 	self validationBlock cull: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PhexSurvey >> validationBlock [
 
 	^ validationBlock ifNil: [ validationBlock := [ :survey| ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PhexSurvey >> validationBlock: anObject [
 
 	validationBlock := anObject

@@ -2,8 +2,8 @@
 I represent an experiment with a name, a description and a list of tasks (instances of PhexTask)
 "
 Class {
-	#name : #PhexExperiment,
-	#superclass : #Object,
+	#name : 'PhexExperiment',
+	#superclass : 'Object',
 	#instVars : [
 		'name',
 		'description',
@@ -22,16 +22,18 @@ Class {
 	#classInstVars : [
 		'current'
 	],
-	#category : #'PharoExperienceBox-model'
+	#category : 'PharoExperienceBox-model',
+	#package : 'PharoExperienceBox',
+	#tag : 'model'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PhexExperiment class >> currentExperiment [
 
 	^current ifNil:[current := self new]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 PhexExperiment class >> ensureTasksDefinitionFolder [
 
 	"ensures that the tasks folder of the experiment exists. Returns the FileReference"
@@ -39,7 +41,7 @@ PhexExperiment class >> ensureTasksDefinitionFolder [
 	^ self currentExperiment ensureTasksDefinitionFolder
 ]
 
-{ #category : #'building - API' }
+{ #category : 'building - API' }
 PhexExperiment class >> freeTextQuestion: text [
 
 	^ PhexFreeTextQuestion new
@@ -47,23 +49,23 @@ PhexExperiment class >> freeTextQuestion: text [
 		  yourself
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 PhexExperiment class >> isRunnableExperience [
 	^true
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PhexExperiment class >> resetAllExperiments [
 	<script>
 	self allSubclassesDo: [ :c| c resetExperiment ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PhexExperiment class >> resetExperiment [
 	 self subclassResponsibility 
 ]
 
-{ #category : #'building - API' }
+{ #category : 'building - API' }
 PhexExperiment class >> singleChoiceQuestion: text options: choices [
 
 	^ PhexSingleChoiceQuestion new
@@ -72,7 +74,7 @@ PhexExperiment class >> singleChoiceQuestion: text options: choices [
 		  yourself
 ]
 
-{ #category : #'building - API' }
+{ #category : 'building - API' }
 PhexExperiment class >> yesNoQuestion: text [
 
 	^ PhexYesNoQuestion new
@@ -80,53 +82,53 @@ PhexExperiment class >> yesNoQuestion: text [
 		  yourself
 ]
 
-{ #category : #surveys }
+{ #category : 'surveys' }
 PhexExperiment >> addAgreementSurvey: aSurvey [
 
 	self agreementSurveys add: aSurvey uuid
 ]
 
-{ #category : #surveys }
+{ #category : 'surveys' }
 PhexExperiment >> addPostSurvey: aSurvey [
 
 	self postSurveys add: aSurvey uuid
 ]
 
-{ #category : #surveys }
+{ #category : 'surveys' }
 PhexExperiment >> addPreSurvey: aSurvey [
 
 	self preSurveys add: aSurvey uuid
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 PhexExperiment >> addRunningTask: aTask [
 	self runningTasks addIfNotPresent: aTask
 ]
 
-{ #category : #surveys }
+{ #category : 'surveys' }
 PhexExperiment >> addSurvey: aSurvey [
 	self surveys at: aSurvey uuid put: aSurvey
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PhexExperiment >> agreementSurveys [
 
 	^ agreementSurveys ifNil: [ agreementSurveys := OrderedCollection new  ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 PhexExperiment >> canFinishTask: aTask [
 
 	^ aTask isStarted
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 PhexExperiment >> canStartNewTask [
 
 	^ (self sequentialTasks and: [ self hasRunningTasks ]) not
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 PhexExperiment >> clearSurveysFiles [
 
 	| dir |
@@ -134,7 +136,7 @@ PhexExperiment >> clearSurveysFiles [
 	dir files do: [ :f | f delete ]
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 PhexExperiment >> clearTasksFiles [
 
 	| dir |
@@ -142,18 +144,18 @@ PhexExperiment >> clearTasksFiles [
 	dir files do: [ :f | f delete ]
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 PhexExperiment >> closeable [
 	^true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PhexExperiment >> description [
 
 	^ 'No description' "self subclassResponsibility"
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 PhexExperiment >> ensureSurveysDefinitionFolder [
 
 	| dir |
@@ -162,14 +164,14 @@ PhexExperiment >> ensureSurveysDefinitionFolder [
 	^ dir
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 PhexExperiment >> ensureTaskCanBeFinished: aTask [
 
 	aTask isFinished ifTrue: [ PhexTaskIsAlreadyFinished new signal ].
 	aTask isStarted ifFalse: [ PhexTaskIsNotStarted new signal ]
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 PhexExperiment >> ensureTasksAnswersFolder [
 
 	| dir |
@@ -178,7 +180,7 @@ PhexExperiment >> ensureTasksAnswersFolder [
 	^ dir
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 PhexExperiment >> ensureTasksDefinitionFolder [
 
 	| dir |
@@ -187,18 +189,18 @@ PhexExperiment >> ensureTasksDefinitionFolder [
 	^ dir
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PhexExperiment >> experienceId [
 	^self subclassResponsibility 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PhexExperiment >> finishExperimentAction [
 
 	^ finishExperimentAction ifNil: [ finishExperimentAction := [ :xp |  ] ]
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 PhexExperiment >> finishTask: aTask [
 	
 	aTask finish.
@@ -209,33 +211,33 @@ PhexExperiment >> finishTask: aTask [
 	self updateStatus
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PhexExperiment >> finishTaskAction [
 
 	^ finishTaskAction ifNil: [ finishTaskAction := [ :xp :task |  ] ]
 ]
 
-{ #category : #surveys }
+{ #category : 'surveys' }
 PhexExperiment >> hasAgreementSurvey [
 	^self agreementSurveys notEmpty
 ]
 
-{ #category : #surveys }
+{ #category : 'surveys' }
 PhexExperiment >> hasPostSurvey [
 	^self postSurveys notEmpty
 ]
 
-{ #category : #surveys }
+{ #category : 'surveys' }
 PhexExperiment >> hasPreSurvey [
 	^self preSurveys notEmpty
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 PhexExperiment >> hasRunningTasks [
 	^self runningTasks notEmpty
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PhexExperiment >> initialize [
 
 	name := self name.
@@ -243,19 +245,19 @@ PhexExperiment >> initialize [
 	isFinished := false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 PhexExperiment >> isFinished [
 
 	^ isFinished ifNil:[isFinished := false]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PhexExperiment >> lastFinishedTaskOrder [
 
 	^ lastFinishedTaskOrder ifNil: [ lastFinishedTaskOrder := 0 ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PhexExperiment >> logger [
 
 	"Returns the logger object"
@@ -263,7 +265,7 @@ PhexExperiment >> logger [
 	^ self subclassResponsibility
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 PhexExperiment >> materialize [
 
 	self materializeSurveys.
@@ -271,7 +273,7 @@ PhexExperiment >> materialize [
 	self setUpExperiment
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 PhexExperiment >> materializeSurveys [
 
 	| dir |
@@ -283,7 +285,7 @@ PhexExperiment >> materializeSurveys [
 		s configureForExperiment: self ]
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 PhexExperiment >> materializeTasks [
 
 	| dir |
@@ -300,48 +302,48 @@ PhexExperiment >> materializeTasks [
 	self updateStatus
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PhexExperiment >> name [
 
 	^ 'Unnamed experience' "self subclassResponsibility"
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 PhexExperiment >> newOrderedItemCollection [
 
 	^ SortedCollection sortBlock: [ :a :b | a order < b order ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PhexExperiment >> postSurveys [
 
 	^ postSurveys ifNil: [ postSurveys := OrderedCollection new ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PhexExperiment >> preSurveys [
 
 	^ preSurveys ifNil: [ preSurveys := OrderedCollection new  ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PhexExperiment >> prepareSystemForExperiment [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 PhexExperiment >> printOn: aStream [
 	aStream << self name 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 PhexExperiment >> removeRunningTask: aTask [
 
 	self runningTasks remove: aTask ifAbsent: [  ]
 ]
 
-{ #category : #surveys }
+{ #category : 'surveys' }
 PhexExperiment >> runAgreementSurveyWith: aPresenter [
 
 	self hasAgreementSurvey ifFalse: [ ^ self ].
@@ -352,7 +354,7 @@ PhexExperiment >> runAgreementSurveyWith: aPresenter [
 	self logger authorizeDataSending
 ]
 
-{ #category : #surveys }
+{ #category : 'surveys' }
 PhexExperiment >> runPostSurveysWith: aPresenter [
 
 	self hasPostSurvey ifFalse: [ ^ self ].
@@ -360,21 +362,21 @@ PhexExperiment >> runPostSurveysWith: aPresenter [
 
 ]
 
-{ #category : #surveys }
+{ #category : 'surveys' }
 PhexExperiment >> runPreSurveysWith: aPresenter [
 
 	self hasPreSurvey ifFalse: [ ^ self ].
 	self runSurveySelection: self preSurveys with: aPresenter
 ]
 
-{ #category : #surveys }
+{ #category : 'surveys' }
 PhexExperiment >> runSurveyFor: task with: aPresenter [
 
 	task hasSurvey ifFalse: [ ^ self ].	
 	aPresenter runSurvey: (surveys at: task survey)
 ]
 
-{ #category : #surveys }
+{ #category : 'surveys' }
 PhexExperiment >> runSurveySelection: surveySelection with: aPresenter [
 
 	| runnableSurveys |
@@ -387,30 +389,30 @@ PhexExperiment >> runSurveySelection: surveySelection with: aPresenter [
 	runnableSurveys do: [ :s | s configurator runSurveyOn: aPresenter  ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 PhexExperiment >> runTasksInOrder [
 
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PhexExperiment >> runningTasks [
 
 	^ runningTasks ifNil: [ runningTasks := OrderedCollection new ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PhexExperiment >> runningTasks: anObject [
 
 	runningTasks := anObject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 PhexExperiment >> sequentialTasks [
 	^false
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 PhexExperiment >> serializeSurveys [
 
 	| dir |
@@ -421,7 +423,7 @@ PhexExperiment >> serializeSurveys [
 			:ws | ws nextPutAll: (STON toString: s) ] ]
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 PhexExperiment >> serializeTasks [
 
 	| dir |
@@ -432,7 +434,7 @@ PhexExperiment >> serializeTasks [
 			:ws | ws nextPutAll: (STON toString: t) ] ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PhexExperiment >> setUpExperiment [
 
 	"Experiments designers must implement dedicated experiment setup code in this method, that should be immediately called after materializing the experiment (default, see PhexExperiment>>#materialize
@@ -442,7 +444,7 @@ PhexExperiment >> setUpExperiment [
 	self updateStatus
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 PhexExperiment >> startTask: aTask [
 	aTask isFinished ifTrue: [ PhexTaskIsAlreadyFinished new signal ].	
 	(self runningTasks includes: aTask) ifTrue: [ 	PhexTaskIsAlreadyStarted new signal ].
@@ -455,19 +457,19 @@ PhexExperiment >> startTask: aTask [
 	self serializeTasks
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PhexExperiment >> startingTaskAction [
 
 	^ startingTaskAction ifNil: [ startingTaskAction := [ :xp :task |  ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PhexExperiment >> surveyExtension [
 
 	^ 'psx'
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 PhexExperiment >> surveyFilenameFor: s [
 
 	^ (String new writeStreamDo: [ :ws | 
@@ -476,30 +478,30 @@ PhexExperiment >> surveyFilenameFor: s [
 		   ws << self surveyExtension ]) contents
 ]
 
-{ #category : #surveys }
+{ #category : 'surveys' }
 PhexExperiment >> surveyFromUUID: aSurveyUUID [
 	^self surveys at: aSurveyUUID
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PhexExperiment >> surveys [
 
 	^ surveys ifNil: [ surveys := Dictionary new ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PhexExperiment >> surveys: anObject [
 
 	surveys := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PhexExperiment >> taskExtension [
 
 	^ 'ptx'
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 PhexExperiment >> taskFilenameFor: t [
 
 	^ (String new writeStreamDo: [ :ws | 
@@ -508,13 +510,13 @@ PhexExperiment >> taskFilenameFor: t [
 		   ws << self taskExtension ]) contents
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PhexExperiment >> tasks [
 
 	^ tasks ifNil: [ tasks := self newOrderedItemCollection ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PhexExperiment >> tasks: anObject [
 
 	tasks := self newOrderedItemCollection
@@ -522,7 +524,7 @@ PhexExperiment >> tasks: anObject [
 		         yourself
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 PhexExperiment >> tasksMaterializationFilter [
 
 	"returns a filter that is applied when materializing tasks"
@@ -532,48 +534,48 @@ PhexExperiment >> tasksMaterializationFilter [
 	^ [ :task | true "no filter" ]
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 PhexExperiment >> terminate [
 	self finishExperimentAction cull: self
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 PhexExperiment >> updateStatus [
 
 	(self tasks allSatisfy: [ :t | t isFinished ]) ifTrue: [ 
 		isFinished := true ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 PhexExperiment >> validateStartingTaskOrder: task [
 
 	^ (self runTasksInOrder not) or: [ task order = (self lastFinishedTaskOrder + 1) ]
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 PhexExperiment >> validateTask: aTask [
 	self subclassResponsibility 
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 PhexExperiment >> whenFinishedDo: aBlock [
 
 	finishExperimentAction := aBlock
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 PhexExperiment >> whenSurveyClosedDo: aBlock [
 
 	surveys valuesDo: [ :s | s validationBlock: aBlock ]
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 PhexExperiment >> whenTaskFinishedDo: aBlock [
 
 	finishTaskAction := aBlock
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 PhexExperiment >> whenTaskStartedDo: aBlock [
 
 	startingTaskAction := aBlock

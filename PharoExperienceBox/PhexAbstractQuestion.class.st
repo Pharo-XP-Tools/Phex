@@ -1,48 +1,50 @@
 Class {
-	#name : #PhexAbstractQuestion,
-	#superclass : #PhexOrderedExperimentItem,
+	#name : 'PhexAbstractQuestion',
+	#superclass : 'PhexOrderedExperimentItem',
 	#instVars : [
 		'answer',
 		'optionnal'
 	],
-	#category : #'PharoExperienceBox-model'
+	#category : 'PharoExperienceBox-model',
+	#package : 'PharoExperienceBox',
+	#tag : 'model'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PhexAbstractQuestion >> answer [
 
 	^ answer
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PhexAbstractQuestion >> answer: anObject [
 
 	answer := anObject
 ]
 
-{ #category : #'API - spec' }
+{ #category : 'API - spec' }
 PhexAbstractQuestion >> buildOn: aSpecPresenter [
 	self subclassResponsibility 
 ]
 
-{ #category : #'API - DSSpy' }
+{ #category : 'API - DSSpy' }
 PhexAbstractQuestion >> generateRecord [
 	self subclassResponsibility 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PhexAbstractQuestion >> optionnal [
 
 	^ optionnal
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PhexAbstractQuestion >> optionnal: anObject [
 
 	optionnal := anObject
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 PhexAbstractQuestion >> printAnswer: aPhexAnswer on: aStream [
 	aStream << aPhexAnswer answer
 ]

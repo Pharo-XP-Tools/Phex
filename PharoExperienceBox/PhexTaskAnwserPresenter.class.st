@@ -5,8 +5,8 @@ I am opened when a user asks to finish a `PhexTask` from a Phex task launcher:
 - I provide, if required by the task in question, a way of providing an answer
 "
 Class {
-	#name : #PhexTaskAnwserPresenter,
-	#superclass : #SpPresenter,
+	#name : 'PhexTaskAnwserPresenter',
+	#superclass : 'SpPresenter',
 	#instVars : [
 		'titleLabel',
 		'buttonCancel',
@@ -18,10 +18,12 @@ Class {
 		'answerLabel',
 		'subtitleLabel'
 	],
-	#category : #'PharoExperienceBox-presenters'
+	#category : 'PharoExperienceBox-presenters',
+	#package : 'PharoExperienceBox',
+	#tag : 'presenters'
 }
 
-{ #category : #specs }
+{ #category : 'specs' }
 PhexTaskAnwserPresenter class >> defaultSpec [
 
 	^ SpBoxLayout newTopToBottom
@@ -34,7 +36,7 @@ PhexTaskAnwserPresenter class >> defaultSpec [
 		 yourself
 ]
 
-{ #category : #specs }
+{ #category : 'specs' }
 PhexTaskAnwserPresenter class >> noAnswerSpec [
 
 	^ SpBoxLayout newTopToBottom
@@ -45,13 +47,13 @@ PhexTaskAnwserPresenter class >> noAnswerSpec [
 		 yourself
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 PhexTaskAnwserPresenter >> buildTaskAnswer [
 
 	^ PhexTaskAnswer new contents: text text
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PhexTaskAnwserPresenter >> initializePresenters [
 
 	task requiresAnswer ifFalse:[self layout: self class noAnswerSpec].
@@ -91,12 +93,12 @@ PhexTaskAnwserPresenter >> initializePresenters [
 		                yourself
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PhexTaskAnwserPresenter >> setModelBeforeInitialization: aPhexTask [
 	task := aPhexTask
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PhexTaskAnwserPresenter >> title [
 
 	| str |

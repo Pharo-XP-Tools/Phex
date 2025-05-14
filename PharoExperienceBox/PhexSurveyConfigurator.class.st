@@ -2,33 +2,35 @@
 My subclasses are responsible to configure surveys for an experiment. 
 "
 Class {
-	#name : #PhexSurveyConfigurator,
-	#superclass : #Object,
+	#name : 'PhexSurveyConfigurator',
+	#superclass : 'Object',
 	#instVars : [
 		'survey'
 	],
-	#category : #'PharoExperienceBox-model'
+	#category : 'PharoExperienceBox-model',
+	#package : 'PharoExperienceBox',
+	#tag : 'model'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 PhexSurveyConfigurator class >> on: aPhexSurvey [
 
 	^ self new forSurvey: aPhexSurvey
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PhexSurveyConfigurator >> configureForExperiment: aPhexExperiment [
 	aPhexExperiment addSurvey: survey 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PhexSurveyConfigurator >> forSurvey: aPhexSurvey [
 
 	survey := aPhexSurvey.
 	aPhexSurvey configurator: self
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 PhexSurveyConfigurator >> runSurveyOn: aPresenter [
 	aPresenter runSurvey: survey
 ]

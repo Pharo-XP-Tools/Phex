@@ -1,25 +1,27 @@
 Class {
-	#name : #PhexSingleChoiceQuestion,
-	#superclass : #PhexSurveyQuestion,
-	#category : #'PharoExperienceBox-model'
+	#name : 'PhexSingleChoiceQuestion',
+	#superclass : 'PhexSurveyQuestion',
+	#category : 'PharoExperienceBox-model',
+	#package : 'PharoExperienceBox',
+	#tag : 'model'
 }
 
-{ #category : #'API - spec' }
+{ #category : 'API - spec' }
 PhexSingleChoiceQuestion >> buildOn: aSpecPresenter [
 	aSpecPresenter buildSingleChoiceSurveyQuestion:  self
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 PhexSingleChoiceQuestion >> evaluateResultFrom: aPhexSurveyQuestionPresenter [ 
 	aPhexSurveyQuestionPresenter evaluateSingleChoiceAnswerFrom: self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 PhexSingleChoiceQuestion >> hasValidAnswer: aCollection [ 
 	^choices includes: answer answer
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 PhexSingleChoiceQuestion >> printOn: aStream [
 	aStream << title
 ]

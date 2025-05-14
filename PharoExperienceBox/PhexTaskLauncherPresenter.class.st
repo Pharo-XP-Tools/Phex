@@ -2,23 +2,39 @@
 I am a tool to run pharo empirical experiments.
 "
 Class {
-	#name : #PhexTaskLauncherPresenter,
-	#superclass : #SpApplicationWithToolbar,
+	#name : 'PhexTaskLauncherPresenter',
+	#superclass : 'StPresenter',
 	#instVars : [
 		'currentExperience',
 		'taskTable',
 		'taskDescription',
-		'finishModalIsOpen'
+		'finishModalIsOpen',
+		'menu'
 	],
-	#category : #'PharoExperienceBox-presenters'
+	#category : 'PharoExperienceBox-presenters',
+	#package : 'PharoExperienceBox',
+	#tag : 'presenters'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PhexTaskLauncherPresenter class >> currentApplication [ 
 	^PhexSurveyPresenter currentApplication 
 ]
 
-{ #category : #specs }
+{ #category : 'specs' }
+PhexTaskLauncherPresenter class >> defaultLayout [
+
+	^ SpBoxLayout newTopToBottom
+	"	  add: #menu expand: false;"
+		  add: (SpPanedLayout newLeftToRight
+				   positionOfSlider: 30 percent;
+				   add: #taskTable;
+				   add: #taskDescription;
+				   yourself);
+		  yourself
+]
+
+{ #category : 'specs' }
 PhexTaskLauncherPresenter class >> defaultSpec [
 
 	^ SpBoxLayout newTopToBottom
@@ -31,7 +47,7 @@ PhexTaskLauncherPresenter class >> defaultSpec [
 		  yourself
 ]
 
-{ #category : #'world menu' }
+{ #category : 'world menu' }
 PhexTaskLauncherPresenter class >> menuCommandOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #'Phex')
@@ -43,29 +59,29 @@ PhexTaskLauncherPresenter class >> menuCommandOn: aBuilder [
 	aBuilder withSeparatorAfter
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 PhexTaskLauncherPresenter class >> open [
 	<example>
 	^ self new openWithSpec; yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PhexTaskLauncherPresenter >> currentExperience [
 	 ^currentExperience ifNil:[currentExperience := PhexExperiment new]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PhexTaskLauncherPresenter >> currentExperience: anObject [
 
 	currentExperience := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PhexTaskLauncherPresenter >> finishModalIsOpen [ 
 	^finishModalIsOpen ifNil:[finishModalIsOpen := false]
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 PhexTaskLauncherPresenter >> finishTask [
 
 	| task modal taskAnswer |
@@ -95,7 +111,7 @@ PhexTaskLauncherPresenter >> finishTask [
 	self updateTaskDescription: task
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 PhexTaskLauncherPresenter >> finishedTaskDescriptionFor: aTask [
 
 	| str title |
@@ -113,27 +129,31 @@ PhexTaskLauncherPresenter >> finishedTaskDescriptionFor: aTask [
 	^ str contents
 ]
 
-{ #category : #'ui requests' }
+{ #category : 'ui requests' }
 PhexTaskLauncherPresenter >> info: aString [
 
 	self popover: aString style: 'print'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PhexTaskLauncherPresenter >> initializePresenters [
-self application: self class currentApplication.
+
+	self application: self class currentApplication.
 	self initializeTaskTable.
 	self initializeTaskDescription.
-	self menu
+	"self menu"
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PhexTaskLauncherPresenter >> initializeTaskDescription [
-	taskDescription := MDEditorPresenter on: self.
-	taskDescription layout: MDEditorPresenter pharoExperienceSpec
+	taskDescription := MicrodownPresenter on: self.
+	taskDescription  text: (Microdown asRichText:
+			'## Subtitle
+			*italic*
+			**bold**')
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PhexTaskLauncherPresenter >> initializeTaskTable [
 
 	taskTable := self newTable.
@@ -151,7 +171,7 @@ PhexTaskLauncherPresenter >> initializeTaskTable [
 	self updateCurrentExperience
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 PhexTaskLauncherPresenter >> loadExperience [
 
 	| xpClass xpClassChoices |
@@ -170,7 +190,7 @@ PhexTaskLauncherPresenter >> loadExperience [
 	self loadExperience: xpClass
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 PhexTaskLauncherPresenter >> loadExperience: xpClass [
 
 	currentExperience := xpClass currentExperiment.
@@ -184,9 +204,9 @@ PhexTaskLauncherPresenter >> loadExperience: xpClass [
 	currentExperience runPreSurveysWith: self
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 PhexTaskLauncherPresenter >> menu [
-
+ 
 	^ menu ifNil: [ 
 		  menu := self newMenuBar
 			          addGroup: [ :group | 
@@ -213,7 +233,7 @@ PhexTaskLauncherPresenter >> menu [
 			          yourself ]
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 PhexTaskLauncherPresenter >> openModal: aPhexSurveyPresenter for: aPhexSurvey [
 
 	| modal |
@@ -224,14 +244,14 @@ PhexTaskLauncherPresenter >> openModal: aPhexSurveyPresenter for: aPhexSurvey [
 	aPhexSurvey answers: modal presenter evaluateSurvey
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PhexTaskLauncherPresenter >> openWithSpec [ 
 	super openWithSpec.
 	self window window makeUnclosable 
 	
 ]
 
-{ #category : #'ui requests' }
+{ #category : 'ui requests' }
 PhexTaskLauncherPresenter >> popover: aString style: aStyle [
 
 	self newPopover
@@ -248,12 +268,12 @@ PhexTaskLauncherPresenter >> popover: aString style: aStyle [
 		popup
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 PhexTaskLauncherPresenter >> requestWindowClose [
 	 ^self currentExperience closeable
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 PhexTaskLauncherPresenter >> runAgreementSurvey: aPhexSurvey [
 
 	self
@@ -263,7 +283,7 @@ PhexTaskLauncherPresenter >> runAgreementSurvey: aPhexSurvey [
 		for: aPhexSurvey
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 PhexTaskLauncherPresenter >> runSurvey: aPhexSurvey [
 
 	self
@@ -273,7 +293,7 @@ PhexTaskLauncherPresenter >> runSurvey: aPhexSurvey [
 		for: aPhexSurvey
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 PhexTaskLauncherPresenter >> runTaskBlock: aBlock [
 
 	aBlock
@@ -286,7 +306,7 @@ PhexTaskLauncherPresenter >> runTaskBlock: aBlock [
 	Smalltalk image saveSession
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 PhexTaskLauncherPresenter >> startSelectedTask [
 
 	| task |
@@ -297,20 +317,20 @@ PhexTaskLauncherPresenter >> startSelectedTask [
 	self updateTaskDescription: task
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 PhexTaskLauncherPresenter >> taskDescriptionFor: aTask [
 
 	aTask isStarted ifTrue: [ ^ aTask contents ].
 	^ 'This task is not started yet. Click **Start**, or select another task and click **Start**.'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PhexTaskLauncherPresenter >> title [
 
 	^ 'Task launcher: ' , self currentExperience printString
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 PhexTaskLauncherPresenter >> updateCurrentExperience [
 
 	currentExperience ifNil: [ 
@@ -320,7 +340,7 @@ PhexTaskLauncherPresenter >> updateCurrentExperience [
 	self updateTitle
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 PhexTaskLauncherPresenter >> updateTaskDescription: item [
 
 	item ifNil: [ ^ self ].
@@ -330,7 +350,7 @@ PhexTaskLauncherPresenter >> updateTaskDescription: item [
 			 ifFalse: [ self taskDescriptionFor: item ])
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 PhexTaskLauncherPresenter >> updateTextInputWith: aString [
 	
 	taskDescription textInputText: aString.
@@ -339,12 +359,12 @@ PhexTaskLauncherPresenter >> updateTextInputWith: aString [
 
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 PhexTaskLauncherPresenter >> updateTitle [
 	self window title: self title
 ]
 
-{ #category : #'ui requests' }
+{ #category : 'ui requests' }
 PhexTaskLauncherPresenter >> warning: aString [
 
 	self popover: aString style: 'error'

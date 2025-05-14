@@ -1,20 +1,22 @@
 Class {
-	#name : #PhexMultipleChoicesQuestion,
-	#superclass : #PhexSurveyQuestion,
-	#category : #'PharoExperienceBox-model'
+	#name : 'PhexMultipleChoicesQuestion',
+	#superclass : 'PhexSurveyQuestion',
+	#category : 'PharoExperienceBox-model',
+	#package : 'PharoExperienceBox',
+	#tag : 'model'
 }
 
-{ #category : #'API - spec' }
+{ #category : 'API - spec' }
 PhexMultipleChoicesQuestion >> buildOn: aSpecPresenter [
 	aSpecPresenter buildMultipleChoiceSurveyQuestion: self
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 PhexMultipleChoicesQuestion >> evaluateResultFrom: aPhexSurveyQuestionPresenter [ 
 	aPhexSurveyQuestionPresenter evaluateMultipleChoiceAnswerFrom: self
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 PhexMultipleChoicesQuestion >> printAnswer: aPhexAnswer on: aStream [
 
 	aPhexAnswer answer do: [ :a | 

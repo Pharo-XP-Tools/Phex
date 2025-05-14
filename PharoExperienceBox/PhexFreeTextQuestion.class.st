@@ -1,20 +1,22 @@
 Class {
-	#name : #PhexFreeTextQuestion,
-	#superclass : #PhexAbstractQuestion,
-	#category : #'PharoExperienceBox-model'
+	#name : 'PhexFreeTextQuestion',
+	#superclass : 'PhexAbstractQuestion',
+	#category : 'PharoExperienceBox-model',
+	#package : 'PharoExperienceBox',
+	#tag : 'model'
 }
 
-{ #category : #'API - spec' }
+{ #category : 'API - spec' }
 PhexFreeTextQuestion >> buildOn: aSpecPresenter [
 	aSpecPresenter buildFreeTextSurveyQuestion: self
 ]
 
-{ #category : #evaluation }
+{ #category : 'evaluation' }
 PhexFreeTextQuestion >> evaluateResultFrom: aPhexSurveyQuestionPresenter [ 
 	aPhexSurveyQuestionPresenter evaluateFreeTextAnswerFrom: self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 PhexFreeTextQuestion >> hasValidAnswer: aCollection [ 
 	^answer answer notEmpty
 ]

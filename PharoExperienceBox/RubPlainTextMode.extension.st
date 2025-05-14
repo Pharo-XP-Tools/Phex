@@ -1,6 +1,6 @@
-Extension { #name : #RubPlainTextMode }
+Extension { #name : 'RubPlainTextMode' }
 
-{ #category : #'*PharoExperienceBox' }
+{ #category : '*PharoExperienceBox' }
 RubPlainTextMode class >> phexMenuOn: aBuilder [
 	"Specify the menu used when writing text. Try it with:
 	(PragmaMenuBuilder 

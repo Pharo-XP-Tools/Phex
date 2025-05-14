@@ -1,20 +1,22 @@
 Class {
-	#name : #PhexAgreementQuestion,
-	#superclass : #PhexSurveyQuestion,
-	#category : #'PharoExperienceBox-model'
+	#name : 'PhexAgreementQuestion',
+	#superclass : 'PhexSurveyQuestion',
+	#category : 'PharoExperienceBox-model',
+	#package : 'PharoExperienceBox',
+	#tag : 'model'
 }
 
-{ #category : #'API - spec' }
+{ #category : 'API - spec' }
 PhexAgreementQuestion >> buildOn: aSpecPresenter [
 	aSpecPresenter buildAgreementQuestion: self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 PhexAgreementQuestion >> hasValidAnswer: aBoolean [ 
 	^aBoolean notNil
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 PhexAgreementQuestion >> validWithAnswers: aBoolean [ 
 	^aBoolean notNil
 ]
