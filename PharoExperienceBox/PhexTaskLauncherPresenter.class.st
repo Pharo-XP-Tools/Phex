@@ -9,7 +9,7 @@ Class {
 		'taskTable',
 		'taskDescription',
 		'finishModalIsOpen',
-		'menu'
+		'toolbar'
 	],
 	#category : 'PharoExperienceBox-presenters',
 	#package : 'PharoExperienceBox',
@@ -25,20 +25,7 @@ PhexTaskLauncherPresenter class >> currentApplication [
 PhexTaskLauncherPresenter class >> defaultLayout [
 
 	^ SpBoxLayout newTopToBottom
-	"	  add: #menu expand: false;"
-		  add: (SpPanedLayout newLeftToRight
-				   positionOfSlider: 30 percent;
-				   add: #taskTable;
-				   add: #taskDescription;
-				   yourself);
-		  yourself
-]
-
-{ #category : 'specs' }
-PhexTaskLauncherPresenter class >> defaultSpec [
-
-	^ SpBoxLayout newTopToBottom
-		  add: #menu expand: false;
+		  add: #toolbar expand: false;
 		  add: (SpPanedLayout newLeftToRight
 				   positionOfSlider: 30 percent;
 				   add: #taskTable;
@@ -141,7 +128,7 @@ PhexTaskLauncherPresenter >> initializePresenters [
 	self application: self class currentApplication.
 	self initializeTaskTable.
 	self initializeTaskDescription.
-	"self menu"
+	self initializeToolbar
 ]
 
 { #category : 'initialization' }
@@ -169,6 +156,24 @@ PhexTaskLauncherPresenter >> initializeTaskTable [
 		(SpStringTableColumn title: 'Task' evaluated: [ :task | task title ]).
 	taskTable transmitDo: [ :item| self updateTaskDescription: item].
 	self updateCurrentExperience
+]
+
+{ #category : 'api' }
+PhexTaskLauncherPresenter >> initializeToolbar [
+
+	toolbar := self newToolbar.
+	toolbar beBoth.
+	toolbar add: (SpToolbarButtonPresenter new
+			 icon: (self iconNamed: #smallPrintIt);
+			 label: 'Start';
+			 action: [ self startSelectedTask ];
+			 yourself).
+
+	toolbar add: (SpToolbarButtonPresenter new
+			 icon: (self iconNamed: #smallOk);
+			 label: 'Finish';
+			 action: [ self finishTask ];
+			 yourself)
 ]
 
 { #category : 'actions' }
@@ -207,8 +212,8 @@ PhexTaskLauncherPresenter >> loadExperience: xpClass [
 { #category : 'api' }
 PhexTaskLauncherPresenter >> menu [
  
-	^ menu ifNil: [ 
-		  menu := self newMenuBar
+	^ toolbar ifNil: [ 
+		  toolbar := self newMenuBar
 			          addGroup: [ :group | 
 				       "   group addItem: [ :item | 
 						          item
