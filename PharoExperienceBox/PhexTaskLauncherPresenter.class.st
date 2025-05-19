@@ -79,20 +79,24 @@ PhexTaskLauncherPresenter >> finishTask [
 	self runTaskBlock: [ 
 		currentExperience ensureTaskCanBeFinished: task.
 		finishModalIsOpen := true.
-		modal := (PhexTaskAnwserPresenter on: task)
-			         owner: self;
-			         openBlockedDialogWithSpec.
-		finishModalIsOpen := false.
-		modal isOk ifFalse: [ ^ self ].
-		taskAnswer := modal presenter buildTaskAnswer.
-		task answer: taskAnswer.
+		[ 
+			modal := (PhexTaskAnwserPresenter on: task)
+						owner: self;
+						openBlockedDialog.
+		
+			modal isOk ifFalse: [ ^ self ].
+			taskAnswer := modal presenter buildTaskAnswer.
+			task answer: taskAnswer.
 
-		currentExperience finishTask: task.
-		currentExperience runSurveyFor: task with: self.
+			currentExperience finishTask: task.
+			currentExperience runSurveyFor: task with: self.
 				
-		currentExperience isFinished ifTrue: [ 
-			currentExperience runPostSurveysWith: self.
-			currentExperience terminate ] ].
+			currentExperience isFinished ifTrue: [ 
+				currentExperience runPostSurveysWith: self.
+				currentExperience terminate 
+			]
+		] ensure:[ finishModalIsOpen := false.].
+	].
 
 
 	self updateTaskDescription: task
@@ -145,9 +149,9 @@ PhexTaskLauncherPresenter >> initializeTaskTable [
 	taskTable
 		addColumn:
 			((SpImageTableColumn
-				  title: 'Status'
+				  title: String empty
 				  evaluated: [ :task | task icon ])
-				 width: 12;
+				 beNotExpandable;
 				 sortFunction: nil;
 				 yourself);
 		addColumn:
