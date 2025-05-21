@@ -566,7 +566,7 @@ PhexExperiment >> whenFinishedDo: aBlock [
 { #category : 'events' }
 PhexExperiment >> whenSurveyClosedDo: aBlock [
 
-	surveys valuesDo: [ :s | s validationBlock: aBlock ]
+	surveys ifNotNil: [:srvs | srvs valuesDo: [ :s | s validationBlock: aBlock ]]
 ]
 
 { #category : 'events' }
