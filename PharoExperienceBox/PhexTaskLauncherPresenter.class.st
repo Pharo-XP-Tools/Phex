@@ -79,23 +79,21 @@ PhexTaskLauncherPresenter >> finishTask [
 	self runTaskBlock: [ 
 		currentExperience ensureTaskCanBeFinished: task.
 		finishModalIsOpen := true.
-		[ 
-			modal := (PhexTaskAnwserPresenter on: task)
-						owner: self;
-						openBlockedDialog.
-		
-			modal isOk ifFalse: [ ^ self ].
-			taskAnswer := modal presenter buildTaskAnswer.
-			task answer: taskAnswer.
+		modal := (PhexTaskAnwserPresenter on: task)
+					owner: self;
+					openBlockedDialog.
+		finishModalIsOpen := false.
+		modal isOk ifFalse: [ ^ self ].
+		taskAnswer := modal presenter buildTaskAnswer.
+		task answer: taskAnswer.
 
-			currentExperience finishTask: task.
-			currentExperience runSurveyFor: task with: self.
+		currentExperience finishTask: task.
+		currentExperience runSurveyFor: task with: self.
 				
-			currentExperience isFinished ifTrue: [ 
-				currentExperience runPostSurveysWith: self.
-				currentExperience terminate 
-			]
-		] ensure:[ finishModalIsOpen := false.].
+		currentExperience isFinished ifTrue: [ 
+			currentExperience runPostSurveysWith: self.
+			currentExperience terminate 
+		].
 	].
 
 
@@ -244,11 +242,13 @@ PhexTaskLauncherPresenter >> menu [
 PhexTaskLauncherPresenter >> openModal: aPhexSurveyPresenter for: aPhexSurvey [
 
 	| modal |
+
 	self finishModalIsOpen ifTrue: [ ^ self ].
 	finishModalIsOpen := true.
-	modal := aPhexSurveyPresenter openBlockedDialogWithSpec.
+	modal := aPhexSurveyPresenter openBlockedDialog.
 	finishModalIsOpen := false.
 	aPhexSurvey answers: modal presenter evaluateSurvey
+	
 ]
 
 { #category : 'initialization' }
