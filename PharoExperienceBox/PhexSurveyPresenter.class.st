@@ -109,10 +109,18 @@ PhexSurveyPresenter >> evaluateSurvey [
 			  question ]
 ]
 
+{ #category : 'TOREMOVE' }
+PhexSurveyPresenter >> initialExtent [
+
+	^ SmallInteger maxVal @ SmallInteger maxVal
+]
+
 { #category : 'initialization' }
 PhexSurveyPresenter >> initializeDialogWindow: aDialogWindowPresenter [
 
 	| isDemographicSurvey |
+
+	aDialogWindowPresenter initialExtent: self initialExtent.
 
 	isDemographicSurvey := survey title = 'Demographic information'.
 
@@ -134,7 +142,7 @@ PhexSurveyPresenter >> initializeDialogWindow: aDialogWindowPresenter [
 		presenter triggerOkAction.
 		presenter close ].
 	
-	aDialogWindowPresenter initialExtent: SmallInteger maxVal @ SmallInteger maxVal
+	
 ]
 
 { #category : 'initialization' }
