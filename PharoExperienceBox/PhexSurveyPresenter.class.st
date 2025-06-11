@@ -109,12 +109,6 @@ PhexSurveyPresenter >> evaluateSurvey [
 			  question ]
 ]
 
-{ #category : 'api' }
-PhexSurveyPresenter >> initialExtent [
- 
-	^ 600@400
-]
-
 { #category : 'initialization' }
 PhexSurveyPresenter >> initializeDialogWindow: aDialogWindowPresenter [
 
@@ -138,7 +132,9 @@ PhexSurveyPresenter >> initializeDialogWindow: aDialogWindowPresenter [
 						'It is mandatory to complete the demographic survey. Please provide an answer for each question (Do not forget to scroll down).'
 						title: 'Missing information' ] ].
 		presenter triggerOkAction.
-		presenter close ]
+		presenter close ].
+	
+	aDialogWindowPresenter initialExtent: SmallInteger maxVal @ SmallInteger maxVal
 ]
 
 { #category : 'initialization' }

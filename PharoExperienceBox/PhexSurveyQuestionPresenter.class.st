@@ -34,13 +34,21 @@ PhexSurveyQuestionPresenter class >> defaultLayout [
 { #category : 'building' }
 PhexSurveyQuestionPresenter >> addQuestionTextPresenterFor: title toLayout: newLayout [
 
+	self addQuestionTextPresenterFor: title toLayout: newLayout expand: false
+]
+
+{ #category : 'building' }
+PhexSurveyQuestionPresenter >> addQuestionTextPresenterFor: title toLayout: newLayout expand: aExpand [
+
 	newLayout
 		add: (self buildQuestionText: title)
 		withConstraints: [ :c | 
-			c height: (title size > 200
+			aExpand ifFalse: [ 
+				c height: (title size > 200
 					 ifTrue: [ 250 ]
 					 ifFalse: [ 60 ]).
-			c expand: false.
+			].
+			c expand: aExpand.
 			c padding: 0 ]
 ]
 
@@ -52,7 +60,7 @@ PhexSurveyQuestionPresenter >> buildAgreementQuestion: aPhexAgreementQuestion [
 	
 	self
 		addQuestionTextPresenterFor: aPhexAgreementQuestion title
-		toLayout: newLayout.
+		toLayout: newLayout expand: true.
 		
 	radios := OrderedCollection new.
 	radios add: (self newRadioButton
